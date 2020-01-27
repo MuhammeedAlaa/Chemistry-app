@@ -1,4 +1,7 @@
-var createError = require('http-errors');
+//jshint esversion:6
+
+require('dotenv').config()
+const createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
