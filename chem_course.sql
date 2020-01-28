@@ -10,7 +10,7 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+02:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -28,9 +28,13 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
+CREATE DATABASE chem_course;
+
+use chem_course;
+
 CREATE TABLE `admin` (
   `admin_id` varchar(20) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(1024) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -41,9 +45,11 @@ CREATE TABLE `admin` (
 
 CREATE TABLE `assistant` (
   `assistant_id` int(11) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(1024) NOT NULL,
+  `assistant_code` varchar(255) NOT NULL,
   `phone` varchar(255) DEFAULT NULL,
-  `assistant_name` varchar(255) NOT NULL,
+  `fname` varchar(255) NOT NULL,
+  `lname` varchar(255) NOT NULL,
   `admin_id` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -149,8 +155,10 @@ CREATE TABLE `lec_timetable` (
 
 CREATE TABLE `student` (
   `student_code` int(11) NOT NULL,
-  `student_name` varchar(255) NOT NULL,
+  `fname` varchar(255) NOT NULL,
+  `lname` varchar(255) NOT NULL,
   `phone` varchar(255) DEFAULT NULL,
+  `password` varchar(1024) NOT NULL,
   `parent_phone` varchar(255) DEFAULT NULL,
   `black_point` int(11) DEFAULT NULL,
   `school` varchar(255) DEFAULT NULL,
@@ -172,7 +180,7 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `assistant`
   ADD PRIMARY KEY (`assistant_id`),
-  ADD KEY `assistant_name` (`assistant_name`) USING BTREE,
+  ADD KEY `fname` (`fname`) USING BTREE,
   ADD KEY `admin_id` (`admin_id`);
 
 --
@@ -243,7 +251,7 @@ ALTER TABLE `lec_timetable`
 --
 ALTER TABLE `student`
   ADD PRIMARY KEY (`student_code`),
-  ADD KEY `student_name` (`student_name`) USING BTREE,
+  ADD KEY `fname` (`fname`) USING BTREE,
   ADD KEY `assistant_id` (`assistant_id`);
 
 --
