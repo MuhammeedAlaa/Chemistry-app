@@ -8,29 +8,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/codepen.css">
     <nav>
         <div class="menu">
-            <p class="website_name">Chemistry</p>
+            <p class="website_name">Dr.Micheal</p>
             <div class="menu_links">
 
                 <% if(role == "assistant" || role == "admin") {%>
-                <a href="/registerAssist" class="link">Add new Assistant</a>
-                <a href="/registerStud" class="link">Add new Student</a>
-                <%}%>    
-                <% if(fullnameforhtmlkey == "") {%>
-                <a href="/login" class="link">student</a>
-                <a href="/login" class="link">Assistant</a>
-                <a href="/login" class="link">instractor</a>
-                <% } else if(fullnameforhtmlkey != "no") { %>
-                <% console.log("Error:" + fullnameforhtmlkey); %>
-                <a href="" class="link"><%= fullnameforhtmlkey %> </a>
-                <a href="/logout" class="link">Log out</a>
-                <% } else if(fullnameforhtmlkey == "no"){ %>
-                <a href="/firstlog" class="link">Add data</a>
-                <% }%>
+                    <a href="/registerAssist" class="link">Add new Assistant</a>
+                    <a href="/registerStud" class="link">Add new Student</a>
+                    <%}%>
+                        <% if(fullnameforhtmlkey == "") {%>
+                            <a href="/login" class="link">student</a>
+                            <a href="/login" class="link">Assistant</a>
+                            <a href="/login" class="link">instractor</a>
+                            <% } else if(fullnameforhtmlkey != "no") { %>
+                                <% console.log("Error:" + fullnameforhtmlkey); %>
+                                    <a href="" class="link">
+                                        <%= fullnameforhtmlkey %>
+                                    </a>
+                                    <a href="/logout" class="link">Log out</a>
+                                    <% } else if(fullnameforhtmlkey == "no"){ %>
+                                        <a href="/firstlog" class="link">Add data</a>
+                                        <% }%>
             </div>
             <div class="menu_icon">
                 <span class="icon"></span>
