@@ -15,6 +15,7 @@ var studentProfile = require('./routes/studentProfile');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var firstlog = require('./routes/firstlog');
+var admin = require('./routes/admin');
 
 var app = express();
 
@@ -36,6 +37,7 @@ app.use('/studentProfile', studentProfile);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/firstlog', firstlog);
+app.use('/admin', admin);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
