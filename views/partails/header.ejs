@@ -15,10 +15,13 @@
             <p class="website_name">Chemistry</p>
             <div class="menu_links">
                 
+                <% if(role == "assistant" || role == "admin") {%>
+                    <a href="/registerAssist" class="link">Register new Assistant</a>
+                <%}%>    
                 <% if(fullnameforhtmlkey == "") {%>
-                    <a href="" class="link">student</a>
-                    <a href="" class="link">Assistant</a>
-                    <a href="" class="link">instractor</a>
+                    <a href="/login" class="link">student</a>
+                    <a href="/login" class="link">Assistant</a>
+                    <a href="/login" class="link">instractor</a>
                 <% } else { %>
                     <% console.log("Error:" + fullnameforhtmlkey); %>
                 <a href="" class="link"><%= fullnameforhtmlkey %> </a>

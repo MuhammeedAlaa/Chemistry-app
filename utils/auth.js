@@ -9,13 +9,13 @@ function isauth(req) {
       const decoded = jwt.decode(token, secret);
       console.log(decoded);
       if (decoded.role)
-        return true;
+        return decoded;
       else {
-        return false;
+        return null;
       }
     } catch (err) {
   
-      return false;
+      return null;
     }
   
 }
