@@ -2,20 +2,20 @@ const jwt = require('jwt-simple');
 
 function isauth(req) {
     if(!req.cookies.token)
-        return false;
+        return null;
     token = req.cookies.token;
     var secret = 'xxx';
     try {
       const decoded = jwt.decode(token, secret);
-      console.log(decoded);
+      //console.log(decoded);
       if (decoded.role)
-        return true;
+        return decoded;
       else {
-        return false;
+        return null;
       }
     } catch (err) {
-  
-      return false;
+      console.log(err);
+      return null;
     }
   
 }

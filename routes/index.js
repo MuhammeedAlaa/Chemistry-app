@@ -2,20 +2,26 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jwt-simple');
+const {isauth} = require('../utils/auth');
+
 /* GET home page. */
-router.get('/', function(req, res) {
-    
-    const token = req.cookies.token;
-    let secret = 'xxx';
-    let decoded = null;
-    if(token != null){
-        decoded = jwt.decode(token, secret);
-    } 
-    if(decoded != null){
-        console.log(decoded.name);
-        res.render('index',{fullnameforhtmlkey: decoded.name});
+router.get('/', function (req, res) {
+
+    const decoded = isauth(req);
+    if (decoded) {
+        res.render('index', {
+            fullnameforhtmlkey: decoded.name,
+            role: decoded.role
+        });
     } else {
-        res.render('index',{fullnameforhtmlkey: ""});
+        res.clearCookie("token"); //destroy the cookie
+        res.render('index', {
+            fullnameforhtmlkey: "",
+            role : ""
+        });
     }
 });
+
+
+
 module.exports = router;

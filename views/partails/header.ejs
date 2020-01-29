@@ -8,19 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/codepen.css">
     <nav>
         <div class="menu">
             <p class="website_name">Chemistry</p>
             <div class="menu_links">
-                
+
+                <% if(role == "assistant" || role == "admin") {%>
+                <a href="/registerAssist" class="link">Register new Assistant</a>
+                <%}%>    
                 <% if(fullnameforhtmlkey == "") {%>
-                    <a href="" class="link">student</a>
-                    <a href="" class="link">Assistant</a>
-                    <a href="" class="link">instractor</a>
+                <a href="/login" class="link">student</a>
+                <a href="/login" class="link">Assistant</a>
+                <a href="/login" class="link">instractor</a>
                 <% } else { %>
-                    <% console.log("Error:" + fullnameforhtmlkey); %>
+                <% console.log("Error:" + fullnameforhtmlkey); %>
                 <a href="" class="link"><%= fullnameforhtmlkey %> </a>
                 <a href="/logout" class="link">Log out</a>
                 <% } %>
@@ -30,12 +34,9 @@
             </div>
         </div>
     </nav>
-    </head>
+</head>
+
 <body>
     <section class="wrapper">
         <div class="container">
             <div id="scene" class="scene" data-hover-only="false">
-
-
-
-    
