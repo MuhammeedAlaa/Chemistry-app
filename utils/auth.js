@@ -20,10 +20,11 @@ function isauth(req) {
   
 }
 
-function tokenize_assistant(code){
+function tokenize_assistant(code,data){
   var payload = {
     role: 'assistant',
-    code: code
+    code: code,
+    name: data
   };
   var secret = 'xxx';    //must be modified later with environment variables
   return jwt.encode(payload, secret);  //returns the token to be added to the cookie

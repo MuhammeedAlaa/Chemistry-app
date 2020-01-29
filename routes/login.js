@@ -15,12 +15,18 @@ router.get('/', function (req, res) {
 
 router.post('/',  function (req, res) {
   if (req.body.code && req.body.password) {
-    const is_assist =  dbauth.is_assistant(req.body.code, req.body.password);
-    console.log(is_assist);
+    const is_assist =  dbauth.is_assistant(req.body.code, req.body.password);    
     if (is_assist) { //user is in the database
-      const token = auth.tokenize_assistant(req.body.code);
-      res.cookie('token', token);
-      res.redirect('/');
+
+      dbauth.assistant_name(req.body.code, req.body.password, (err,data) =>{
+        if(err){ //there is something with the user name
+         console.log("Error:",err);
+       }else{//user name have no problems and have been fetched
+         const token = auth.tokenize_assistant(req.body.code,data);
+         res.cookie('token', token);
+         res.redirect('/');
+        }
+     });
     } else { //not in the database(wrong input)
       console.log('not noice');
       res.render('login');
