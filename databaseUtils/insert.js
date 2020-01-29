@@ -6,33 +6,33 @@ function isCodeUsed(code, callback) {
     let stmt = `SELECT count(*) FROM Assistant WHERE assistant_code = ?`;
     connection.query(stmt, [code], (err, results, fields) => {
         if (err) {
-            callback(err, true);
+            callback(err, false);
         } else {
             if (results[0]['count(*)'] == 0) {
                 let stmt = `SELECT count(*) FROM Student WHERE student_code = ?`;
                 connection.query(stmt, [code], (err, results, fields) => {
                     if (err) {
-                        callback(err, true);
+                        callback(err, false);
                     } else {
                         if (results[0]['count(*)'] == 0) {
                             let stmt = `SELECT count(*) FROM admin WHERE admin_id = ?`;
                             connection.query(stmt, [code], (err, results, fields) => {
                                 if (err) {
-                                    callback(err, true);
+                                    callback(err, false);
                                 } else {
                                     if (results[0]['count(*)'] == 0) {
                                         callback(null, false);
                                     } else
-                                        callback(null, true);
+                                        callback(null, 'admin');
                                 }
                             });
 
                         } else
-                            callback(null, true);
+                            callback(null, 'student');
                     }
                 });
             } else
-                callback(null, true);
+                callback(null, 'assistant');
         }
     });
 }
@@ -43,11 +43,10 @@ function insertAssistant(req){
     let assistant = [req.body.password, req.body.phone, req.body.fname, req.body.lname, req.body.code, 1 /*temporarly hard coded*/ ];
     connection.query(stmt, assistant, (err, results, fields) => {
         if (err) {
-            callback(err, null);
+            console.error("error in entering assistant "+err);
         }
         else{  
-            if (results[0]['count(*)'] == 1);
-            callback(err, null);
+            console.log("entered assistant successfully")
     }
     });
 }

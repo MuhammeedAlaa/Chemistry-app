@@ -13,7 +13,7 @@ router.get('/', function (req, res) {
   const decoded = isauth(req);
   console.log(decoded);
   if (decoded) {  //if it has a real cookie
-    if (decoded.role == 'assistant' || decoded.role == 'admin') { //if admin or assistant tried to access
+    if (decoded.role == 'admin') { //if admin tried to access
       res.render('registerAssist', {
         fullnameforhtmlkey: decoded.name,
         role: decoded.role
@@ -31,7 +31,7 @@ router.post('/', function (req, res) {
     return res.redirect('/');
   const decoded = isauth(req);
   if (decoded) {  //make sure it has a real cookie
-    if (decoded.role == 'assistant' || decoded.role == 'admin') { //make sure its an admin
+    if (decoded.role == 'admin') { //make sure its an admin
       if (req.body.password && req.body.phone && req.body.fname) {
         insertAssistant(req);
         return res.redirect('/');

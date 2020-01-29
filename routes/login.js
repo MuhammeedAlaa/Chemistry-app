@@ -1,6 +1,9 @@
 // jshint esversion:8
 const auth = require('../utils/auth');
 const dbauth = require('../databaseUtils/auth');
+const {
+  isCodeUsed
+} = require('../databaseUtils/insert');
 const express = require('express');
 const router = express.Router();
 
@@ -15,36 +18,38 @@ router.get('/', function (req, res) {
 
 router.post('/', function (req, res) {
   if (req.body.code && req.body.password) {
-    dbauth.is_assistant(req.body.code, req.body.password, (err, data) =>{
-      if (data) { //user is in the database
+    isCodeUsed(req.body.code, (err, data) => {
+      if (data == 'admin')
+        dbauth.is_admin(req.body.code, req.body.password, (err, data) => {
+          if (data) { //user is in the database
+            const token = auth.tokenize('admin', req.body.code, "Micheal Labib");
+            res.cookie('token', token);
+            res.redirect('/');
+          } else //wrong password
+            res.redirect('/login');
+        });
+      else if (data == 'assistant')
         dbauth.assistant_name(req.body.code, req.body.password, (err, data) => {
-          if (err) { //there is something with the user name
-            console.log("Error:", err);
-          } else { //user name have no problems and have been fetched
-            const token = auth.tokenize_assistant(req.body.code, data);
+          if (data) { //user is in the database
+            const token = auth.tokenize('assistant', req.body.code, data);
             res.cookie('token', token);
             res.redirect('/');
-          }
+          } else //wrong password
+            res.redirect('/login');
         });
-      } 
-    });
-    dbauth.is_student(req.body.code, req.body.password, (err, data) =>{
-      if (data) { //user is in the database
+      else if (data == 'student')
         dbauth.student_name(req.body.code, req.body.password, (err, data) => {
-          if (err) { //there is something with the user name
-            console.log("Error:", err);
-          } else { //user name have no problems and have been fetched
-            const token = auth.tokenize_student(req.body.code, data);
+          if (data) { //user is in the database
+            const token = auth.tokenize('student', req.body.code, data);
             res.cookie('token', token);
             res.redirect('/');
-          }
+          } else //wrong password
+            res.redirect('/login');
         });
-      } else { //not in the database(wrong input)
-        console.log('not noice');
-        res.render('login');
-      }
+      else //data is false (no stored code matched)
+        res.redirect('/login');
     });
-    
+
   } else //some missing input
     return res.redirect('/login');
 });
