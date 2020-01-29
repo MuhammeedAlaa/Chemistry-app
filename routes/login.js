@@ -26,6 +26,19 @@ router.post('/', function (req, res) {
             res.redirect('/');
           }
         });
+      } 
+    });
+    dbauth.is_student(req.body.code, req.body.password, (err, data) =>{
+      if (data) { //user is in the database
+        dbauth.student_name(req.body.code, req.body.password, (err, data) => {
+          if (err) { //there is something with the user name
+            console.log("Error:", err);
+          } else { //user name have no problems and have been fetched
+            const token = auth.tokenize_student(req.body.code, data);
+            res.cookie('token', token);
+            res.redirect('/');
+          }
+        });
       } else { //not in the database(wrong input)
         console.log('not noice');
         res.render('login');

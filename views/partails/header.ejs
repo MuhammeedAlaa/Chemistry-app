@@ -24,11 +24,13 @@
                 <a href="/login" class="link">student</a>
                 <a href="/login" class="link">Assistant</a>
                 <a href="/login" class="link">instractor</a>
-                <% } else { %>
+                <% } else if(fullnameforhtmlkey != "no") { %>
                 <% console.log("Error:" + fullnameforhtmlkey); %>
                 <a href="" class="link"><%= fullnameforhtmlkey %> </a>
                 <a href="/logout" class="link">Log out</a>
-                <% } %>
+                <% } else if(fullnameforhtmlkey == "no"){ %>
+                <a href="/firstlog" class="link">Add data</a>
+                <% }%>
             </div>
             <div class="menu_icon">
                 <span class="icon"></span>
