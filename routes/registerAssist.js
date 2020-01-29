@@ -27,6 +27,8 @@ router.get('/', function (req, res) {
 });
 
 router.post('/', function (req, res) {
+  if(req.body.cancel)
+    res.redirect('/');
   const decoded = isauth(req);
   if (decoded) {  //make sure it has a real cookie
     if (decoded.role == 'assistant' || decoded.role == 'admin') { //make sure its an admin
