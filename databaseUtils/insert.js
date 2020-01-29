@@ -46,7 +46,7 @@ function insertAssistant(req){
             console.error("error in entering assistant "+err);
         }
         else{  
-            console.log("entered assistant successfully")
+            console.log("entered assistant successfully");
     }
     });
 }

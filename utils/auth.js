@@ -1,3 +1,4 @@
+// jshint esversion:6
 const jwt = require('jwt-simple');
 
 function isauth(req) {
