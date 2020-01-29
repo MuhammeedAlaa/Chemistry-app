@@ -9,10 +9,11 @@ router.get('/', function (req, res) {
 
     const decoded = isauth(req);
     if (decoded) {
-        res.render('index', {
-            fullnameforhtmlkey: decoded.name,
-            role: decoded.role
-        });
+            res.render('index', {
+                fullnameforhtmlkey: decoded.name,
+                role: decoded.role,
+                code: decoded.code
+            });
     } else {
         res.clearCookie("token"); //destroy the cookie
         res.render('index', {

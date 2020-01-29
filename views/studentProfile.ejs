@@ -21,11 +21,13 @@
         <header class="block">
             <ul class="header-menu horizontal-list">
                 <li>
-                    <a class="header-menu-tab" href="#2"><span class="icon fontawesome-user scnd-font-color"></span>Log Out</a>
+                    <a class="header-menu-tab" href="/logout"><span class="icon fontawesome-user scnd-font-color"></span>Log Out</a>
                 </li>
             </ul>
             <div class="profile-menu">
-                <p>Name</p>
+                <p>
+                    <%= fullnameforhtmlkey %>
+                </p>
                 <div class="profile-picture small-profile-picture">
                     <img width="40px" alt="User picture" src="https://capenetworks.com/static/images/testimonials/user-icon.svg">
                 </div>
@@ -80,7 +82,9 @@
                 <div class="profile-picture big-profile-picture clear">
                     <img width="150px" alt="Anne Hathaway picture" src="https://capenetworks.com/static/images/testimonials/user-icon.svg">
                 </div>
-                <h1 class="user-name">Name</h1>
+                <h1 class="user-name">
+                    <%= fullnameforhtmlkey %>
+                </h1>
                 <div class="profile-description">
                     <p class="scnd-font-color">Info</p>
                 </div>
