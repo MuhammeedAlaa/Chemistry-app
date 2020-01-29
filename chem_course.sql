@@ -155,9 +155,9 @@ CREATE TABLE `lec_timetable` (
 
 CREATE TABLE `student` (
   `student_code` int(11) NOT NULL,
-  `fname` varchar(255) NOT NULL,
-  `lname` varchar(255) NOT NULL,
-  `phone` varchar(255) DEFAULT NULL,
+  `fname` varchar(255) DEFAULT NULL,
+  `lname` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) NOT NULL,
   `password` varchar(1024) NOT NULL,
   `parent_phone` varchar(255) DEFAULT NULL,
   `black_point` int(11) DEFAULT NULL,
