@@ -43,6 +43,47 @@ function getAssistInfo(callback){
 
 
 
+function getCourseInfo(callback){
+    let stmt = "SELECT * FROM Course";
+    connection.query(stmt, (err,result) =>{
+        if(err){
+            callback(err,null);
+        } else {
+            let course_name = [];
+            let course_id = [];
+            result.forEach((course)=>{
+               
+                course_name.push(course.course_name);
+                course_id.push(course.course_id);
+                console.log(course.course_name);
+            });
+            callback(null, [course_name,course_id]);
+        }
+    });
+}
+
+
+function getCenterInfo(callback){
+    let stmt = "SELECT * FROM Center";
+    connection.query(stmt, (err,result) =>{
+        if(err){
+            callback(err,null);
+        } else {
+            let center_name = [];
+            result.forEach((center)=>{
+               
+                center_name.push(center.center_name);
+                console.log(center.center_name);
+            });
+            callback(null, center_name);
+        }
+    });
+}
+
+
+
 
 exports.getAssistInfo = getAssistInfo;
 exports.getStudInfo = getStudInfo;
+exports.getCourseInfo = getCourseInfo; 
+exports.getCenterInfo = getCenterInfo; 

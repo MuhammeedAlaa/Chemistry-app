@@ -29,6 +29,32 @@ function updateAssistData(req) {
     });
 }
 
+
+function updateCourseData(req) {
+    let stmt = `UPDATE course SET course_name = ? WHERE course_code = ?`;
+    connection.query(stmt, req.name, req.id, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        console.error("Updated Successfully");
+    });
+}
+
+
+function updateCenterData(req) {
+    let stmt = `UPDATE center SET center_name = ? WHERE center_name = ?`;
+    connection.query(stmt, req.name, req.name, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        console.error("Updated Successfully");
+    });
+}
+
 exports.updateStudData = updateStudData;
+exports.updateCourseData = updateCourseData;
 
 exports.updateAssistData = updateAssistData;
+exports.updateCenterData = updateCenterData;

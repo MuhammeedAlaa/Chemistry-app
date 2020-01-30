@@ -73,6 +73,36 @@ function insertStudent(req, assistant_code) {
 
 }
 
+
+
+
+function insertCourse(course_name){
+    let stmt = "INSERT INTO `course`( `course_name`, `admin_id`) VALUES (?,1)";
+       connection.query(stmt, course_name, (err, results, fields) => {
+        if (err) {
+            console.error("error in entering assistant "+ err);
+        }
+        else{  
+            console.log("entered course successfully");
+    }
+    });
+}
+
+
+function insertCenter(Center_name){
+    let stmt = "INSERT INTO `center`( `center_name`) VALUES (?)";
+       connection.query(stmt, Center_name, (err, results, fields) => {
+        if (err) {
+            console.error("error in entering assistant "+ err);
+        }
+        else{  
+            console.log("entered course successfully");
+    }
+    });
+}
+
 exports.insertAssistant = insertAssistant;
 exports.insertStudent = insertStudent;
 exports.isCodeUsed = isCodeUsed;
+exports.insertCourse = insertCourse;
+exports.insertCenter = insertCenter;

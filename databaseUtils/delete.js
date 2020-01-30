@@ -12,5 +12,32 @@ function deleteAssistant(assist_code) {
         console.error("Deleted Successfully");
     });
 }
-exports.deleteAssistant = deleteAssistant;
 
+
+function deleteCourse(course_id) {
+    let stmt = `DELETE FROM COURSE WHERE course_id = ?`;
+    connection.query(stmt, course_id, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        console.error("Deleted Successfully");
+    });
+}
+
+
+function deleteCenter(Center_name) {
+    let stmt = `DELETE FROM CENTER WHERE Center_name = ?`;
+    connection.query(stmt, Center_name, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        console.error("Deleted Successfully");
+    });
+}
+
+
+exports.deleteAssistant = deleteAssistant;
+exports.deleteCourse = deleteCourse;
+exports.deleteCenter = deleteCenter;
