@@ -119,3 +119,4 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $scope.crudFormPassword = '';
     };
 });
+
