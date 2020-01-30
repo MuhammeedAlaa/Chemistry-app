@@ -10,11 +10,7 @@ router.get('/:code', function (req, res) {
     const userCode = req.params.code;
     const decoded = isauth(req);
     if (decoded && decoded.code == userCode && decoded.role == "student") {
-        /*
-        we should have here some queries outputs to get the total attendance, blackpoints,
-        and average exams and send it to the following object which is sent to be rendered
-        */
-        getStudInfo(userCode, (err,[gradesarv,attendance,blackpoints]) =>{
+        getStudInfo(userCode, (err,[gradesarv,attendance,blackpoints,fullavg]) =>{
             if(err){
                 console.log(err);
                 res.redirect("/");
@@ -23,8 +19,9 @@ router.get('/:code', function (req, res) {
                     fullnameforhtmlkey: decoded.name,
                     role: decoded.role,
                     blackpointsforhtml: blackpoints,
-                    avgexamsforhtml: attendance,
-                    attendanceforhtml: gradesarv
+                    avgexamsforhtml: gradesarv,
+                    attendanceforhtml: attendance,
+                    fullmarkavgforhtml: fullavg
                 });
             }
        }); 
