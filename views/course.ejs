@@ -1,0 +1,64 @@
+<title>Admin</title>
+<%- include("partails/adminHeader") -%>
+
+    <main class="page-content">
+        <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
+            <div class="clearfix">
+                <div class="form-inline pull-left">
+                    <button class="btn btn-success" ng-click="addUser()"><span class="glyphicon glyphicon-plus"> </span>Add new course</button>
+                </div>
+                <div class="form-inline pull-right">
+                    <div class="form-group">
+                        <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th ng-click="orderBy('name')">Course Name</th>
+                        <th ng-click="orderBy('code')">Course Code</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
+                        <td>{{user.name}} </td>
+                        <td>{{user.code}} </td>
+                        <td></td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editUser(user)">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="deleteUser(user)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="crude-form__wrapper" ng-show="triggerForm">
+                <h3 ng-show="editForm">Edit user</h3>
+                <h3 ng-show="addForm">Add user</h3>
+                <form name="userForm" ng-model="userForm">
+                    <div class="form-group">
+                        <label for="editName">Course Name</label>
+                        <input class="form-control" id="editName" type="text" name="fname" ng-model="crudFormName" placeholder="Edit Course Name" required="required" autocomplete="off" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.name.$invalid &amp;&amp; userForm.name.$touched">Please input Course Name</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCode">Course Code</label>
+                        <input class="form-control" id="editCode" type="text" name="code" ng-model="crudFormCode" placeholder="Edit Course Code" min="1" required="required" autocomplete="off" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.code.$invalid &amp;&amp; userForm.code.$touched"><span ng-show="userForm.code.$error.number">Please input valid number</span><span ng-show="userForm.code.$error.min">Please input Code greater than 1</span><span ng-show="userForm.code.$error.required">Please input Code</span></div>
+                    </div>
+                    <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
+                    <button class="btn btn-primary" ng-click="saveEdit(editUserId)" ng-disabled="userForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
+                    <button class="btn btn-primary" ng-click="triggerForm = false"> Cancel</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    </div>
+    <!-- page-wrapper -->
+    <script src="/javascripts/course.js"></script>
+    <%- include("partails/adminFooter") -%>
