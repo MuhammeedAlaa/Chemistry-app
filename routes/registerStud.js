@@ -33,12 +33,12 @@ router.post('/', function (req, res) {
           if (err) { //there is something with the user name
             console.log("Error:", err);
           } else { 
-            if(data){ //returns false or the role of the used code
+            if(!data){ //returns false or the role of the used code
             insertStudent(req, decoded.code);
             return res.redirect('/');
             }
             else{
-            return res.redirect('/registerStud');
+              return res.redirect('/registerStud');
             }
           }
         });

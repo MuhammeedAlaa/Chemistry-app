@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jwt-simple');
 const {isauth} = require('../utils/auth');
+const {getStudInfo} = require('../databaseUtils/studentinfo');
 
 /* GET student profile. */
 router.get('/:code', function (req, res) {
@@ -13,10 +14,21 @@ router.get('/:code', function (req, res) {
         we should have here some queries outputs to get the total attendance, blackpoints,
         and average exams and send it to the following object which is sent to be rendered
         */
-        res.render('studentProfile', {
-            fullnameforhtmlkey: decoded.name,
-            role: decoded.role
-        });
+        getStudInfo(userCode, (err,[gradesarv,attendance,blackpoints]) =>{
+            if(err){
+                console.log(err);
+                res.redirect("/");
+            } else {
+                res.render('studentProfile', {
+                    fullnameforhtmlkey: decoded.name,
+                    role: decoded.role,
+                    blackpointsforhtml: blackpoints,
+                    avgexamsforhtml: attendance,
+                    attendanceforhtml: gradesarv
+                });
+            }
+       }); 
+      
     } else {
         res.redirect('/');
     }
