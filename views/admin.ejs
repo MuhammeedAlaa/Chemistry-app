@@ -1,3 +1,4 @@
+<title>Admin</title>
 <%- include("partails/adminHeader") -%>
 
     <main class="page-content">
@@ -15,10 +16,9 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th ng-click="orderBy('name')">Name</th>
-                        <th ng-click="orderBy('country')">Country</th>
-                        <th ng-click="orderBy('salary')">Salary</th>
-                        <th ng-click="orderBy('email')">Email</th>
+                        <th ng-click="orderBy('FName')">Name</th>
+                        <th ng-click="orderBy('Phone')">Phone</th>
+                        <th ng-click="orderBy('Code')">Code</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -26,20 +26,14 @@
                 <tbody class="text-center">
                     <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
                         <td>{{user.name}} </td>
-                        <td>{{user.country}} </td>
-                        <td>{{user.salary}} </td>
-                        <td>{{ user.email }}</td>
+                        <td>{{user.phone}} </td>
+                        <td>{{user.code}} </td>
                         <td>
                             <button class="btn btn-primary" ng-click="editUser(user)">Edit</button>
                         </td>
                         <td>
                             <button class="btn btn-danger" ng-click="deleteUser(user)">Delete</button>
                         </td>
-                    </tr>
-                    <tr class="text-left">
-                        <td colspan="2"> <b>Total </b></td>
-                        <td class="text-center">{{ resultUser | totalSalary:'salary' }}</td>
-                        <td colspan="3"></td>
                     </tr>
                 </tbody>
             </table>
@@ -48,27 +42,30 @@
                 <h3 ng-show="addForm">Add user</h3>
                 <form name="userForm" ng-model="userForm">
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input class="form-control" id="editName" type="text" name="name" ng-model="crudFormName" placeholder="Edit name" required="required" />
-                        <div class="form-alert alert alert-danger" ng-show="userForm.name.$invalid &amp;&amp; userForm.name.$touched">Please input name</div>
+                        <label for="fname">First Name</label>
+                        <input class="form-control" id="editfName" type="text" name="fname" ng-model="crudFormfName" placeholder="Edit Fist Name" required="required" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.fname.$invalid &amp;&amp; userForm.fname.$touched">Please input Last Name</div>
                     </div>
                     <div class="form-group">
-                        <label for="country">Country</label>
-                        <input class="form-control" id="editCounty" type="text" name="country" ng-model="crudFormCountry" placeholder="Edit country" required="required" />
-                        <div class="form-alert alert alert-danger" ng-show="userForm.country.$invalid &amp;&amp; userForm.country.$touched">Please input user country</div>
+                        <label for="lname">Last Name</label>
+                        <input class="form-control" id="editlName" type="text" name="lname" ng-model="crudFormLname" placeholder="Edit Last Name" required="required" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.lname.$invalid &amp;&amp; userForm.lname.$touched">Please input Last Name</div>
                     </div>
                     <div class="form-group">
-                        <label for="salary">Salary</label>
-                        <input class="form-control" id="editSalary" type="number" name="salary" ng-model="crudFormSalary" placeholder="Edit salary" min="1" required="required" />
-                        <div class="form-alert alert alert-danger" ng-show="userForm.salary.$invalid &amp;&amp; userForm.salary.$touched"><span ng-show="userForm.salary.$error.number">Please input valid number</span><span ng-show="userForm.salary.$error.min">Please input salary greater than 1</span><span ng-show="userForm.salary.$error.required">Please input salary</span></div>
+                        <label for="code">Code</label>
+                        <input class="form-control" id="editCode" type="number" name="code" ng-model="crudFormCode" placeholder="Edit Code" min="1" required="required" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.code.$invalid &amp;&amp; userForm.code.$touched"><span ng-show="userForm.code.$error.number">Please input valid number</span><span ng-show="userForm.code.$error.min">Please input Code greater than 1</span><span ng-show="userForm.code.$error.required">Please input Code</span></div>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input class="form-control" id="editEmail" type="email" name="email" ng-model="crudFormEmail" ng-change="checkEmail(editUserId)" placeholder="Edit email" required="required" min="1" />
+                        <label for="phone">Phone</label>
+                        <input class="form-control" id="editPhone" type="text" name="Phone" ng-model="crudFormPhone"  placeholder="Edit Phone" required="required" min="1" />
                     </div>
-                    <div class="form-alert alert alert-danger" ng-show="userForm.email.$invalid &amp;&amp; userForm.email.$touched"><span ng-show="userForm.email.$error.email">Please input valid email</span><span ng-show="userForm.email.$error.required">Please input email  </span></div>
-                    <div class="form-alert alert alert-danger" ng-show="emailExisted"> This email has been registerd by other user</div>
-                    <button class="btn btn-primary" ng-click="saveEdit(editUserId)" ng-disabled="userForm.$invalid || emailExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" id="editPassword" type="password" name="password" ng-model="crudFormPassword"  placeholder="Edit password" required="required" min="1" />
+                    </div>
+                    <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
+                    <button class="btn btn-primary" ng-click="saveEdit(editUserId)" ng-disabled="userForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
                     <button class="btn btn-primary" ng-click="triggerForm = false">
              Cancel                     </button>
                 </form>

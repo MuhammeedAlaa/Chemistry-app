@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jwt-simple');
 const {isauth} = require('../utils/auth');
-const {getStudInfo} = require('../databaseUtils/studentinfo');
+const {getStudInfo} = require('../databaseUtils/info');
 
 /* GET student profile. */
 router.get('/:code', function (req, res) {

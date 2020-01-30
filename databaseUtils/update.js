@@ -15,4 +15,20 @@ function updateStudData(req, stud_code, callback) {
     });
 }
 
+
+
+function updateAssistData(req) {
+    let stmt = `UPDATE assistant SET fname = ?, lname = ?, password = ?, phone = ?, assistant_code = ?  WHERE assistant_code = ?`;
+    Student = [req.body.fname, req.body.lname, req.body.password, req.body.phone, req.body.code, req.body.code];
+    connection.query(stmt, Student, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        console.error("Updated Successfully");
+    });
+}
+
 exports.updateStudData = updateStudData;
+
+exports.updateAssistData = updateAssistData;
