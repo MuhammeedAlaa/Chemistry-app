@@ -46,6 +46,11 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $scope.crudFormCode = $scope.users[index].code;
         $scope.crudFormPhone = $scope.users[index].phone;
         $scope.crudFormPassword = $scope.users[index].password;
+        $('#editfName').attr("placeholder", "Edit Assistant First Name");
+        $('#editlName').attr("placeholder", "Edit Assistant Last Name");
+        $('#editCode').attr("placeholder", "Edit Assistant Code");
+        $('#editPhone').attr("placeholder", "Edit Assistant Phone");
+        $('#editPassword').attr("placeholder", "Edit Assistant Password");
     };
 
     $scope.saveEdit = function(userId) {
@@ -117,6 +122,11 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $scope.crudFormCode = '';
         $scope.crudFormPhone = '';
         $scope.crudFormPassword = '';
+        $('#editfName').attr("placeholder", "Add Assistant First Name");
+        $('#editlName').attr("placeholder", "Add Assistant Last Name");
+        $('#editCode').attr("placeholder", "Add Assistant Code");
+        $('#editPhone').attr("placeholder", "Add Assistant Phone");
+        $('#editPassword').attr("placeholder", "Add Assistant Password");
     };
 });
 
