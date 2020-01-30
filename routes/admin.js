@@ -9,9 +9,6 @@ router.get('/', function(req, res) {
         res.render('admin');            
 });
 
-
-
-
 router.get("/assistant",function (req, res) {
     getAssistInfo((err,[fullnames, phones, count, assistId, assistCode, assistPassword])=>{
         if(err) {
@@ -29,30 +26,30 @@ router.get("/assistant",function (req, res) {
     });
 });
 
-
-
 router.post("/AddAssistant",function (req, res) {
     console.log(req.body);
-
     var spaceindex = req.body.name.indexOf(" ");
     req.body.fname = req.body.name.substring(0, spaceindex);
-    req.body.lname = req.body.name.substring(spaceindex, req.body.name.length);
+    req.body.lname = req.body.name.substring(spaceindex + 1, req.body.name.length);
     insertAssistant(req);
+    res.redirect("/");
 });
 
 router.post("/EditAssistant",function (req, res) {
     console.log(req.body);
     var spaceindex = req.body.name.indexOf(" ");
     req.body.fname = req.body.name.substring(0, spaceindex);
-    req.body.lname = req.body.name.substring(spaceindex + 1 , req.body.name.length);
+    req.body.lname = req.body.name.substring(spaceindex + 1, req.body.name.length);
     updateAssistData(req);
+    res.redirect("/");
 });
 
 
 
 router.post("/delete",function (req, res) {
     console.log(req.body);
-    deleteAssistant(req.body.code);  
+    deleteAssistant(req.body.code);
+    res.redirect("/");  
 });
 
 module.exports = router;

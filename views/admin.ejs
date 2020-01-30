@@ -42,27 +42,27 @@
                 <h3 ng-show="addForm">Add user</h3>
                 <form name="userForm" ng-model="userForm">
                     <div class="form-group">
-                        <label for="fname">First Name</label>
-                        <input class="form-control" id="editfName" type="text" name="fname" ng-model="crudFormfName" placeholder="Edit Fist Name" required="required" />
+                        <label for="editfName">First Name</label>
+                        <input class="form-control" id="editfName" type="text" name="fname" ng-model="crudFormfName" placeholder="Edit Fist Name" required="required" autocomplete="off" />
                         <div class="form-alert alert alert-danger" ng-show="userForm.fname.$invalid &amp;&amp; userForm.fname.$touched">Please input Last Name</div>
                     </div>
                     <div class="form-group">
-                        <label for="lname">Last Name</label>
-                        <input class="form-control" id="editlName" type="text" name="lname" ng-model="crudFormLname" placeholder="Edit Last Name" required="required" />
+                        <label for="editlName">Last Name</label>
+                        <input class="form-control" id="editlName" type="text" name="lname" ng-model="crudFormLname" placeholder="Edit Last Name" required="required" autocomplete="off" />
                         <div class="form-alert alert alert-danger" ng-show="userForm.lname.$invalid &amp;&amp; userForm.lname.$touched">Please input Last Name</div>
                     </div>
                     <div class="form-group">
-                        <label for="code">Code</label>
-                        <input class="form-control" id="editCode" type="number" name="code" ng-model="crudFormCode" placeholder="Edit Code" min="1" required="required" />
+                        <label for="editCode">Code</label>
+                        <input class="form-control" id="editCode" type="text" name="code" ng-model="crudFormCode" placeholder="Edit Code" min="1" required="required" autocomplete="off" />
                         <div class="form-alert alert alert-danger" ng-show="userForm.code.$invalid &amp;&amp; userForm.code.$touched"><span ng-show="userForm.code.$error.number">Please input valid number</span><span ng-show="userForm.code.$error.min">Please input Code greater than 1</span><span ng-show="userForm.code.$error.required">Please input Code</span></div>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone</label>
+                        <label for="editPhone">Phone</label>
                         <input class="form-control" id="editPhone" type="text" name="Phone" ng-model="crudFormPhone"  placeholder="Edit Phone" required="required" min="1" />
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input class="form-control" id="editPassword" type="password" name="password" ng-model="crudFormPassword"  placeholder="Edit password" required="required" min="1" />
+                        <label for="editPassword">Password</label>
+                        <input class="form-control" id="editPassword" type="password" name="password" ng-model="crudFormPassword"  placeholder="Edit password" required="required" min="1" autocomplete="off" />
                     </div>
                     <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
                     <button class="btn btn-primary" ng-click="saveEdit(editUserId)" ng-disabled="userForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
