@@ -80,7 +80,7 @@ function insertCourse(course_name){
     let stmt = "INSERT INTO `course`( `course_name`, `admin_id`) VALUES (?,1)";
        connection.query(stmt, course_name, (err, results, fields) => {
         if (err) {
-            console.error("error in entering assistant "+ err);
+            console.error("error in entering course "+ err);
         }
         else{  
             console.log("entered course successfully");
@@ -91,17 +91,41 @@ function insertCourse(course_name){
 
 function insertCenter(Center_name){
     let stmt = "INSERT INTO `center`( `center_name`) VALUES (?)";
-       connection.query(stmt, Center_name, (err, results, fields) => {
+       connection.query(stmt, Center_name, (err, results) => {
         if (err) {
-            console.error("error in entering assistant "+ err);
+            console.error("error in entering center "+ err);
         }
         else{  
-            console.log("entered course successfully");
+            console.log("entered center successfully");
+    }
+    });
+}
+
+
+
+function insertLecture(center_name, course_id, day, hour){
+    let stmt = "INSERT INTO `lecture`( `center_name`,'course_id') VALUES (?,?)";
+       connection.query(stmt, [center_name, course_id], (err, results) => {
+        if (err) {
+            console.error("error in entering lecture "+ err);
+        }
+        else{  
+            console.log("entered lecture successfully");
+    }
+    });
+      stmt = "INSERT INTO `lec_timetable`( `center_name`,'course_id','day','hour') VALUES (?,?,?,?)";
+    connection.query(stmt, [center_name, course_id, day, hour], (err, results) => {
+        if (err) {
+            console.error("error in entering lecture_timetable "+ err);
+        }
+        else{  
+            console.log("entered lecture_timetable successfully");
     }
     });
 }
 
 exports.insertAssistant = insertAssistant;
+exports.insertLecture = insertLecture;
 exports.insertStudent = insertStudent;
 exports.isCodeUsed = isCodeUsed;
 exports.insertCourse = insertCourse;
