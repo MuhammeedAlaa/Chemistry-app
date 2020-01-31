@@ -77,7 +77,7 @@
                         <input class="form-control" id="editTime" type="time" name="time" ng-model="crudFormPassword" placeholder="Edit Lecture Time" required="required" min="1" autocomplete="off" />
                     </div>
                     <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
-                    <button class="btn btn-primary" ng-click="saveEdit(editLecture)" ng-disabled="lectureForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
+                    <button class="btn btn-primary" ng-click="saveEdit(editLectureID)" ng-disabled="lectureForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
                     <button class="btn btn-primary" ng-click="triggerForm = false">
              Cancel                     </button>
                 </form>
