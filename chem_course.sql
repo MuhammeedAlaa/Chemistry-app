@@ -143,8 +143,8 @@ CREATE TABLE `lecture` (
 CREATE TABLE `lec_timetable` (
   `center_name` varchar(255) NOT NULL,
   `course_id` int(11) NOT NULL,
-  `day` varchar(255) NOT NULL,
-  `hour` time NOT NULL
+  `day` DATE NOT NULL,
+  `hour` TIME NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

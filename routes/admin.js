@@ -53,7 +53,10 @@ router.post("/AddAssistant", function (req, res) {
                     insertAssistant(req);
                     res.redirect("/");
                 } else {
-                    res.redirect('/admin');
+                    var code = 400;
+                    var message = "this user code already in use try another one";
+                    res.writeHead(code, message, {'content-type' : 'text/plain'});
+                    res.end(message);
                 }
             }
         });
