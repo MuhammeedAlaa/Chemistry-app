@@ -6,7 +6,7 @@ const router = express.Router();
 router.get('/', function(req, res) {
     const { role } = isauth(req);
     if (role == 'assistant') {
-        res.render('AssistantStudent');
+        res.render('battendance');
     } else {
         res.redirect('/');
     }
