@@ -131,7 +131,8 @@ CREATE TABLE `exam_grades` (
 CREATE TABLE `lecture` (
   `lecture_num` int(11) NOT NULL,
   `center_name` varchar(255) NOT NULL,
-  `course_id` int(11) NOT NULL
+  `course_id` int(11) NOT NULL,
+  `date` DATE NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -143,8 +144,8 @@ CREATE TABLE `lecture` (
 CREATE TABLE `lec_timetable` (
   `center_name` varchar(255) NOT NULL,
   `course_id` int(11) NOT NULL,
-  `day` varchar(255) NOT NULL,
-  `hour` time NOT NULL
+  `day` varchar(250) NOT NULL,
+  `hour` TIME NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
