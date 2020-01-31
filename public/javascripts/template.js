@@ -14,9 +14,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
     }).then(function successCallback(response) {
         console.log("API is used successfully");
         for(var i = 0; i < response.data.numberofassistance; i++){
-            console.log(response.data.phones[i]);           
-            console.log(response.data.assistantId[i]);
-            console.log(response.data.fullnames[i]);
             $scope.users.push({
                 id: response.data.assistantId[i],
                 name: response.data.fullnames[i],

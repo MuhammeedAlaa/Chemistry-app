@@ -22,6 +22,7 @@ router.get("/assistant", function (req, res) {
         getAssistInfo((err, [fullnames, phones, count, assistId, assistCode, assistPassword]) => {
             if (err) {
                 console.log(err);
+                res.redirect('/');
             } else {
                 res.json({
                     fullnames: fullnames,
@@ -46,6 +47,7 @@ router.post("/AddAssistant", function (req, res) {
         isCodeUsed(req.body.code, (err, data) => {
             if (err) { //there is something with the user name
                 console.log("Error:", err);
+                res.redirect('/');
             } else {
                 if (!data) { //returns false or the role of the used code
                     var spaceindex = req.body.name.indexOf(" ");
@@ -110,6 +112,7 @@ router.get("/Coursedata", function (req, res) {
         getCourseInfo((err, [course_name, course_id]) => {
             if (err) {
                 console.log(err);
+                res.redirect('/');
             } else {
                 res.json({
                     course_name: course_name,
@@ -200,6 +203,7 @@ router.get("/Centerdata", function (req, res) {
         getCenterInfo((err, center_name) => {
             if (err) {
                 console.log(err);
+                res.redirect('/');
             } else {
                 res.json({
                     center_name: center_name,

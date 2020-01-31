@@ -12,6 +12,16 @@ function deleteAssistant(assist_code) {
         console.error("Deleted Successfully");
     });
 }
+function deleteStudent(assist_code) {
+    let stmt = `DELETE FROM STUDENT WHERE student_code = ?`;
+    connection.query(stmt, assist_code, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        console.error("Deleted Successfully");
+    });
+}
 
 
 function deleteCourse(course_name) {
@@ -45,3 +55,4 @@ function deleteCenter(Center_name) {
 exports.deleteAssistant = deleteAssistant;
 exports.deleteCourse = deleteCourse;
 exports.deleteCenter = deleteCenter;
+exports.deleteStudent = deleteStudent;

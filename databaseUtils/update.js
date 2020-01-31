@@ -16,6 +16,24 @@ function updateStudData(req, stud_code, callback) {
 }
 
 
+function updateStudantData(req) {
+    let stmt = `UPDATE student SET fname = ?, lname = ?, password = ?, parent_phone = ?, school = ?, black_point = ?, phone = ?  WHERE student_code = ?`;
+
+    
+    Student = [req.body.fname, req.body.lname, req.body.password, req.body.parent_phone, req.body.school, req.body.blackpoints, req.body.phone, req.body.code];
+    console.log(Student);
+    connection.query(stmt, Student, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        {
+            console.log("Updated Successfully");
+        }
+    });
+}
+
+
 
 function updateAssistData(req) {
     let stmt = `UPDATE assistant SET fname = ?, lname = ?, password = ?, phone = ?, assistant_code = ?  WHERE assistant_code = ?`;
@@ -56,6 +74,7 @@ function updateCenterData(req) {
 }
 
 exports.updateStudData = updateStudData;
+exports.updateStudantData = updateStudantData;
 exports.updateCourseData = updateCourseData;
 
 exports.updateAssistData = updateAssistData;

@@ -52,11 +52,11 @@ function insertAssistant(req){
 }
 
 function insertStudent(req, assistant_code) {
+    
     let stmt = `SELECT assistant_id FROM Assistant WHERE assistant_code = ?`;
     connection.query(stmt, [assistant_code], (err, results, fields) => {
         console.log(results);
         if (err) {
-            return console.error(err.message);
         } else {
             let assist_id = results[0].assistant_id;
             let stmt = `INSERT INTO Student (password, phone, student_code, assistant_id)
