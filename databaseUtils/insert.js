@@ -69,8 +69,6 @@ function insertStudent(req, assistant_code) {
             });
         }
     });
-
-
 }
 
 

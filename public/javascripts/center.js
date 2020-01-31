@@ -43,14 +43,15 @@ myApp.controller('namesCtrl', function($scope, $http) {
     $scope.saveEdit = function(centerId) {
         
         if (centerId == 'new') {
-            var newCenter = {
-                name: $scope.crudFormName
+            var newData = {
+                name: $scope.crudFormName,
+                old: $scope.centers
             };
             
             $http({
                 method: 'POST',
                 url: '/admin/AddCenter',
-                data: newCenter
+                data: newData
             }).then(function successCallback(response) {
                 console.log("API is used successfully");
                 $scope.centers.push(newCenter);
@@ -60,7 +61,8 @@ myApp.controller('namesCtrl', function($scope, $http) {
         } else {
             var newCenterdata = {
                 oldCentername: $scope.centers[centerId].name,
-                NewCentername:  $scope.crudFormName
+                NewCentername:  $scope.crudFormName,
+                old: $scope.centers
             };
 
             $http({

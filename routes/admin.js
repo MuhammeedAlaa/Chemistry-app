@@ -1,5 +1,6 @@
 // jshint esversion:8
 const express = require('express');
+const _ = require('lodash');
 const {getAssistInfo, getCourseInfo, getCenterInfo} = require('../databaseUtils/info');
 const {insertAssistant, insertCenter, insertCourse, isCodeUsed} = require('../databaseUtils/insert');
 const {updateAssistData, updateCenterData, updateCourseData} = require('../databaseUtils/update');
@@ -53,7 +54,10 @@ router.post("/AddAssistant", function (req, res) {
                     insertAssistant(req);
                     res.redirect("/");
                 } else {
-                    res.redirect('/admin');
+                    var code = 400;
+                    var message = "this user code already in try another one";
+                    res.writeHead(code, message,{'cotent-type' : 'text/plain'});
+                    res.end(message);
                 }
             }
         });
@@ -119,13 +123,22 @@ router.get("/Coursedata", function (req, res) {
 });
 
 router.post("/AddCourse", function (req, res) {
-    console.log(req.body);
     const {role} = isauth(req);
-    console.log(role);
-    console.log(req.body);
     if (role == 'admin') {
-        console.log(req.body);
-        insertCourse(req.body.name);
+        let oldC = req.body.old;
+        let newC = req.body.new;
+        let dontInsert = false;
+        for(var course_index = 0; course_index < oldC.length; course_index++ ){
+            if(_.toLower(newC.name) == _.toLower(oldC[course_index].name)){
+                var code = 400;
+                var message = "The Course already Exist";
+                res.writeHead(code, message,{'cotent-type' : 'text/plain'});
+                res.end(message);
+                dontInsert = true;
+            }
+        } 
+        if(!dontInsert)       
+        insertCourse(newC.name);
         res.redirect("/");
     }
     else{
@@ -136,6 +149,19 @@ router.post("/AddCourse", function (req, res) {
 router.post("/EditCourse", function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
+        let oldCS = req.body.courses;
+        let newNameC = req.body.newname;
+        let dontInsert = false;
+        for(var course_index = 0; course_index < oldCS.length; course_index++ ){
+            if(_.toLower(newNameC) == _.toLower(oldCS[course_index].name)){
+                var code = 400;
+                var message = "The Course already Exist";
+                res.writeHead(code, message,{'cotent-type' : 'text/plain'});
+                res.end(message);
+                dontInsert = true;
+            }
+        } 
+        if(!dontInsert)       
         updateCourseData(req);
         res.redirect("/");
     }
@@ -188,7 +214,20 @@ router.get("/Centerdata", function (req, res) {
 router.post("/AddCenter", function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
-        insertCenter(req.body.name);
+        let oldCS = req.body.old;
+        let newNameC = req.body.name;
+        let dontInsert = false;
+        for(var center_index = 0; center_index < oldCS.length; center_index++ ){
+            if(_.toLower(newNameC) == _.toLower(oldCS[center_index].name)){
+                var code = 400;
+                var message = "The Center already Exist";
+                res.writeHead(code, message,{'cotent-type' : 'text/plain'});
+                res.end(message);
+                dontInsert = true;
+            }
+        } 
+        if(!dontInsert)       
+        insertCenter(newNameC);
         res.redirect("/");
     } else {
         res.redirect('/');
@@ -199,7 +238,19 @@ router.post("/AddCenter", function (req, res) {
 router.post("/EditCenter", function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
-        console.log(req.body);
+        let oldCS = req.body.old;
+        let newNameC = req.body.NewCentername;
+        let dontInsert = false;
+        for(var center_index = 0; center_index < oldCS.length; center_index++ ){
+            if(_.toLower(newNameC) == _.toLower(oldCS[center_index].name)){
+                var code = 400;
+                var message = "The Center already Exist";
+                res.writeHead(code, message,{'cotent-type' : 'text/plain'});
+                res.end(message);
+                dontInsert = true;
+            }
+        } 
+        if(!dontInsert)       
         updateCenterData(req);
         res.redirect("/");
     } else {

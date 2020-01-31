@@ -39,8 +39,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $('#editName').attr("placeholder", "Edit Course Name");
     };
 
-    $scope.saveEdit = function(courseId) {
-        
+    $scope.saveEdit = function(courseId) {  
         if (courseId == 'new') {
             var newCourse = {
                 name: $scope.crudFormName,
@@ -49,7 +48,10 @@ myApp.controller('namesCtrl', function($scope, $http) {
             $http({
                 method: 'POST',
                 url: '/admin/AddCourse',
-                data: newCourse
+                data: {
+                    new: newCourse,
+                    old: $scope.courses
+                }
             }).then(function successCallback(response) {
                 console.log("API is used successfully");
                 $scope.courses.push(newCourse);
@@ -59,6 +61,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
         } else {
             var newData = {
                 oldcourse: $scope.courses[courseId],
+                courses: $scope.courses,
                 newname: $scope.crudFormName
             };
             console.log( $scope.courses[courseId]);
