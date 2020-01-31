@@ -1,7 +1,7 @@
 // jshint esversion:8
 const express = require('express');
 const {getAssistInfo, getCourseInfo, getCenterInfo} = require('../databaseUtils/info');
-const {insertAssistant, insertCenter, insertCourse} = require('../databaseUtils/insert');
+const {insertAssistant, insertCenter, insertCourse, isCodeUsed} = require('../databaseUtils/insert');
 const {updateAssistData, updateCenterData, updateCourseData} = require('../databaseUtils/update');
 const {deleteAssistant, deleteCourse, deleteCenter} = require('../databaseUtils/delete');
 const {isauth} = require('../utils/auth');
@@ -38,16 +38,26 @@ router.get("/assistant", function (req, res) {
 });
 
 router.post("/AddAssistant", function (req, res) {
-    const {role} = isauth(req);
+    const {
+        role
+    } = isauth(req);
     if (role == 'admin') {
-    console.log(req.body);
-    var spaceindex = req.body.name.indexOf(" ");
-    req.body.fname = req.body.name.substring(0, spaceindex);
-    req.body.lname = req.body.name.substring(spaceindex + 1, req.body.name.length);
-    insertAssistant(req);
-    res.redirect("/");
-    }
-    else {
+        isCodeUsed(req.body.code, (err, data) => {
+            if (err) { //there is something with the user name
+                console.log("Error:", err);
+            } else {
+                if (!data) { //returns false or the role of the used code
+                    var spaceindex = req.body.name.indexOf(" ");
+                    req.body.fname = req.body.name.substring(0, spaceindex);
+                    req.body.lname = req.body.name.substring(spaceindex + 1, req.body.name.length);
+                    insertAssistant(req);
+                    res.redirect("/");
+                } else {
+                    res.redirect('/admin');
+                }
+            }
+        });
+    } else {
         res.redirect('/');
     }
 });

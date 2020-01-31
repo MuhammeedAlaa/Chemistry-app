@@ -87,7 +87,7 @@ CREATE TABLE `center` (
 
 CREATE TABLE `course` (
   `course_id` int(11) NOT NULL,
-  `course_name` varchar(255) NOT NULL,
+  `course_name` varchar(255) NOT NULL UNIQUE,
   `admin_id` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
