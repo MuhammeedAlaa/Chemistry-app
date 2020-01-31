@@ -1,7 +1,8 @@
+// jshint esversion:8
 const express = require('express');
+const router = express.Router();
 const { isauth } = require('../utils/auth');
 const { insertLecture } = require('../databaseUtils/insert');
-const router = express.Router();
 
 router.get('/', function(req, res) {
     const { role } = isauth(req);

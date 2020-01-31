@@ -124,6 +124,20 @@ function insertLecture(center_name, course_id, day, hour){
     });
 }
 
+function insertNewLecture(center_name, course_id, day, hour){
+      stmt = "INSERT INTO lec_timetable (center_name, course_id, day, hour) VALUES (?,?,?,?)";
+    connection.query(stmt, [center_name, course_id, day, hour], (err, results) => {
+        if (err) {
+            console.error("error in entering lecture_timetable "+ err);
+        }
+        else{  
+            console.log("entered lecture_timetable successfully");
+    }
+    });
+}
+
+
+exports.insertNewLecture = insertNewLecture;
 exports.insertAssistant = insertAssistant;
 exports.insertLecture = insertLecture;
 exports.insertStudent = insertStudent;

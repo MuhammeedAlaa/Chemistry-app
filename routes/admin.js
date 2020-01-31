@@ -1,9 +1,9 @@
 // jshint esversion:8
 const express = require('express');
-const {getAssistInfo, getCourseInfo, getCenterInfo} = require('../databaseUtils/info');
-const {insertAssistant, insertCenter, insertCourse, isCodeUsed} = require('../databaseUtils/insert');
-const {updateAssistData, updateCenterData, updateCourseData} = require('../databaseUtils/update');
-const {deleteAssistant, deleteCourse, deleteCenter} = require('../databaseUtils/delete');
+const {getAssistInfo, getCourseInfo, getCenterInfo, getlectureInfo} = require('../databaseUtils/info');
+const {insertAssistant, insertCenter, insertCourse, isCodeUsed, insertNewLecture} = require('../databaseUtils/insert');
+const {updateAssistData, updateCenterData, updateCourseData, updateLectureData} = require('../databaseUtils/update');
+const {deleteAssistant, deleteCourse, deleteCenter, deleteLecData} = require('../databaseUtils/delete');
 const {isauth} = require('../utils/auth');
 const router = express.Router();
 router.get('/', function (req, res) {
@@ -96,6 +96,67 @@ router.get('/course', function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
         res.render('course');
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+router.get('/lecture', function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        res.render('lecture');
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+router.get("/lectureData", function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        getlectureInfo((err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/addlecture', function (req, res) {
+    console.log(req.body);
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        insertNewLecture(req.body.center_name, req.body.course_id, req.body.day, req.body.hour);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+
+router.post('/EditLecture', function (req, res) {
+    console.log(req.body);
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        updateLectureData(req);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+router.post('/DeleteLecture', function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        deleteLecData(req);
+        res.redirect("/");
     }
     else{
         res.redirect('/');

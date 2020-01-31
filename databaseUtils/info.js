@@ -43,6 +43,18 @@ function getAssistInfo(callback){
 
 
 
+function getlectureInfo(callback){
+    let stmt = "SELECT course_name, center_name, day, hour FROM lec_timetable NATURAL JOIN Course ";
+    connection.query(stmt, (err,rows) =>{
+        if(err){
+            callback(err,null);
+        } else {
+            callback(null, rows);
+        }
+    });
+}
+
+
 function getCourseInfo(callback){
     let stmt = "SELECT * FROM Course";
     connection.query(stmt, (err,result) =>{
@@ -85,4 +97,5 @@ function getCenterInfo(callback){
 exports.getAssistInfo = getAssistInfo;
 exports.getStudInfo = getStudInfo;
 exports.getCourseInfo = getCourseInfo; 
+exports.getlectureInfo = getlectureInfo; 
 exports.getCenterInfo = getCenterInfo; 
