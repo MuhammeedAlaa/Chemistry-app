@@ -17,17 +17,22 @@
                 <thead>
                     <tr>
                         <th ng-click="orderBy('name')">Name</th>
-                        <th ng-click="orderBy('phone')">Phone</th>
-                        <th ng-click="orderBy('code')">Code</th>
                         <th></th>
+                        <th ng-click="orderBy('phone')">Phone</th>
+                        <th></th>
+                        <th ng-click="orderBy('code')">Code</th>
+                        
                         <th></th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
                         <td>{{user.name}} </td>
+                        <td></td>
                         <td>{{user.phone}} </td>
+                        <td></td>
                         <td>{{user.code}} </td>
+                        <td></td>
                         <td>
                             <button class="btn btn-primary" ng-click="editUser(user)">Edit</button>
                         </td>
@@ -52,7 +57,7 @@
                         <div class="form-alert alert alert-danger" ng-show="userForm.lname.$invalid &amp;&amp; userForm.lname.$touched">Please input Last Name</div>
                     </div>
                     <div class="form-group">
-                        <label for="editCode">Code</label>
+                        <label for="editCode" id="labelCode">Code</label>
                         <input class="form-control" id="editCode" type="text" name="code" ng-model="crudFormCode" placeholder="Edit Assistant Code" min="1" required="required" autocomplete="off" />
                         <div class="form-alert alert alert-danger" ng-show="userForm.code.$invalid &amp;&amp; userForm.code.$touched"><span ng-show="userForm.code.$error.number">Please input valid number</span><span ng-show="userForm.code.$error.min">Please input Code greater than 1</span><span ng-show="userForm.code.$error.required">Please input Code</span></div>
                     </div>

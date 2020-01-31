@@ -51,6 +51,8 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $('#editCode').attr("placeholder", "Edit Assistant Code");
         $('#editPhone').attr("placeholder", "Edit Assistant Phone");
         $('#editPassword').attr("placeholder", "Edit Assistant Password");
+        $('#editCode').attr('type', 'hidden');
+        $('#labelCode').hide();
     };
 
     $scope.saveEdit = function(userId) {
@@ -75,15 +77,21 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 alert(response.statusText);
             });
         } else {
-            $scope.users[userId].name = $scope.crudFormfName + " " + $scope.crudFormLname;
-            $scope.users[userId].code = $scope.crudFormCode;
-            $scope.users[userId].phone = $scope.crudFormPhone;
-            $scope.users[userId].password = $scope.crudFormPassword;
+            var editUser = {
+                id: $scope.users[userId].id,
+                name: $scope.crudFormfName + " " + $scope.crudFormLname,
+                phone: $scope.crudFormPhone,
+                code: $scope.users[userId].code,
+                password: $scope.crudFormPassword
+            }
             $http({
                 method: 'POST',
                 url: '/admin/EditAssistant',
-                data: $scope.users[userId]
+                data: editUser
             }).then(function successCallback(response) {
+                $scope.users[userId].name = $scope.crudFormfName + " " + $scope.crudFormLname;
+                $scope.users[userId].phone = $scope.crudFormPhone;
+                $scope.users[userId].password = $scope.crudFormPassword;
                 console.log("API is used successfully");
             }, function errorCallback(response) {
                 alert(response.statusText);
@@ -127,6 +135,8 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $('#editCode').attr("placeholder", "Add Assistant Code");
         $('#editPhone').attr("placeholder", "Add Assistant Phone");
         $('#editPassword').attr("placeholder", "Add Assistant Password");
+        $('#editCode').attr('type', 'text');
+        $('#labelCode').show();
     };
 });
 

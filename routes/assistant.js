@@ -13,6 +13,16 @@ router.get('/', function(req, res) {
     }
 });
 
+//------lecture routes
+router.get('/lecture', function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        res.render('lecture');
+    } else {
+        res.redirect('/');
+    }
+});
+
 router.post("/AddLecture", function(req, res) {
     console.log(req.body);
     const { role } = isauth(req);
@@ -25,5 +35,36 @@ router.post("/AddLecture", function(req, res) {
     }
     res.redirect("/");
 });
+
+//------Black Points routes
+router.get('/blackpoint', function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        res.render('blackpoint');
+    } else {
+        res.redirect('/');
+    }
+});
+
+//------exam routes
+router.get('/Exam', function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        res.render('exam');
+    } else {
+        res.redirect('/');
+    }
+});
+
+//------exam routes
+router.get('/totalAttendance', function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        res.render('totalAttendance');
+    } else {
+        res.redirect('/');
+    }
+});
+
 
 module.exports = router;
