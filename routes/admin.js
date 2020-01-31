@@ -109,11 +109,14 @@ router.get("/Coursedata", function (req, res) {
 });
 
 router.post("/AddCourse", function (req, res) {
-    const {role} = isauth(req);
-    if (role == 'admin') {
     console.log(req.body);
-    insertCourse(req.body.code);
-    res.redirect("/");
+    const {role} = isauth(req);
+    console.log(role);
+    console.log(req.body);
+    if (role == 'admin') {
+        console.log(req.body);
+        insertCourse(req.body.name);
+        res.redirect("/");
     }
     else{
         res.redirect('/');
@@ -123,9 +126,8 @@ router.post("/AddCourse", function (req, res) {
 router.post("/EditCourse", function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
-    console.log(req.body);
-    updateCourseData(req);
-    res.redirect("/");
+        updateCourseData(req);
+        res.redirect("/");
     }
     else{
         res.redirect('/');
@@ -137,9 +139,8 @@ router.post("/EditCourse", function (req, res) {
 router.post("/DeleteCourse", function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
-    console.log(req.body);
-    deleteCourse(req.body.id);
-    res.redirect("/");
+        deleteCourse(req.body.name);
+        res.redirect("/");
     }
     else{
         res.redirect('/');

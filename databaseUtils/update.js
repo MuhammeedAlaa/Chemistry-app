@@ -25,19 +25,21 @@ function updateAssistData(req) {
             console.error(err.message);
         }
         else
-        console.error("Updated Successfully");
+        console.log("Updated Successfully");
     });
 }
 
 
 function updateCourseData(req) {
-    let stmt = `UPDATE course SET course_name = ? WHERE course_code = ?`;
-    connection.query(stmt, req.name, req.id, (err, results) => {
+    let stmt = `UPDATE course SET course_name =? WHERE course_name =?`;
+    connection.query(stmt, [req.body.newname, req.body.oldcourse.name], (err, results) => {
         if (err) {
             console.error(err.message);
         }
-        else
-        console.error("Updated Successfully");
+        else{
+            console.log("Updated Successfully");
+            console.log(req.body.oldcourse.name + "  " + req.body.newname);
+        }
     });
 }
 
@@ -49,7 +51,7 @@ function updateCenterData(req) {
             console.error(err.message);
         }
         else
-        console.error("Updated Successfully");
+        console.log("Updated Successfully");
     });
 }
 

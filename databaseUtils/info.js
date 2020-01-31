@@ -62,7 +62,6 @@ function getCourseInfo(callback){
     });
 }
 
-
 function getCenterInfo(callback){
     let stmt = "SELECT * FROM Center";
     connection.query(stmt, (err,result) =>{

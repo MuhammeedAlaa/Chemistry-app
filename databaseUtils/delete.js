@@ -14,14 +14,16 @@ function deleteAssistant(assist_code) {
 }
 
 
-function deleteCourse(course_id) {
-    let stmt = `DELETE FROM COURSE WHERE course_id = ?`;
-    connection.query(stmt, course_id, (err, results) => {
-        if (err) {
-            console.error(err.message);
-        }
-        else
-        console.error("Deleted Successfully");
+function deleteCourse(course_name) {
+        let stmt = `DELETE FROM COURSE WHERE course_name = ?`;
+        connection.query(stmt, course_name, (err, results) => {
+            if (err) {
+                console.error(err.message);
+            }
+            else
+            {
+                console.error("Deleted Successfully");
+            }
     });
 }
 
@@ -33,7 +35,9 @@ function deleteCenter(Center_name) {
             console.error(err.message);
         }
         else
-        console.error("Deleted Successfully");
+        {
+            console.error("Deleted Successfully");
+        }
     });
 }
 
