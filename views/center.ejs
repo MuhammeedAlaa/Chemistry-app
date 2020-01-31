@@ -1,0 +1,57 @@
+<title>Center</title>
+<%- include("partails/adminHeader") -%>
+
+    <main class="page-content">
+        <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
+            <div class="clearfix">
+                <div class="form-inline pull-left">
+                    <button class="btn btn-success" ng-click="addCenter()"><span class="glyphicon glyphicon-plus"> </span>Add new center</button>
+                </div>
+                <div class="form-inline pull-right">
+                    <div class="form-group">
+                        <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th ng-click="orderBy('name')">Center Name</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr ng-repeat="center in resultCenter = (centers | filter: {'name': searchName}) | orderBy: order">
+                        <td>{{center.name}} </td>
+                        <td></td>
+                        <td>
+                            <buttFon class="btn btn-primary" ng-click="editCenter(center)">Edit</buttFon>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="deleteCenter(center)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="crude-form__wrapper" ng-show="triggerForm">
+                <h3 ng-show="editForm">Edit Center</h3>
+                <h3 ng-show="addForm">Add Center</h3>
+                <form name="centerForm" ng-model="centerForm">
+                    <div class="form-group">
+                        <label for="editName">Center Name</label>
+                        <input class="form-control" id="editName" type="text" name="name" ng-model="crudFormName" placeholder="Edit Center Name" required="required" autocomplete="off" />
+                        <div class="form-alert alert alert-danger" ng-show="centerForm.name.$invalid &amp;&amp; centerForm.name.$touched">Please input Center Name</div>
+                    </div>
+                    <div class="form-alert alert alert-danger" ng-show="centerExisted"> This Name has been registerd by other Center</div>
+                    <button class="btn btn-primary" ng-click="saveEdit(editCenterId)" ng-disabled="centerForm.$invalid || centerExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
+                    <button class="btn btn-primary" ng-click="triggerForm = false"> Cancel</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    </div>
+    <!-- page-wrapper -->
+    <script src="/javascripts/center.js"></script>
+    <%- include("partails/adminFooter") -%>

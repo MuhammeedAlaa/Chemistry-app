@@ -46,7 +46,7 @@ function updateCourseData(req) {
 
 function updateCenterData(req) {
     let stmt = `UPDATE center SET center_name = ? WHERE center_name = ?`;
-    connection.query(stmt, req.name, req.name, (err, results) => {
+    connection.query(stmt, [req.body.NewCentername, req.body.oldCentername], (err, results) => {
         if (err) {
             console.error(err.message);
         }

@@ -178,13 +178,13 @@ router.get("/Centerdata", function (req, res) {
 router.post("/AddCenter", function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
-        console.log(req.body);
         insertCenter(req.body.name);
         res.redirect("/");
     } else {
         res.redirect('/');
     }
 });
+
 
 router.post("/EditCenter", function (req, res) {
     const {role} = isauth(req);
