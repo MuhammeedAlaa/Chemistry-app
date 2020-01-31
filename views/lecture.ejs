@@ -27,11 +27,11 @@
                 </thead>
                 <tbody class="text-center">
                     <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
-                        <td>code </td>
-                        <td>name</td>
-                        <td>phone</td>
-                        <td>parent phone</td>
-                        <td>school</td>
+                        <td>course </td>
+                        <td>center</td>
+                        <td>lec#</td>
+                        <td>day</td>
+                        <td>time</td>
                         <td>
                             <button class="btn btn-primary" ng-click="editUser(user)">Edit</button>
                         </td>
@@ -42,35 +42,39 @@
                 </tbody>
             </table>
             <div class="crude-form__wrapper" ng-show="triggerForm">
-                <h3 ng-show="editForm">Edit Student</h3>
-                <h3 ng-show="addForm">Add Student</h3>
+                <h3 ng-show="editForm">Edit Lecture</h3>
+                <h3 ng-show="addForm">Add Lectuer</h3>
                 <form name="userForm" ng-model="userForm">
                     <div class="form-group">
-                        <label for="editfName">First Name</label>
-                        <input class="form-control" id="editfName" type="text" name="fname" ng-model="crudFormfName" placeholder="Edit Assistant First Name" required="required" autocomplete="off" />
-                        <div class="form-alert alert alert-danger" ng-show="userForm.fname.$invalid &amp;&amp; userForm.fname.$touched">Please input Last Name</div>
+                        <div class="form-group col-md-4">
+                            <label for="inputCourse">Course</label>
+                            <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>Courses list</option>
+                          <option>...</option>
+                        </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="editlName">Last Name</label>
-                        <input class="form-control" id="editlName" type="text" name="lname" ng-model="crudFormLname" placeholder="Edit Assistant Last Name" required="required" autocomplete="off" />
-                        <div class="form-alert alert alert-danger" ng-show="userForm.lname.$invalid &amp;&amp; userForm.lname.$touched">Please input Last Name</div>
+                        <div class="form-group col-md-4">
+                            <label for="inputCourse">Center</label>
+                            <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>Courses list</option>
+                          <option>...</option>
+                        </select>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="editCode">Code</label>
-                        <input class="form-control" id="editCode" type="text" name="code" ng-model="crudFormCode" placeholder="Edit Assistant Code" min="1" required="required" autocomplete="off" />
-                        <div class="form-alert alert alert-danger" ng-show="userForm.code.$invalid &amp;&amp; userForm.code.$touched"><span ng-show="userForm.code.$error.number">Please input valid number</span><span ng-show="userForm.code.$error.min">Please input Code greater than 1</span><span ng-show="userForm.code.$error.required">Please input Code</span></div>
+                        <label for="editLecNo">Lecture Number</label>
+                        <input class="form-control" id="editLecNo" type="number" maxlength="2" name="Lecnumber" ng-model="crudFormCode" placeholder="Edit Lecture Number" min="1" required="required" autocomplete="off" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.code.$invalid &amp;&amp; userForm.code.$touched"><span ng-show="userForm.code.$error.number">Please input valid number</span><span ng-show="userForm.code.$error.min">Please input lecture# greater than 1</span><span ng-show="userForm.code.$error.required">Please input Code</span></div>
                     </div>
                     <div class="form-group">
-                        <label for="editPhone">Phone</label>
-                        <input class="form-control" id="editPhone" type="text" name="Phone" ng-model="crudFormPhone" placeholder="Edit Assistant Phone" required="required" min="1" />
+                        <label for="editDay">Day</label>
+                        <input class="form-control" id="editDay" type="text" name="Day" ng-model="crudFormPhone" placeholder="Edit Lecture Day" required="required" min="1" />
                     </div>
                     <div class="form-group">
-                        <label for="editPassword">Parent Phone</label>
-                        <input class="form-control" id="editPassword" type="password" name="password" ng-model="crudFormPassword" placeholder="Edit Assistant Password" required="required" min="1" autocomplete="off" />
-                    </div>
-                    <div class="form-group">
-                        <label for="editPassword">School</label>
-                        <input class="form-control" id="editfName" type="text" name="fname" ng-model="crudFormfName" placeholder="Edit Assistant First Name" required="required" autocomplete="off" />
+                        <label for="editTime">Time</label>
+                        <input class="form-control" id="editTime" type="time" name="time" ng-model="crudFormPassword" placeholder="Edit Lecture Time" required="required" min="1" autocomplete="off" />
                     </div>
                     <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
                     <button class="btn btn-primary" ng-click="saveEdit(editUserId)" ng-disabled="userForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
