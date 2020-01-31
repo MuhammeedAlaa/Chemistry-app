@@ -1,0 +1,86 @@
+<title>Admin</title>
+<%- include("partails/assistHeader") -%>
+
+    <main class="page-content">
+        <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
+            <div class="clearfix">
+                <div class="form-inline pull-left">
+                    <button class="btn btn-success" ng-click="addUser()"><span class="glyphicon glyphicon-plus"> </span>Add more user</button>
+                </div>
+                <div class="form-inline pull-right">
+                    <div class="form-group">
+                        <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th ng-click="orderBy('code')">Code</th>
+                        <th ng-click="orderBy('name')">Name</th>
+                        <th ng-click="orderBy('phone')">Phone</th>
+                        <th>Parent Phone</th>
+                        <th>Shool</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
+                        <td>code </td>
+                        <td>name</td>
+                        <td>phone</td>
+                        <td>parent phone</td>
+                        <td>school</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editUser(user)">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="deleteUser(user)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="crude-form__wrapper" ng-show="triggerForm">
+                <h3 ng-show="editForm">Edit Student</h3>
+                <h3 ng-show="addForm">Add Student</h3>
+                <form name="userForm" ng-model="userForm">
+                    <div class="form-group">
+                        <label for="editfName">First Name</label>
+                        <input class="form-control" id="editfName" type="text" name="fname" ng-model="crudFormfName" placeholder="Edit Assistant First Name" required="required" autocomplete="off" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.fname.$invalid &amp;&amp; userForm.fname.$touched">Please input Last Name</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editlName">Last Name</label>
+                        <input class="form-control" id="editlName" type="text" name="lname" ng-model="crudFormLname" placeholder="Edit Assistant Last Name" required="required" autocomplete="off" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.lname.$invalid &amp;&amp; userForm.lname.$touched">Please input Last Name</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCode">Code</label>
+                        <input class="form-control" id="editCode" type="text" name="code" ng-model="crudFormCode" placeholder="Edit Assistant Code" min="1" required="required" autocomplete="off" />
+                        <div class="form-alert alert alert-danger" ng-show="userForm.code.$invalid &amp;&amp; userForm.code.$touched"><span ng-show="userForm.code.$error.number">Please input valid number</span><span ng-show="userForm.code.$error.min">Please input Code greater than 1</span><span ng-show="userForm.code.$error.required">Please input Code</span></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Phone</label>
+                        <input class="form-control" id="editPhone" type="text" name="Phone" ng-model="crudFormPhone" placeholder="Edit Assistant Phone" required="required" min="1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="editPassword">Parent Phone</label>
+                        <input class="form-control" id="editPassword" type="password" name="password" ng-model="crudFormPassword" placeholder="Edit Assistant Password" required="required" min="1" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <label for="editPassword">School</label>
+                        <input class="form-control" id="editfName" type="text" name="fname" ng-model="crudFormfName" placeholder="Edit Assistant First Name" required="required" autocomplete="off" />
+                    </div>
+                    <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
+                    <button class="btn btn-primary" ng-click="saveEdit(editUserId)" ng-disabled="userForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
+                    <button class="btn btn-primary" ng-click="triggerForm = false">
+             Cancel                     </button>
+                </form>
+            </div>
+        </div>
+    </main>
+    </div>
+    <!-- page-wrapper -->
+    <script src="/javascripts/template.js"></script>
+    <%- include("partails/adminFooter") -%>
