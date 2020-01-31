@@ -1,0 +1,94 @@
+<title>Exam</title>
+<%- include("partails/assistHeader") -%>
+
+    <main class="page-content">
+        <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
+            <div class="clearfix">
+                <div class="form-inline pull-left">
+                    <button class="btn btn-success" ng-click="addUser()"><span class="glyphicon glyphicon-plus"> </span>Add exam</button>
+                </div>
+                <div class="form-inline pull-right">
+                    <div class="form-group">
+                        <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th ng-click="orderBy('code')">Course</th>
+                        <th ng-click="orderBy('name')">Center</th>
+                        <th ng-click="orderBy('phone')">Lectuer #</th>
+                        <th>exam #</th>
+                        <th>full mark</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
+                        <td>course</td>
+                        <td>center</td>
+                        <td>Lecture number</td>
+                        <td>exam number</td>
+                        <td>full mark</td>
+                        <td>
+                            <button class="btn btn-primary" ng-click="editUser(user)">Edit</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger" ng-click="deleteUser(user)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="crude-form__wrapper" ng-show="triggerForm">
+                <h3 ng-show="editForm">Edit Exam</h3>
+                <h3 ng-show="addForm">Add Exam</h3>
+                <form name="userForm" ng-model="userForm">
+                    <div class="form-group">
+                        <div class="form-group col-md-4">
+                            <label for="inputCourse">Course</label>
+                            <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>Courses list</option>
+                          <option>...</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group col-md-4">
+                            <label for="inputCourse">Center</label>
+                            <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>Center list</option>
+                          <option>...</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group col-md-4">
+                            <label for="inputCourse">Lecture#</label>
+                            <select class="custom-select" id="inputGroupSelect01">
+                          <option selected>Lecture no. list</option>
+                          <option>...</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editNumber">Exam Number</label>
+                        <input class="form-control" id="editNumber" type="text" name="examNo" ng-model="crudFormPhone" placeholder="Edit Exam Number" required="required" min="1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="editfullmark">Full Mark</label>
+                        <input class="form-control" id="editfullmark" type="number" name="fullmark" ng-model="crudFormPassword" placeholder="Edit Assistant Password" required="required" min="1" autocomplete="off" />
+                    </div>
+                    <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
+                    <button class="btn btn-primary" ng-click="saveEdit(editUserId)" ng-disabled="userForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
+                    <button class="btn btn-primary" ng-click="triggerForm = false">
+             Cancel                     </button>
+                </form>
+            </div>
+        </div>
+    </main>
+    </div>
+    <!-- page-wrapper -->
+    <script src="/javascripts/template.js"></script>
+    <%- include("partails/adminFooter") -%>
