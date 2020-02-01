@@ -119,26 +119,31 @@ myApp.controller('namesCtrl', function ($scope, $http) {
         $('#lblec').show();    
     };
     $scope.savestudentAttendance = function (user){
-        console.log(user);
-        console.log(user.attend);
-        user.attend = ! user.attend;
+        var index = $scope.users.indexOf(user);
+        console.log(index);
+        console.log($scope.users[index].attend);
+        
+        $scope.users[index].attend = ! $scope.users[index].attend;
     };
     $scope.insertAttendance = function (){
         for (let i = 0; i < $scope.users.length; i++) {
             $scope.users[i].lec_num = $scope.chosenLecture;
             $scope.users[i].center_name = $scope.chosenCenter;
             $scope.users[i].course_id = $scope.chosenCourse;
+            console.log($scope.users[i].attend);
         }
         $http({
             method: 'POST',
             url: '/assistant/setattendance', 
             data: $scope.users
         }).then(function successCallback(response) {
-            users.attend = !users.attend; 
+            console.log("API is used successfully");
         }, function errorCallback(response) {
             alert(response.statusText);
         });
         $(location).attr('href', '/assistant');
+      
+        
     };
 
 

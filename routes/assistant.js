@@ -269,7 +269,7 @@ router.post('/AddStudent', function(req, res) {
 
 router.post('/setattendance', function (req, res) {
     const decodedtoken = isauth(req);
-    console.log(req);
+    //console.log(req);
     if(decodedtoken.role =='assistant' ){
         for (let i = 0; i < req.body.length; i++) {
             insertAttendance(req.body[i], decodedtoken.code);
