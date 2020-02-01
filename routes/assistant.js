@@ -1,9 +1,8 @@
-
 // jshint esversion:6
 const express = require('express');
 const router = express.Router();
 const { isauth } = require('../utils/auth');
-const { isCodeUsed ,insertStudent ,insertLecture } = require('../databaseUtils/insert');
+const { isCodeUsed, insertStudent, insertLecture } = require('../databaseUtils/insert');
 const { getStudentsInfo } = require('../databaseUtils/info');
 const { deleteStudent } = require('../databaseUtils/delete');
 const { updateStudantData } = require('../databaseUtils/update');
@@ -50,6 +49,58 @@ router.get('/blackpoint', function(req, res) {
     }
 });
 
+router.get('/BPData', (req, res) => {
+    const { role } = isauth(req);
+    console.log(role);
+    if (role == 'assistant') {
+        getStudentsInfo((err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) => {
+            if (err) {
+                console.log(err);
+                res.redirect('/');
+            } else {
+                res.json({
+                    fullnames: fullnames,
+                    phones: phones,
+                    parent_phones: parent_phones,
+                    assistIds: assistIds,
+                    studCodes: studCodes,
+                    studpasswords: studpasswords,
+                    blackpoints: blackpoints,
+                    schools: schools
+                });
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+router.post("/EditBPplus", function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        req.body.blackpoints += 1;
+        var spaceindex = req.body.name.indexOf(" ");
+        req.body.fname = req.body.name.substring(0, spaceindex);
+        req.body.lname = req.body.name.substring(spaceindex + 1, req.body.name.length);
+        updateStudantData(req);
+        res.redirect("/");
+    } else {
+        res.redirect('/');
+    }
+});
+router.post("/EditBPminus", function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        req.body.blackpoints -= 1;
+        var spaceindex = req.body.name.indexOf(" ");
+        req.body.fname = req.body.name.substring(0, spaceindex);
+        req.body.lname = req.body.name.substring(spaceindex + 1, req.body.name.length);
+        updateStudantData(req);
+        res.redirect("/");
+    } else {
+        res.redirect('/');
+    }
+});
+
 //------exam routes
 router.get('/Exam', function(req, res) {
     const { role } = isauth(req);
@@ -82,11 +133,11 @@ router.get('/', function(req, res) {
 });
 
 
-router.get('/studentInfo', (req, res) =>{
+router.get('/studentInfo', (req, res) => {
     const { role } = isauth(req);
     console.log(role);
-    if(role == 'assistant'){
-        getStudentsInfo((err,[fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) =>{
+    if (role == 'assistant') {
+        getStudentsInfo((err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) => {
             if (err) {
                 console.log(err);
                 res.redirect('/');
@@ -112,8 +163,8 @@ router.get('/studentInfo', (req, res) =>{
 
 
 
-router.post("/deleteStudent", function (req, res) {
-    const {role} = isauth(req);
+router.post("/deleteStudent", function(req, res) {
+    const { role } = isauth(req);
     if (role == 'assistant') {
         console.log(req.body);
         deleteStudent(req.body.code);
@@ -125,10 +176,10 @@ router.post("/deleteStudent", function (req, res) {
 
 
 
-router.post('/AddStudent', function (req, res) {
+router.post('/AddStudent', function(req, res) {
     const decodedtoken = isauth(req);
-        
-    if (decodedtoken.role == 'assistant') {  
+
+    if (decodedtoken.role == 'assistant') {
         var coded = req.body.code;
         isCodeUsed(coded, (err, data) => {
             if (err) { //there is something with the user name
@@ -141,7 +192,7 @@ router.post('/AddStudent', function (req, res) {
                 } else {
                     var code = 400;
                     var message = "this user code already in try another one";
-                    res.writeHead(code, message,{'cotent-type' : 'text/plain'});
+                    res.writeHead(code, message, { 'cotent-type': 'text/plain' });
                     res.end(message);
                 }
             }
@@ -149,11 +200,11 @@ router.post('/AddStudent', function (req, res) {
     } else {
         res.redirect('/');
     }
-  });
+});
 
 
-router.post("/EditStudent", function (req, res) {
-    const {role} = isauth(req);
+router.post("/EditStudent", function(req, res) {
+    const { role } = isauth(req);
     if (role == 'assistant') {
         var spaceindex = req.body.name.indexOf(" ");
         req.body.fname = req.body.name.substring(0, spaceindex);

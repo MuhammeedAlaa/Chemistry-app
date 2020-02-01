@@ -21,15 +21,15 @@
                     </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
-                        <td>code </td>
-                        <td>name</td>
-                        <td>total black points</td>
+                    <tr ng-repeat="user in resultUser = (users | filter: {'code': searchName}) | orderBy: order">
+                        <td>{{user.code}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.blackpoints}}</td>
                         <td>
-                            <button class="btn btn-primary" ng-click="editUser(user)">Add BP</button>
+                            <button class="btn btn-primary" ng-click="editBP1(user)">Add BP</button>
                         </td>
                         <td>
-                            <button class="btn btn-danger" ng-click="editUser(user)">Remove BP</button>
+                            <button class="btn btn-danger" ng-click="editBP2(user)">Remove BP</button>
                         </td>
                     </tr>
                 </tbody>
@@ -38,5 +38,5 @@
     </main>
     </div>
     <!-- page-wrapper -->
-    <script src="/javascripts/template.js"></script>
+    <script src="/javascripts/blackpoint.js"></script>
     <%- include("partails/adminFooter") -%>
