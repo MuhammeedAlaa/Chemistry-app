@@ -65,15 +65,15 @@
                     </div>
                     <div class="form-group">
                         <label for="editPhone">Phone</label>
-                        <input class="form-control" id="editPhone" type="text" name="Phone" ng-model="crudFormPhone" placeholder="Edit Student Phone" required="required" min="1" />
+                        <input class="form-control" id="editPhone" type="text" name="Phone" ng-model="crudFormPhone" placeholder="Edit Student Phone" required="required" min="1" minlength="11" maxlength="11" pattern="^01[0-5]{1}[0-9]{8}" />
                     </div>
                     <div class="form-group">
                         <label for="editparentPhone" id="labelParent">Parent Phone</label>
-                        <input class="form-control" id="editparentPhone" type="text" name="parentPhone" ng-model="crudFormparentPhone" placeholder="Edit Student Parent Phone" min="1" />
+                        <input class="form-control" id="editparentPhone" type="text" name="parentPhone" ng-model="crudFormparentPhone" placeholder="Edit Student Parent Phone" min="1" minlength="11" maxlength="11" pattern="^01[0-5]{1}[0-9]{8}" />
                     </div>
                     <div class="form-group">
                         <label for="editblackpoints" id="labelBlack">Black Points</label>
-                        <input class="form-control" id="editblackpoints" type="text" name="blackPoints" ng-model="crudFormparentBlackPoints" placeholder="Edit Student Black Points" min="1" />
+                        <input class="form-control" id="editblackpoints" type="number" name="blackPoints" ng-model="crudFormparentBlackPoints" placeholder="Edit Student Black Points" min="0" max="4" />
                     </div>
                     <div class="form-group">
                         <label for="editPassword" id="labelPassword">Student Password</label>
