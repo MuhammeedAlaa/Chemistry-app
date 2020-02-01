@@ -76,7 +76,7 @@ myApp.controller('namesCtrl', function ($scope, $http) {
                 center_name: $scope.chosenCenter,
                 course_id: $scope.chosenCourse,
                 day: $scope.chosenday,
-                hour: $('#Time').val(),
+                hour: $('#Time').val() + ":00",
                 course_name: $( "#Course option:selected" ).text()
             };
             console.log(newLecture);
@@ -95,7 +95,7 @@ myApp.controller('namesCtrl', function ($scope, $http) {
                 center_name: $scope.chosenCenter,
                 course_id: $scope.chosenCourse,
                 day: $scope.chosenday,
-                hour: $('#Time').val(),
+                hour: $('#Time').val() + ":00",
                 old_center_name: $scope.old_center_name,
                 old_course_id: $scope.old_course_id,
                 old_day: $scope.old_day,
@@ -112,7 +112,7 @@ myApp.controller('namesCtrl', function ($scope, $http) {
                 var index_new_course = $scope.courses.findIndex(x => x.id ==`${$scope.chosenCourse}`);        
                 $scope.lectures[lectureId].course_name = $scope.courses[index_new_course].name;
                 $scope.lectures[lectureId].day = $scope.chosenday;
-                $scope.lectures[lectureId].hour =  $('#Time').val();
+                $scope.lectures[lectureId].hour =  $('#Time').val()+":00";
             }, function errorCallback(response) {
                 alert(response.statusText);
             });

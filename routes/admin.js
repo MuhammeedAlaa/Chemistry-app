@@ -1,10 +1,10 @@
 // jshint esversion:8
 const express = require('express');
 const _ = require('lodash');
-const {getAssistInfo, getCourseInfo, getCenterInfo} = require('../databaseUtils/info');
-const {insertAssistant, insertCenter, insertCourse, isCodeUsed} = require('../databaseUtils/insert');
-const {updateAssistData, updateCenterData, updateCourseData} = require('../databaseUtils/update');
-const {deleteAssistant, deleteCourse, deleteCenter} = require('../databaseUtils/delete');
+const {getAssistInfo, getCourseInfo, getCenterInfo, getlectureInfo} = require('../databaseUtils/info');
+const {insertAssistant, insertCenter, insertCourse, isCodeUsed, insertNewLecture} = require('../databaseUtils/insert');
+const {updateAssistData, updateCenterData, updateCourseData, updateLectureData} = require('../databaseUtils/update');
+const {deleteAssistant, deleteCourse, deleteCenter, deleteLecData} = require('../databaseUtils/delete');
 const {isauth} = require('../utils/auth');
 const router = express.Router();
 router.get('/', function (req, res) {

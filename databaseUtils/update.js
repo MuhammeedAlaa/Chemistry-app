@@ -94,5 +94,5 @@ exports.updateCourseData = updateCourseData;
 exports.updateAssistData = updateAssistData;
 exports.updateCenterData = updateCenterData;
 
-
+exports.updateLectureData = updateLectureData;
 exports.updateLectureData = updateLectureData;

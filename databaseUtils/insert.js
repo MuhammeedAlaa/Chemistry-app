@@ -140,6 +140,7 @@ function insertNewLecture(center_name, course_id, day, hour){
 exports.insertLecture = insertLecture;
 
 exports.insertAssistant = insertAssistant;
+exports.insertNewLecture = insertNewLecture;
 exports.insertLecture = insertLecture;
 exports.insertStudent = insertStudent;
 exports.isCodeUsed = isCodeUsed;
