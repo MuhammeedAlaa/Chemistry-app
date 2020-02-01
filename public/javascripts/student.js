@@ -1,19 +1,19 @@
-var myApp = angular.module('myApp',[]);
+var myApp = angular.module('myApp', []);
 
 myApp.controller('namesCtrl', function($scope, $http) {
     $scope.triggerForm = false;
     $scope.editForm = false;
     $scope.addForm = false;
-    $scope.order = 'name'; 
-   
+    $scope.order = 'name';
+
     $scope.users = [];
-   
+
     $http({
         method: 'GET',
         url: '/assistant/studentInfo'
     }).then(function successCallback(response) {
         console.log("API is used successfully");
-        for(var i = 0; i < response.data.assistIds.length; i++){
+        for (var i = 0; i < response.data.assistIds.length; i++) {
             $scope.users.push({
                 assistid: response.data.assistIds[i],
                 name: response.data.fullnames[i],
@@ -43,7 +43,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $scope.editUserId = index;
         console.log($scope.users[index]);
         var spaceindex = $scope.users[index].name.indexOf(" ");
-        $scope.crudFormfName = $scope.users[index].name.substring(0,spaceindex);
+        $scope.crudFormfName = $scope.users[index].name.substring(0, spaceindex);
         $scope.crudFormLname = $scope.users[index].name.substring(spaceindex + 1, $scope.users[index].name.length);
         $scope.crudFormCode = $scope.users[index].code;
         $scope.crudFormPhone = $scope.users[index].phone;
@@ -69,7 +69,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $('#editShcool').attr('type', 'text');
         $('#labelSchool').show();
         $('#editblackpoints').attr('type', 'text');
-        $('#labelBlack').show();        
+        $('#labelBlack').show();
     };
 
     $scope.saveEdit = function(userId) {
@@ -95,9 +95,9 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 alert(response.statusText);
             });
         } else {
-            var fullname =  $scope.crudFormfName + " " + $scope.crudFormLname;  
+            var fullname = $scope.crudFormfName + " " + $scope.crudFormLname;
             console.log(fullname);
-                      
+
             var editUser = {
                 name: fullname,
                 phone: $scope.crudFormPhone,
@@ -120,7 +120,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 $scope.users[userId].school = editUser.school;
                 $scope.users[userId].parent_phone = editUser.parent_phone;
                 console.log($scope.users[userId]);
-                
+
                 console.log("API is used successfully");
             }, function errorCallback(response) {
                 alert(response.statusText);
@@ -170,24 +170,23 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $('#editShcool').attr("placeholder", "Add Student School");
         $('#editCode').attr('type', 'text');
         $('#labelCode').show();
-       
+
         $('#editfName').attr('type', 'hidden');
         $('#labelFname').hide();
-       
+
         $('#editlName').attr('type', 'hidden');
         $('#labelLname').hide();
-        
+
         $('#editparentPhone').attr('type', 'hidden');
         $('#labelParent').hide();
-        
+
         $('#editPassword').attr('type', 'hidden');
         $('#labelPassword').hide();
-        
+
         $('#editShcool').attr('type', 'hidden');
         $('#labelSchool').hide();
-        
+
         $('#editblackpoints').attr('type', 'hidden');
-        $('#labelBlack').hide();        
+        $('#labelBlack').hide();
     };
 });
-
