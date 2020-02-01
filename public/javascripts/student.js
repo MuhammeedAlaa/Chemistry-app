@@ -5,9 +5,9 @@ myApp.controller('namesCtrl', function($scope, $http) {
     $scope.editForm = false;
     $scope.addForm = false;
     $scope.order = 'name';
-
     $scope.users = [];
-
+    $scope.courses = [];
+    $scope.chosenCourse = '';
     $http({
         method: 'GET',
         url: '/assistant/studentInfo'
@@ -22,9 +22,25 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 code: response.data.studCodes[i],
                 password: response.data.studpasswords[i],
                 blackpoints: response.data.blackpoints[i],
-                school: response.data.schools[i]
-
+                school: response.data.schools[i],
+                course_id: response.data.course_id
             });
+        }
+    }, function errorCallback(response) {
+        alert(response.statusText);
+    });
+    $http({
+        method: 'GET',
+        url: '/admin/Coursedata'
+    }).then(function successCallback(response) {
+        console.log("API is used successfully");
+        $scope.chosenCourse = "";
+        for (var i = 0; i < response.data.course_name.length; i++) {
+            $scope.courses.push({
+                id: response.data.course_id[i],
+                name: response.data.course_name[i],
+            });
+            console.log(response.data.course_id[i] + "   " + response.data.course_name[i]);
         }
     }, function errorCallback(response) {
         alert(response.statusText);
@@ -70,6 +86,8 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $('#labelSchool').show();
         $('#editblackpoints').attr('type', 'text');
         $('#labelBlack').show();
+        $('#lbcourse').hide();
+        $('#Course').hide();
     };
 
     $scope.saveEdit = function(userId) {

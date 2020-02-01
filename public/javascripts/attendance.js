@@ -2,10 +2,10 @@
 var myApp = angular.module('myApp', []);
 
 
-myApp.controller('namesCtrl', function ($scope, $http) {
+myApp.controller('namesCtrl', function($scope, $http) {
     $scope.triggerForm = true;
     $scope.addForm = false;
-    $scope.order = 'name';
+    $scope.order = 'code';
     $scope.reverse = true;
     $scope.centers = [];
     $scope.courses = [];
@@ -51,12 +51,12 @@ myApp.controller('namesCtrl', function ($scope, $http) {
         alert(response.statusText);
     });
 
-    $scope.orderBy = function (filter) {
+    $scope.orderBy = function(filter) {
         $scope.order = filter;
         $scope.reverse = !$scope.reverse;
     };
-    $scope.viewlecattend = function () {
-        if($scope.chosenCourse != '' && $scope.chosenCenter != '' && $scope.chosenLecture != ''){
+    $scope.viewlecattend = function() {
+        if ($scope.chosenCourse != '' && $scope.chosenCenter != '' && $scope.chosenLecture != '') {
             $scope.triggerForm = true;
             $scope.addForm = true;
             $('#view').hide();
@@ -69,11 +69,11 @@ myApp.controller('namesCtrl', function ($scope, $http) {
             $('#saveandcancel').show();
             $http({
                 method: 'GET',
-                url: '/assistant/studentInfoCourse/' + $scope.chosenCourse ,
+                url: '/assistant/studentInfoCourse/' + $scope.chosenCourse,
             }).then(function successCallback(response) {
                 console.log("API is used successfully");
                 console.log(response);
-                for(var i = 0; i < response.data.assistIds.length; i++){
+                for (var i = 0; i < response.data.assistIds.length; i++) {
                     $scope.users.push({
                         assistid: response.data.assistIds[i],
                         name: response.data.fullnames[i],
@@ -94,10 +94,10 @@ myApp.controller('namesCtrl', function ($scope, $http) {
             }, function errorCallback(response) {
                 alert(response.statusText);
             });
-                $('#studenttable').show();
+            $('#studenttable').show();
         }
     };
-    $scope.showLec = function () {        
+    $scope.showLec = function() {
         $http({
             method: 'GET',
             url: '/assistant/lecturenumber/' + $scope.chosenCourse
@@ -110,22 +110,22 @@ myApp.controller('namesCtrl', function ($scope, $http) {
                 });
                 $('#lec').append(`<option value="${response.data.lecture_num[i]}"> 
                                        ${"Lecture Number: " + response.data.lecture_num[i] + " Day: " + response.data.day[i] + " Time: " + response.data.hour[i]} 
-                                  </option>`); 
+                                  </option>`);
             }
         }, function errorCallback(response) {
             alert(response.statusText);
         });
         $('#lec').show();
-        $('#lblec').show();    
+        $('#lblec').show();
     };
-    $scope.savestudentAttendance = function (user){
+    $scope.savestudentAttendance = function(user) {
         var index = $scope.users.indexOf(user);
         console.log(index);
         console.log($scope.users[index].attend);
-        
-        $scope.users[index].attend = ! $scope.users[index].attend;
+
+        $scope.users[index].attend = !$scope.users[index].attend;
     };
-    $scope.insertAttendance = function (){
+    $scope.insertAttendance = function() {
         for (let i = 0; i < $scope.users.length; i++) {
             $scope.users[i].lec_num = $scope.chosenLecture;
             $scope.users[i].center_name = $scope.chosenCenter;
@@ -134,7 +134,7 @@ myApp.controller('namesCtrl', function ($scope, $http) {
         }
         $http({
             method: 'POST',
-            url: '/assistant/setattendance', 
+            url: '/assistant/setattendance',
             data: $scope.users
         }).then(function successCallback(response) {
             console.log("API is used successfully");
@@ -142,13 +142,13 @@ myApp.controller('namesCtrl', function ($scope, $http) {
             alert(response.statusText);
         });
         $(location).attr('href', '/assistant');
-      
-        
+
+
     };
 
 
 
-    $scope.cancelAttendance = function (){
+    $scope.cancelAttendance = function() {
         $(location).attr('href', '/assistant/attendance');
     };
 
