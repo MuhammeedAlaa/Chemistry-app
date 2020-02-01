@@ -43,6 +43,8 @@ myApp.controller('namesCtrl', function($scope, $http) {
     $scope.saveEdit = function(centerId) {
         
         if (centerId == 'new') {
+            console.log($scope.centers);
+            
             var newData = {
                 name: $scope.crudFormName,
                 old: $scope.centers
@@ -54,7 +56,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 data: newData
             }).then(function successCallback(response) {
                 console.log("API is used successfully");
-                $scope.centers.push(newCenter);
+                $scope.centers.push({name: newData.name});
             }, function errorCallback(response) {
                 alert(response.statusText);
             });
@@ -83,11 +85,10 @@ myApp.controller('namesCtrl', function($scope, $http) {
 
     $scope.deleteCenter = function(center) {
         var index = $scope.centers.indexOf(center);
-        console.log(center);
         $http({
             method: 'POST',
             url: '/admin/DeleteCenter',
-            data: $scope.centers[index]
+            data: center
         }).then(function successCallback(response) {
             console.log("API is used successfully");
             $scope.centers.splice(index, 1);
