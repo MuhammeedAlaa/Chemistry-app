@@ -178,6 +178,8 @@ router.post("/EditCourse", function (req, res) {
 router.post("/DeleteCourse", function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
+        console.log(req.body.name);
+        
         deleteCourse(req.body.name);
         res.redirect("/");
     }
