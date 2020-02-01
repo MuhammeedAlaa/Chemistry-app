@@ -135,7 +135,9 @@ function insertNewLecture(center_name, course_id, day, hour) {
 
 
 function insertAttendance(req, code) {
-    let stmt = "INSERT INTO `attendance`(`exam_num`, `lecture_num`, `center_name`, `course_id`, `assistant_id`, `student_code`, `Attended`) VALUES (?,?,?,?,?,?,?)";
+    console.log(req);
+        
+    let stmt = "INSERT INTO `attendance`(`exam_num`, `lecture_num`, `center_name`, `course_id`, `assistant_id`, `student_code`, `Attended`) VALUES (?,?,?,?,?,?,?)";    
     connection.query(stmt, [1, req.lec_num, req.center_name, req.course_id, code, req.code, req.attend], (err, results) => {
         if (err) {
             console.error("error in entering attendance " + err);
