@@ -47,7 +47,7 @@
                 <div class="form-group">
                     <div class="form-group col-md-12">
                         <label for="course">Course</label>
-                        <select id="Course" required ng-model="chosenCourse"  class="col-md-12">
+                        <select id="Course" required ng-model="chosenCourse"  class="col-md-12" style="height: auto;">
                             <option value = "">Select a course</option>
                             <option ng-repeat="option in courses" ng-value="option.id">{{option.name}}</option>
                         </select>
@@ -56,7 +56,7 @@
                 <div class="form-group">
                     <div class="form-group col-md-12">
                         <label for="center">Center</label>
-                        <select required ng-model="chosenCenter" class="col-md-12">
+                        <select required ng-model="chosenCenter" class="col-md-12" style="height: auto;">
                             <option value = "">Select a center</option>
                             <option ng-repeat="option in centers" ng-value="option.name">{{option.name}}</option>
                         </select>
@@ -65,7 +65,7 @@
                 <div class="form-group">
                     <div class="form-group col-md-12">
                         <label for="editDay">Day</label>
-                        <select class="custom-select" ng-model="chosenday" required class="col-md-12">
+                        <select class="custom-select" ng-model="chosenday" required class="col-md-12" style="height: auto;">
                             <option value = "">Select day</option>
                             <option value="Saturday">Saturday</option>
                             <option value="Sunday">Sunday</option>

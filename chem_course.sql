@@ -1,16 +1,16 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2020 at 01:15 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Generation Time: Feb 01, 2020 at 01:52 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+02:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -27,10 +27,6 @@ SET time_zone = "+02:00";
 --
 -- Table structure for table `admin`
 --
-
-CREATE DATABASE chem_course;
-
-use chem_course;
 
 CREATE TABLE `admin` (
   `admin_id` varchar(20) NOT NULL,
@@ -87,7 +83,7 @@ CREATE TABLE `center` (
 
 CREATE TABLE `course` (
   `course_id` int(11) NOT NULL,
-  `course_name` varchar(255) NOT NULL UNIQUE,
+  `course_name` varchar(255) NOT NULL,
   `admin_id` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -132,9 +128,9 @@ CREATE TABLE `lecture` (
   `lecture_num` int(11) NOT NULL,
   `center_name` varchar(255) NOT NULL,
   `course_id` int(11) NOT NULL,
-  `date` DATE NOT NULL,
+  `date` date NOT NULL,
   `day` varchar(255) NOT NULL,
-  `hour` TIME NOT NULL
+  `hour` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -147,7 +143,7 @@ CREATE TABLE `lec_timetable` (
   `center_name` varchar(255) NOT NULL,
   `course_id` int(11) NOT NULL,
   `day` varchar(255) NOT NULL,
-  `hour` TIME NOT NULL
+  `hour` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -165,7 +161,8 @@ CREATE TABLE `student` (
   `parent_phone` varchar(255) DEFAULT NULL,
   `black_point` int(11) DEFAULT NULL,
   `school` varchar(255) DEFAULT NULL,
-  `assistant_id` int(11) NOT NULL
+  `assistant_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -208,6 +205,7 @@ ALTER TABLE `center`
 --
 ALTER TABLE `course`
   ADD PRIMARY KEY (`course_id`),
+  ADD UNIQUE KEY `course_name` (`course_name`),
   ADD KEY `course_id` (`course_id`),
   ADD KEY `admin_id` (`admin_id`);
 
@@ -237,7 +235,7 @@ ALTER TABLE `exam_grades`
 -- Indexes for table `lecture`
 --
 ALTER TABLE `lecture`
-  ADD PRIMARY KEY (`lecture_num`,`center_name`,`course_id`, `day`, `hour`),
+  ADD PRIMARY KEY (`lecture_num`,`center_name`,`course_id`,`day`,`hour`),
   ADD KEY `lecture_num` (`lecture_num`) USING BTREE,
   ADD KEY `center_name` (`center_name`),
   ADD KEY `day` (`day`),
@@ -260,7 +258,8 @@ ALTER TABLE `lec_timetable`
 ALTER TABLE `student`
   ADD PRIMARY KEY (`student_code`),
   ADD KEY `fname` (`fname`) USING BTREE,
-  ADD KEY `assistant_id` (`assistant_id`);
+  ADD KEY `assistant_id` (`assistant_id`),
+  ADD KEY `student_ibfk_2` (`course_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -357,7 +356,8 @@ ALTER TABLE `lec_timetable`
 -- Constraints for table `student`
 --
 ALTER TABLE `student`
-  ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`assistant_id`) REFERENCES `assistant` (`assistant_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `student_ibfk_1` FOREIGN KEY (`assistant_id`) REFERENCES `assistant` (`assistant_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

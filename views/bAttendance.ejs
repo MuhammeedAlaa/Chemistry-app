@@ -1,34 +1,96 @@
 <title>Lectures</title>
 <%- include("partails/assistHeader") -%>
+<main class="page-content">
+  <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
+    <div class="clearfix">
+      <div class="form-inline pull-left">
+        <button class="btn btn-success" ng-click="viewlecattend()" id="view"><span class="glyphicon glyphicon-list">
+        </span>View</button>
+      </div>
+      <div class="form-inline pull-right">
+          <div class="form-group">
+              <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
+          </div>
+      </div>
+  </div>
+  <div id="studenttable">
+    <table class="table table-striped table-responsive">
+      <thead>
+          <tr>
+              <th ng-click="orderBy('code')">Code</th>
+              <th ng-click="orderBy('name')">Name</th>
+              <th ng-click="orderBy('phone')">Phone</th>
+              <th>Parent Phone</th>
+              <th>Shool</th>
+              <th></th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody class="text-center">
+          <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
+              <td>{{user.code}} </td>
+              <td>{{user.name}} </td>
+              <td>{{user.phone}} </td>
+              <td>{{user.parent_phone}}</td>
+              <td>{{user.school}}</td>
+              <td>
+                  <input class="btn btn-primary" type="checkbox" ng-click="savestudentAttendance(user)"></input>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
 
-    <main class="page-content">
-        <form>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="inputCourse">Course</label>
-                    <select class="custom-select" id="inputGroupSelect01">
-                  <option selected>Courses list</option>
-                  <option>...</option>
-                </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputCenter">Center</label>
-                    <select class="custom-select" id="inputGroupSelect01">
-                  <option selected>Center list...</option>
-                  <option>...</option>
-                </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="inputLec">Lecture</label>
-                    <select class="custom-select" id="inputGroupSelect01">
-                  <option selected>Lec list...</option>
-                  <option>...</option>
-                </select>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Next</button>
-        </form>
-    </main>
-    </div>
+
+
+  <div class="crude-form__wrapper" ng-show="triggerForm">
+    <h3 ng-show="addForm">Attendance</h3>
+    <form name="lectureForm" ng-model="lectureForm">
+      <div class="form-group">
+        <div class="form-group col-md-12">
+          <label for="course" id="lbcourse">Course</label>
+          <select id="Course" required ng-model="chosenCourse" class="col-md-12"style="height: auto;"  ng-change="showLec()" >
+            <option value = "">Select a course</option>
+            <option ng-repeat="option in courses" ng-value="option.id" >{{option.name}}</option>
+          </select>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <div class="form-group col-md-12">
+          <label for="center" id="lbcenter">Center</label>
+          <select required ng-model="chosenCenter" id="selectcenter" class="col-md-12" style="height: auto;" >
+            <option value = "">Select a center</option>
+            <option ng-repeat="option in centers" ng-value="option.name">{{option.name}}</option>
+          </select>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <div class="form-group col-md-12">
+          <label for="lecunum" id="lblec">Lecture</label>
+          <select required ng-model="chosenLecture" class="col-md-12" style="height: auto;" id="lec">
+            <option value = "">Select a Lecture</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="saveandcancel">
+        <button class="btn btn-primary" ng-click="insertAttendance()" id="Save"
+        ng-disabled="userForm.$invalid"> <i class="glyphicon glyphicon-pencil"> </i>Save
+        change </button>
+        <button class="btn btn-primary" ng-click="cancelAttendance()" id="Cancel">
+          Cancel </button>
+        </div>
+      </form>
+  </div>
+  </div>
+</main>
+</div>
     <!-- page-wrapper -->
+    <script src="/javascripts/attendance.js"></script>
     <%- include("partails/adminFooter") -%>

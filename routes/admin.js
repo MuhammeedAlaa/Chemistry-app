@@ -108,7 +108,7 @@ router.get('/course', function (req, res) {
 
 router.get("/Coursedata", function (req, res) {
     const {role} = isauth(req);
-    if (role == 'admin') {
+    if (role == 'admin' || role == 'assistant') {
         getCourseInfo((err, [course_name, course_id]) => {
             if (err) {
                 console.log(err);
@@ -199,7 +199,7 @@ router.get('/center', function (req, res) {
 
 router.get("/Centerdata", function (req, res) {
     const {role} = isauth(req);
-    if (role == 'admin') {
+    if (role == 'admin' || role =='assistant') {
         getCenterInfo((err, center_name) => {
             if (err) {
                 console.log(err);
@@ -293,6 +293,21 @@ router.get("/lectureData", function (req, res) {
     const {role} = isauth(req);
     if (role == 'admin') {
         getlectureInfo((err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get("/lectureData", function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'assistant') {
+        getlecturesnumber(req.body.course_id ,(err, data) => {
             if (err) {
                 console.log(err);
             } else {
