@@ -52,6 +52,24 @@ function deleteCenter(Center_name) {
 }
 
 
+function deleteLecData(req) {
+    let stmt = `DELETE FROM lec_timetable WHERE course_id = ? AND center_name = ? AND day = ? AND hour = ?`;
+    const r = req.body;
+    const lecture = [r.course_id, r.center_name, r.day, r.hour];
+    console.log(lecture);
+    connection.query(stmt, lecture, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        {
+            console.error("Deleted Successfully");
+        }
+});
+}
+
+
+exports.deleteLecData = deleteLecData;
 exports.deleteAssistant = deleteAssistant;
 exports.deleteCourse = deleteCourse;
 exports.deleteCenter = deleteCenter;

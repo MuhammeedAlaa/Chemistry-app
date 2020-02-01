@@ -1,90 +1,98 @@
 <title>Lectures</title>
-<%- include("partails/assistHeader") -%>
+<%- include("partails/adminHeader.ejs") -%>
 
-    <main class="page-content">
-        <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
-            <div class="clearfix">
-                <div class="form-inline pull-left">
-                    <button class="btn btn-success" ng-click="addLecture()"><span class="glyphicon glyphicon-plus"> </span>Add Lecture</button>
-                </div>
-                <div class="form-inline pull-right">
-                    <div class="form-group">
-                        <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
-                    </div>
-                </div>
+<main class="page-content">
+    <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
+        <div class="clearfix">
+            <div class="form-inline pull-left">
+                <button class="btn btn-success" ng-click="addlecture()"><span class="glyphicon glyphicon-plus">
+                    </span>Add lecture</button>
             </div>
-            <table class="table table-striped table-responsive">
-                <thead>
-                    <tr>
-                        <th ng-click="orderBy('course')">Course</th>
-                        <th ng-click="orderBy('center')">Center</th>
-                        <th ng-click="orderBy('lecNo')">Lectuer #</th>
-                        <th ng-click="orderBy('day')">Day</th>
-                        <th ng-click="orderBy('hour')">Hour</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="text-center">
-                    <tr ng-repeat="lecture in resultLecture = (lectures | filter: {'course': searchName}) | orderBy: order">
-                        <td>course </td>
-                        <td>center</td>
-                        <td>lec#</td>
-                        <td>day</td>
-                        <td>time</td>
-                        <td>
-                            <button class="btn btn-primary" ng-click="editLecture(lecture)">Edit</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger" ng-click="deleteLecture(lecture)">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="crude-form__wrapper" ng-show="triggerForm">
-                <h3 ng-show="editForm">Edit Lecture</h3>
-                <h3 ng-show="addForm">Add Lectuer</h3>
-                <form name="lectureForm" ng-model="lectureForm">
-                    <div class="form-group">
-                        <div class="form-group col-md-4">
-                            <label for="inputCourse">Course</label>
-                            <select class="custom-select" id="inputGroupSelect01">
-                          <option selected>Courses list</option>
-                          <option>...</option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-group col-md-4">
-                            <label for="inputCourse">Center</label>
-                            <select class="custom-select" id="inputGroupSelect01">
-                          <option selected>Courses list</option>
-                          <option>...</option>
-                        </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editLecNo">Lecture Number</label>
-                        <input class="form-control" id="editLecNo" type="number" maxlength="2" name="lecNumber" ng-model="crudFormCode" placeholder="Edit Lecture Number" min="1" required="required" autocomplete="off" />
-                        <div class="form-alert alert alert-danger" ng-show="lectureForm.lecNumber.$invalid &amp;&amp; lectureForm.lecNumber.$touched"><span ng-show="lectureForm.lecNumber.$error.number">Please input valid number</span><span ng-show="lectureForm.lecNumber.$error.min">Please input lecture# greater than 1</span><span ng-show="lectureForm.lecNumber.$error.required">Please input lecture number</span></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editDay">Day</label>
-                        <input class="form-control" id="editDay" type="text" name="Day" ng-model="crudFormPhone" placeholder="Edit Lecture Day" required="required" min="1" />
-                    </div>
-                    <div class="form-group">
-                        <label for="editTime">Time</label>
-                        <input class="form-control" id="editTime" type="time" name="time" ng-model="crudFormPassword" placeholder="Edit Lecture Time" required="required" min="1" autocomplete="off" />
-                    </div>
-                    <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
-                    <button class="btn btn-primary" ng-click="saveEdit(editLectureID)" ng-disabled="lectureForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
-                    <button class="btn btn-primary" ng-click="triggerForm = false">
-             Cancel                     </button>
-                </form>
+            <div class="form-inline pull-right">
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
+                </div>
             </div>
         </div>
-    </main>
+        <table class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th ng-click="orderBy('code')">Course</th>
+                    <th ng-click="orderBy('name')">Center</th>
+                    <th>Day</th>
+                    <th>Hour</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr ng-repeat="lecture in resultlectures = (lectures) | orderBy: order">
+                    <td>{{lecture.course_name}}</td>
+                    <td>{{lecture.center_name}}</td>
+                    <td>{{lecture.day}}</td>
+                    <td>{{lecture.hour}}</td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="editlecture(lecture)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="deletelecture(lecture)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="crude-form__wrapper" ng-show="triggerForm">
+            <h3 ng-show="editForm">Edit Lecture</h3>
+            <h3 ng-show="addForm">Add Lectuer</h3>
+            <form name="lectureForm" ng-model="lectureForm">
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="course">Course</label>
+                        <select id="Course" required ng-model="chosenCourse"  class="col-md-12">
+                            <option value = "">Select a course</option>
+                            <option ng-repeat="option in courses" ng-value="option.id">{{option.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="center">Center</label>
+                        <select required ng-model="chosenCenter" class="col-md-12">
+                            <option value = "">Select a center</option>
+                            <option ng-repeat="option in centers" ng-value="option.name">{{option.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="editDay">Day</label>
+                        <select class="custom-select" ng-model="chosenday" required class="col-md-12">
+                            <option value = "">Select day</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="editTime">Time</label>
+                        <input class="form-control" ng-model="chosenhour" id="Time" type="time" name="time" required autocomplete="off" />
+                    </div>
+                </div>
+                <button class="btn btn-primary" ng-click="saveEdit(lectureId)"
+                    ng-disabled="userForm.$invalid"> <i class="glyphicon glyphicon-pencil"> </i>Save
+                    change </button>
+                <button class="btn btn-primary" ng-click="triggerForm = false">
+                    Cancel </button>
+            </form>
+        </div>
     </div>
-    <!-- page-wrapper -->
-    <script src="/javascripts/template.js"></script>
-    <%- include("partails/adminFooter") -%>
+</main>
+</div>
+<!-- page-wrapper -->
+<script src="/javascripts/lecture.js"></script>
+<%- include("partails/adminFooter") -%>

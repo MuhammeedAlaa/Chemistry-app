@@ -1,13 +1,12 @@
 
 // jshint esversion:6
 const express = require('express');
+const router = express.Router();
 const { isauth } = require('../utils/auth');
 const { isCodeUsed ,insertStudent ,insertLecture } = require('../databaseUtils/insert');
 const { getStudentsInfo } = require('../databaseUtils/info');
 const { deleteStudent } = require('../databaseUtils/delete');
 const { updateStudantData } = require('../databaseUtils/update');
-const router = express.Router();
-
 
 router.get('/', function(req, res) {
     const { role } = isauth(req);

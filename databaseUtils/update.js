@@ -73,9 +73,26 @@ function updateCenterData(req) {
     });
 }
 
+
+function updateLectureData(req) {
+    let stmt = `UPDATE lec_timetable SET center_name = ?, course_id = ?, day = ?, hour = ? 
+    WHERE center_name = ? AND course_id = ? AND day = ? AND hour = ? `;
+    const r = req.body;
+    const lecture = [r.center_name, r.course_id, r.day, r.hour, r.old_center_name, r.old_course_id, r.old_day, r.old_hour];
+    connection.query(stmt, lecture, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        console.log("Updated Successfully");
+    });
+}
 exports.updateStudData = updateStudData;
 exports.updateStudantData = updateStudantData;
 exports.updateCourseData = updateCourseData;
 
 exports.updateAssistData = updateAssistData;
 exports.updateCenterData = updateCenterData;
+
+
+exports.updateLectureData = updateLectureData;

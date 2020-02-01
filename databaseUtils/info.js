@@ -185,9 +185,23 @@ function getCenterInfo(callback){
 
 
 
+function getlectureInfo(callback){
+    let stmt = "SELECT course_name, center_name, day, hour FROM lec_timetable NATURAL JOIN Course ";
+    connection.query(stmt, (err,rows) =>{
+        if(err){
+            callback(err,null);
+        } else {
+            callback(null, rows);
+        }
+    });
+}
+
 
 exports.getAssistInfo = getAssistInfo;
 exports.getStudentsInfo = getStudentsInfo;
 exports.getStudInfo = getStudInfo;
 exports.getCourseInfo = getCourseInfo; 
 exports.getCenterInfo = getCenterInfo; 
+
+exports.getlectureInfo = getlectureInfo; 
+

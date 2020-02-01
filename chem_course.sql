@@ -132,7 +132,9 @@ CREATE TABLE `lecture` (
   `lecture_num` int(11) NOT NULL,
   `center_name` varchar(255) NOT NULL,
   `course_id` int(11) NOT NULL,
-  `date` DATE NOT NULL
+  `date` DATE NOT NULL,
+  `day` varchar(255) NOT NULL,
+  `hour` TIME NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -144,7 +146,7 @@ CREATE TABLE `lecture` (
 CREATE TABLE `lec_timetable` (
   `center_name` varchar(255) NOT NULL,
   `course_id` int(11) NOT NULL,
-  `day` varchar(250) NOT NULL,
+  `day` varchar(255) NOT NULL,
   `hour` TIME NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -206,7 +208,7 @@ ALTER TABLE `center`
 --
 ALTER TABLE `course`
   ADD PRIMARY KEY (`course_id`),
-  ADD KEY `course_name` (`course_name`) USING BTREE,
+  ADD KEY `course_id` (`course_id`),
   ADD KEY `admin_id` (`admin_id`);
 
 --
@@ -235,17 +237,22 @@ ALTER TABLE `exam_grades`
 -- Indexes for table `lecture`
 --
 ALTER TABLE `lecture`
-  ADD PRIMARY KEY (`lecture_num`,`center_name`,`course_id`),
+  ADD PRIMARY KEY (`lecture_num`,`center_name`,`course_id`, `day`, `hour`),
   ADD KEY `lecture_num` (`lecture_num`) USING BTREE,
   ADD KEY `center_name` (`center_name`),
+  ADD KEY `day` (`day`),
+  ADD KEY `hour` (`hour`),
   ADD KEY `course_id` (`course_id`);
 
 --
 -- Indexes for table `lec_timetable`
 --
 ALTER TABLE `lec_timetable`
-  ADD PRIMARY KEY (`center_name`,`course_id`),
-  ADD KEY `course_id` (`course_id`);
+  ADD PRIMARY KEY (`center_name`,`course_id`,`day`,`hour`),
+  ADD KEY `center_name` (`center_name`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `day` (`day`),
+  ADD KEY `hour` (`hour`);
 
 --
 -- Indexes for table `student`
@@ -335,7 +342,9 @@ ALTER TABLE `exam_grades`
 --
 ALTER TABLE `lecture`
   ADD CONSTRAINT `lecture_ibfk_1` FOREIGN KEY (`center_name`) REFERENCES `center` (`center_name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lecture_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `lecture_ibfk_2` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lecture_ibfk_3` FOREIGN KEY (`day`) REFERENCES `lec_timetable` (`day`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lecture_ibfk_4` FOREIGN KEY (`hour`) REFERENCES `lec_timetable` (`hour`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `lec_timetable`

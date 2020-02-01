@@ -275,4 +275,68 @@ router.post("/DeleteCenter", function (req, res) {
     }
 });
 
+
+
+
+
+router.get('/lecture', function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        res.render('lecture');
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+router.get("/lectureData", function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        getlectureInfo((err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/addlecture', function (req, res) {
+    console.log(req.body);
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        insertNewLecture(req.body.center_name, req.body.course_id, req.body.day, req.body.hour);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+
+router.post('/EditLecture', function (req, res) {
+    console.log(req.body);
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        updateLectureData(req);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+router.post('/DeleteLecture', function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'admin') {
+        deleteLecData(req);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
 module.exports = router;
