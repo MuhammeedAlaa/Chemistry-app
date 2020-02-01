@@ -147,7 +147,7 @@ router.get('/studentInfo', (req, res) => {
     const { role } = isauth(req);
     console.log(role);
     if (role == 'assistant') {
-        getStudentsInfo((err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools, course_id]) => {
+        getStudentsInfo((err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools, course_id, course_name]) => {
             if (err) {
                 console.log(err);
                 res.redirect('/');
@@ -161,7 +161,8 @@ router.get('/studentInfo', (req, res) => {
                     studpasswords: studpasswords,
                     blackpoints: blackpoints,
                     schools: schools,
-                    course_id: course_id
+                    course_id: course_id,
+                    course_name: course_name
                 });
             }
         });
@@ -241,7 +242,7 @@ router.post("/deleteStudent", function(req, res) {
 
 
 router.post('/AddStudent', function(req, res) {
-    const decodedtoken = isauth(req);
+    const decodedtoken = isauth(req);    
     if (decodedtoken.role == 'assistant') {
         var coded = req.body.code;
         isCodeUsed(coded, (err, data) => {

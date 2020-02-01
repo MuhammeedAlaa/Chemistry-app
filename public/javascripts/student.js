@@ -23,7 +23,8 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 password: response.data.studpasswords[i],
                 blackpoints: response.data.blackpoints[i],
                 school: response.data.schools[i],
-                course_id: response.data.course_id
+                course_id: response.data.course_id[i],
+                course_name: response.data.course_name[i]
             });
         }
     }, function errorCallback(response) {
@@ -100,11 +101,22 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 parent_phone: '',
                 crudFormparentBlackPoints: '',
                 school: '',
-                assistid: ''
+                assistid: '',
+                course_id: $scope.chosenCourse,
+                course_name: ''
             };
+            for (var index = 0; index < $scope.courses.length; index++) {
+               if($scope.courses[index].id == $scope.chosenCourse)
+                {
+                    newUser.course_name = $scope.courses[index].name; 
+                    break;
+                }
+           }
+           
+            
             $http({
                 method: 'POST',
-                url: '/assistant/AddStudent',
+                url: '/assistant/AddStudent' ,
                 data: newUser
             }).then(function successCallback(response) {
                 console.log("API is used successfully");
@@ -124,7 +136,9 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 password: $scope.crudFormPassword,
                 blackpoints: $scope.crudFormparentBlackPoints,
                 school: $scope.crudFormSName,
-                assistid: ''
+                assistid: '',
+                course_id: $scope.chosenCourse,
+                course_name: ''
             };
             $http({
                 method: 'POST',
@@ -206,5 +220,8 @@ myApp.controller('namesCtrl', function($scope, $http) {
 
         $('#editblackpoints').attr('type', 'hidden');
         $('#labelBlack').hide();
+
+        $('#Course').show();
+        $('#lbcourse').show();
     };
 });
