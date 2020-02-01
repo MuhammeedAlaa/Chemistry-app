@@ -266,7 +266,6 @@ router.post('/AddStudent', function(req, res) {
 });
 
 
-<<<<<<< HEAD
 
 router.post('/setattendance', function (req, res) {
     const decodedtoken = isauth(req);
@@ -288,10 +287,6 @@ router.post('/setattendance', function (req, res) {
 
 router.post("/EditStudent", function (req, res) {
     const {role} = isauth(req);
-=======
-router.post("/EditStudent", function(req, res) {
-    const { role } = isauth(req);
->>>>>>> 0f3089e9ba0a41649b3ea7a868c3ca71ed0c9745
     if (role == 'assistant') {
         var spaceindex = req.body.name.indexOf(" ");
         req.body.fname = req.body.name.substring(0, spaceindex);
