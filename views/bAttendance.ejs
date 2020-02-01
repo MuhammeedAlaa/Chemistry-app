@@ -61,7 +61,7 @@
       <div class="form-group">
         <div class="form-group col-md-12">
           <label for="center" id="lbcenter">Center</label>
-          <select required ng-model="chosenCenter" id="selectcenter" class="col-md-12" style="height: auto;" >
+          <select required ng-model="chosenCenter" id="selectcenter" class="col-md-12" style="height: auto;"  ng-change="showLec()" >
             <option value = "">Select a center</option>
             <option ng-repeat="option in centers" ng-value="option.name">{{option.name}}</option>
           </select>

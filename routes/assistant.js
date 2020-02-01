@@ -241,7 +241,6 @@ router.post("/deleteStudent", function(req, res) {
 
 router.post('/AddStudent', function(req, res) {
     const decodedtoken = isauth(req);
-
     if (decodedtoken.role == 'assistant') {
         var coded = req.body.code;
         isCodeUsed(coded, (err, data) => {
@@ -269,7 +268,6 @@ router.post('/AddStudent', function(req, res) {
 
 router.post('/setattendance', function (req, res) {
     const decodedtoken = isauth(req);
-    //console.log(req);
     if(decodedtoken.role =='assistant' ){
         for (let i = 0; i < req.body.length; i++) {
             insertAttendance(req.body[i], decodedtoken.code);

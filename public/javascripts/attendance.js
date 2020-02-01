@@ -87,17 +87,24 @@ myApp.controller('namesCtrl', function ($scope, $http) {
                         lec_num: -1,
                         center_name: '',
                         course_id: -1
-
-
                     });
                 }
             }, function errorCallback(response) {
                 alert(response.statusText);
             });
                 $('#studenttable').show();
+        }  else if($scope.chosenCourse == '' && $scope.chosenCenter == '') {
+            alert("Please choose Coure and Center");
+        } else if($scope.chosenCenter == '') {
+            alert("Please choose Center");
+        } else if ($scope.chosenCourse == ''){
+            alert("Please choose Course");
+        } else {
+            alert("Please choose Lecture");
         }
     };
     $scope.showLec = function () {        
+    if($scope.chosenCourse != '' && $scope.chosenCenter != ''){
         $http({
             method: 'GET',
             url: '/assistant/lecturenumber/' + $scope.chosenCourse
@@ -109,14 +116,16 @@ myApp.controller('namesCtrl', function ($scope, $http) {
                     hour: response.data.hour[i]
                 });
                 $('#lec').append(`<option value="${response.data.lecture_num[i]}"> 
-                                       ${"Lecture Number: " + response.data.lecture_num[i] + " Day: " + response.data.day[i] + " Time: " + response.data.hour[i]} 
+                                       ${" Day: " + response.data.day[i] + " Time: " + response.data.hour[i]} 
                                   </option>`); 
             }
         }, function errorCallback(response) {
             alert(response.statusText);
         });
         $('#lec').show();
-        $('#lblec').show();    
+        $('#lblec').show(); 
+    } 
+    
     };
     $scope.savestudentAttendance = function (user){
         var index = $scope.users.indexOf(user);
@@ -142,12 +151,7 @@ myApp.controller('namesCtrl', function ($scope, $http) {
             alert(response.statusText);
         });
         $(location).attr('href', '/assistant');
-      
-        
     };
-
-
-
     $scope.cancelAttendance = function (){
         $(location).attr('href', '/assistant/attendance');
     };
