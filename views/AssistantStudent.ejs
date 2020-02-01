@@ -22,7 +22,7 @@
                         <th>Parent Phone</th>
                         <th>Shool</th>
                         <th>Total BP</th>
-                        <th></th>
+                        <th>Course id</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -34,6 +34,7 @@
                         <td>{{user.parent_phone}}</td>
                         <td>{{user.school}}</td>
                         <td>{{user.blackpoints}}</td>
+                        <td>{{user.course_id}}</td>
                         <td>
                             <button class="btn btn-primary" ng-click="editUser(user)">Edit</button>
                         </td>
@@ -82,10 +83,16 @@
                         <label for="editScool" id="labelSchool">School</label>
                         <input class="form-control" id="editShcool" type="text" name="school" ng-model="crudFormSName" placeholder="Edit Student School" autocomplete="off" />
                     </div>
+                    <div class="form-group col-md-12">
+                        <label for="course" id="lbcourse">Course</label>
+                        <select id="Course" required ng-model="chosenCourse" class="col-md-12" style="height: auto;" ng-change="showLec()">
+                          <option value = "">Select a course</option>
+                          <option ng-repeat="option in courses" ng-value="option.id" >{{option.name}}</option>
+                        </select>
+                    </div>
                     <div class="form-alert alert alert-danger" ng-show="codeExisted"> This Code has been registerd by other user</div>
                     <button class="btn btn-primary" ng-click="saveEdit(editUserId)" ng-disabled="userForm.$invalid || codeExisted"> <i class="glyphicon glyphicon-pencil"> </i>Save change </button>
-                    <button class="btn btn-primary" ng-click="triggerForm = false">
-             Cancel                     </button>
+                    <button class="btn btn-primary" ng-click="triggerForm = false">Cancel</button>
                 </form>
             </div>
         </div>

@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { isauth } = require('../utils/auth');
-const { isCodeUsed ,insertStudent ,insertLecture, insertAttendance } = require('../databaseUtils/insert');
+const { isCodeUsed, insertStudent, insertLecture, insertAttendance } = require('../databaseUtils/insert');
 const { getStudentsInfo, studentInfoCourse, getlecturesnumber } = require('../databaseUtils/info');
 const { deleteStudent } = require('../databaseUtils/delete');
 const { updateStudantData } = require('../databaseUtils/update');
@@ -143,11 +143,11 @@ router.get('/attendance', function(req, res) {
 });
 
 
-router.get('/studentInfo', (req, res) =>{
+router.get('/studentInfo', (req, res) => {
     const { role } = isauth(req);
     console.log(role);
     if (role == 'assistant') {
-        getStudentsInfo((err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) => {
+        getStudentsInfo((err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools, course_id]) => {
             if (err) {
                 console.log(err);
                 res.redirect('/');
@@ -160,7 +160,8 @@ router.get('/studentInfo', (req, res) =>{
                     studCodes: studCodes,
                     studpasswords: studpasswords,
                     blackpoints: blackpoints,
-                    schools: schools
+                    schools: schools,
+                    course_id: course_id
                 });
             }
         });
@@ -171,19 +172,19 @@ router.get('/studentInfo', (req, res) =>{
 
 
 
-router.get('/lecturenumber/:course_id', (req, res) =>{
+router.get('/lecturenumber/:course_id', (req, res) => {
     const { role } = isauth(req);
     console.log(role);
-    if(role == 'assistant'){
-        getlecturesnumber(req.params.course_id,(err,[lecture_num, day, hour]) =>{
+    if (role == 'assistant') {
+        getlecturesnumber(req.params.course_id, (err, [lecture_num, day, hour]) => {
             if (err) {
                 console.log(err);
                 res.redirect('/');
             } else {
                 res.json({
-                    lecture_num : lecture_num, 
-                    day: day ,
-                     hour: hour
+                    lecture_num: lecture_num,
+                    day: day,
+                    hour: hour
                 });
             }
         });
@@ -195,12 +196,12 @@ router.get('/lecturenumber/:course_id', (req, res) =>{
 
 
 
-router.get('/studentInfoCourse/:code', (req, res) =>{
+router.get('/studentInfoCourse/:code', (req, res) => {
     const { role } = isauth(req);
     console.log(req.params.code);
-    
-    if(role == 'assistant'){
-        studentInfoCourse(req.params.code, (err,[fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) =>{
+
+    if (role == 'assistant') {
+        studentInfoCourse(req.params.code, (err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) => {
             if (err) {
                 console.log(err);
                 res.redirect('/');
@@ -266,25 +267,25 @@ router.post('/AddStudent', function(req, res) {
 
 
 
-router.post('/setattendance', function (req, res) {
+router.post('/setattendance', function(req, res) {
     const decodedtoken = isauth(req);
     if(decodedtoken.role =='assistant' ){
         for (let i = 0; i < req.body.length; i++) {
             insertAttendance(req.body[i], decodedtoken.code);
-            res.redirect("/");   
+            res.redirect("/");
         }
-         
+
     } else {
         redirect("/");
-    }    
-                    
-    
-  });
+    }
+
+
+});
 
 
 
-router.post("/EditStudent", function (req, res) {
-    const {role} = isauth(req);
+router.post("/EditStudent", function(req, res) {
+    const { role } = isauth(req);
     if (role == 'assistant') {
         var spaceindex = req.body.name.indexOf(" ");
         req.body.fname = req.body.name.substring(0, spaceindex);
