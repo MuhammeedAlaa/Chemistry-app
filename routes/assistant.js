@@ -2,8 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const { isauth } = require('../utils/auth');
-const { isCodeUsed, insertStudent, insertLecture, insertAttendance } = require('../databaseUtils/insert');
-const { getStudentsInfo, studentInfoCourse, getlecturesnumber } = require('../databaseUtils/info');
+const { isCodeUsed, insertStudent, insertLecture, insertAttendance, insertNewExamScore } = require('../databaseUtils/insert');
+const { getStudentsInfo, studentInfoCourse, getlecturesnumber, getExam } = require('../databaseUtils/info');
 const { deleteStudent } = require('../databaseUtils/delete');
 const { updateStudantData } = require('../databaseUtils/update');
 
@@ -272,12 +272,11 @@ router.post('/setattendance', function(req, res) {
     if(decodedtoken.role =='assistant' ){
         for (let i = 0; i < req.body.length; i++) {
             insertAttendance(req.body[i], decodedtoken.code);
-            res.redirect("/");
         }
-
     } else {
-        redirect("/");
+        res.redirect("/");
     }
+    res.redirect("/")
 
 
 });
@@ -292,6 +291,77 @@ router.post("/EditStudent", function(req, res) {
         req.body.lname = req.body.name.substring(spaceindex + 1, req.body.name.length);
         updateStudantData(req);
         res.redirect("/");
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+
+router.get("/studscore", function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        console.log(req.body);
+        res.render("examscore");
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+router.post("/insertScore", function(req, res) {
+    const { role } = isauth(req);
+    const { code } = isauth(req);
+    if (role == 'assistant') {
+        insertNewExamScore(req,code);
+        res.redirect('/');
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get("/examnum/:co/:lec/:cen", function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        getExam(req,(err,num)=>{
+            if(err){
+                console.log(err);
+                res.redirect("/");
+            } else {
+                console.log("Success");
+                res.json({
+                    num: num
+                });
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+
+router.get('/studentInfoCourse/:code', (req, res) => {
+    const { role } = isauth(req);
+    console.log(req.params.code);
+    if (role == 'assistant') {
+        studentInfoCourse(req.params.code, (err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) => {
+            if (err) {
+                console.log(err);
+                res.redirect('/');
+            } else {
+                res.json({
+                    fullnames: fullnames,
+                    phones: phones,
+                    parent_phones: parent_phones,
+                    assistIds: assistIds,
+                    studCodes: studCodes,
+                    studpasswords: studpasswords,
+                    blackpoints: blackpoints,
+                    schools: schools
+                });
+            }
+        });
     } else {
         res.redirect('/');
     }

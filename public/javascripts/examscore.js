@@ -14,6 +14,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
     $scope.chosenCenter = '';
     $scope.chosenCourse = '';
     $scope.chosenLecture = '';
+    $scope.chosenexam = -1;
     $('#saveandcancel').hide();
     $('#studenttable').hide();
     $('#lec').hide();
@@ -67,6 +68,15 @@ myApp.controller('namesCtrl', function($scope, $http) {
             $('#lblec').hide();
             $('#lec').hide();
             $('#saveandcancel').show();
+
+
+
+
+
+
+
+                        
+           
             $http({
                 method: 'GET',
                 url: '/assistant/studentInfoCourse/' + $scope.chosenCourse,
@@ -87,9 +97,13 @@ myApp.controller('namesCtrl', function($scope, $http) {
                         lec_num: -1,
                         center_name: '',
                         course_id: -1,
-                        exam_num: -1
+                        score: -1,
+                        exam_num:  $scope.chosenexam
                     });
                 }
+
+
+
             }, function errorCallback(response) {
                 alert(response.statusText);
             });
@@ -130,10 +144,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
     };
     $scope.savestudentAttendance = function(user) {
         var index = $scope.users.indexOf(user);
-        console.log(index);
-        
-        console.log($scope.users[index].attend);
-
         $scope.users[index].attend = !$scope.users[index].attend;
     };
     $scope.insertAttendance = function() {
@@ -141,40 +151,34 @@ myApp.controller('namesCtrl', function($scope, $http) {
             $scope.users[i].lec_num = $scope.chosenLecture;
             $scope.users[i].center_name = $scope.chosenCenter;
             $scope.users[i].course_id = $scope.chosenCourse;
-            console.log($scope.users[i].attend);
+            $scope.users[i].score = $('#' + $scope.users[i].code).val();
         }
-
-
-
         $http({
             method: 'GET',
             url: '/assistant/examnum/' + $scope.chosenCourse +'/' + $scope.chosenLecture +'/' +$scope.chosenCenter ,
         }).then(function successCallback(response) {
             console.log("API is used successfully");
             for (let i = 0; i < $scope.users.length; i++) {
-                console.log(response.data.num);
-                
                 $scope.users[i].exam_num =  response.data.num;
             }
+            console.log($scope.users);
+            
             $http({
                 method: 'POST',
-                url: '/assistant/setattendance',
+                url: '/assistant/insertScore',
                 data: $scope.users
-            }).then(function successCallback(response) {
+            }).then(function successCallback(res) {
                 console.log("API is used successfully");
-                $(location).attr('href', '/assistant');
-            }, function errorCallback(response) {
-                alert(response.statusText);
+             $(location).attr('href', '/assistant');
+            }, function errorCallback(res) {
+                alert(res.statusText);
             });
+                       
         }, function errorCallback(response) {
             alert(response.statusText);
         });
     };
     $scope.cancelAttendance = function (){
-        $(location).attr('href', '/assistant/attendance');
+        $(location).attr('href', '/assistant/studscore');
     };
-
-
-
-
 });

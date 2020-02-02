@@ -180,23 +180,70 @@ function insertNewExam(req, code) {
 
 }
 
+function insertNewExamScore(req, code) {
+    console.log(req.body);
+    let stmt = "SELECT assistant_id as id FROM assistant WHERE assistant_code=? "; 
+    connection.query(stmt, code, (err, assistid) => {
+        if (err) {
+            console.error("error in fetching exam " + err);
+        } else { 
+            req.body.forEach(user => {
+                let stmt = "SELECT COUNT(*) as count FROM exam_grades WHERE lecture_num = ? and  course_id =? and center_name=? and assistant_id=? and student_code=?"; 
+                let exist = false;
+            
+                connection.query(stmt, [user.lec_num, user.course_id, user.center_name, assistid[0].id,user.code ], (err, results) => {
+                    if (err) {
+                        console.error("error in fetching exam " + err);
+                    } else {
+                        console.log("fetched successfully");
+                        if(results[0].count != 0){
+                            exist = true;
+                        }
+                        if(exist){
+                            stmt = "UPDATE exam_grades SET grade = ?  WHERE lecture_num = ? and  course_id =? and center_name=? and assistant_id=? and student_code=?";
+                            connection.query(stmt, [user.score, user.lec_num, user.course_id, user.center_name,assistid[0].id,user.code], (err, results) => {
+                                if (err) {
+                                    console.error("error in updata exam " + err);
+                                } else {
+                                    console.log("Update attendance successfully");
+                                }
+                            });
+                        } else {
+                            stmt = "INSERT INTO exam_grades (exam_num,lecture_num, center_name, course_id, assistant_id, student_code, grade) VALUES (?,?,?,?,?,?,?)";
+                            connection.query(stmt, [user.exam_num,user.lec_num, user.center_name, user.course_id, assistid[0].id, user.code, user.score], (err, results) => {
+                            if (err) {
+                                console.error("error in entering Exam " + err);
+                            } else {
+                                console.log("entered Exam successfully");
+                            }
+                        });
+        
+                        }
+                    }
+        
+                    });
+        
+                
+            });
+
+        }
+
+    });
+}
+
 
 function insertAttendance(req, code) {
     console.log(req);
-    let stmt = "SELECT COUNT(*) as count FROM STUDENT WHERE student_code = ?"; 
-    let exist = false;
+    let stmt = "SELECT COUNT(*) as count FROM ATTENDANCE WHERE student_code = ?"; 
     connection.query(stmt, req.code, (err, results) => {
         if (err) {
             console.error("error in fetching student " + err);
         } else {
             console.log("fetched successfully");
-            console.log(results[0].count);
-            
+            let exist = false;   
             if(results[0].count != 0){
                 exist = true;
             }
-
-
             if(exist){
                 stmt = "UPDATE ATTENDANCE SET Attended = ? where student_code = ?";
                 console.log(req.attend + " " + req.code);
@@ -211,12 +258,10 @@ function insertAttendance(req, code) {
             }
             else {
                 stmt = "INSERT INTO `attendance`(`exam_num`, `lecture_num`, `center_name`, `course_id`, `assistant_id`, `student_code`, `Attended`) VALUES (?,?,?,?,?,?,?)";  
-                connection.query(stmt, [1, req.lec_num, req.center_name, req.course_id, code, req.code, req.attend], (err, results) => {
+                connection.query(stmt, [req.exam_num, req.lec_num, req.center_name, req.course_id, code, req.code, req.attend], (err, results) => {
                     if (err) {
                         console.error("error in entering attendance " + err);
                     } else {
-                        console.log(req.lec_num + "  " + req.center_name + "  " + req.course_id + "  " + code + "  " + req.code + " " + req.attend);
-            
                         console.log("entered attendance successfully");
                     }
                 });
@@ -239,3 +284,4 @@ exports.insertCourse = insertCourse;
 exports.insertCenter = insertCenter;
 exports.insertAttendance = insertAttendance;
 exports.insertNewExam = insertNewExam;
+exports.insertNewExamScore = insertNewExamScore;

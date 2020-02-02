@@ -34,9 +34,8 @@
                             <td>{{user.phone}} </td>
                             <td>{{user.parent_phone}}</td>
                             <td>{{user.school}}</td>
-                            <td class="tg-list-item">
-                                <input class="tgl tgl-flip" id="cb5" type="checkbox" ng-click="savestudentAttendance(user)"/>
-                                <label class="tgl-btn" data-tg-off="Nope" data-tg-on="Yeah!" for="cb5"></label>
+                            <td class=>
+                                <input  type="checkbox" name="{{user.code}}" ng-click="savestudentAttendance(user)"/>
                             </td>
                         </tr>
                     </tbody>

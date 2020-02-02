@@ -277,6 +277,17 @@ function getlectureInfo(callback){
     });
 }
 
+function getExam(req,callback){   
+    let stmt = "SELECT exam_num FROM exam where course_id=? and center_name=? and lecture_num =?";
+    connection.query(stmt,[req.params.co, req.params.cen, req.params.lec], (err,rows) =>{
+        if(err){
+            callback(err,null);
+        } else {                        
+            callback(null, rows[0].exam_num);
+        }
+    });
+}
+
 function getlecturesnumber(course_id, callback){
     let stmt = "SELECT lecture_num, day, hour FROM lecture where course_id = ?  ";
     connection.query(stmt, course_id, (err,rows) =>{
@@ -307,4 +318,5 @@ exports.getCenterInfo = getCenterInfo;
 exports.getlectureInfo = getlectureInfo; 
 exports.studentInfoCourse = studentInfoCourse; 
 exports.getlecturesnumber = getlecturesnumber; 
+exports.getExam = getExam; 
 
