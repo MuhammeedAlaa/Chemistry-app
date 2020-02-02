@@ -134,7 +134,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
                     day: response.data.day[i],
                     hour: response.data.hour[i]
                 });
-                $('#lec').append(`<option value="${response.data.lecture_num[i]}"> 
+                $('#lec').append(`<option value="${response.data.lecture_num[i]}" id="${response.data.lecture_num[i]}"> 
                                        ${" Day: " + response.data.day[i] + " Time: " + response.data.hour[i]} 
                                   </option>`); 
             }
