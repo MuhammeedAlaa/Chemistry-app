@@ -2,7 +2,7 @@
 const express = require('express');
 const _ = require('lodash');
 const {getAssistInfo, getCourseInfo, getCenterInfo, getlectureInfo} = require('../databaseUtils/info');
-const {insertAssistant, insertCenter, insertCourse, isCodeUsed, insertNewLecture} = require('../databaseUtils/insert');
+const {insertAssistant, insertCenter, insertCourse, isCodeUsed, insertNewLecture, insertNewExam} = require('../databaseUtils/insert');
 const {updateAssistData, updateCenterData, updateCourseData, updateLectureData} = require('../databaseUtils/update');
 const {deleteAssistant, deleteCourse, deleteCenter, deleteLecData} = require('../databaseUtils/delete');
 const {isauth} = require('../utils/auth');
@@ -354,4 +354,30 @@ router.post('/DeleteLecture', function (req, res) {
         res.redirect('/');
     }
 });
+
+
+
+
+router.get('/exam', function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'admin') {
+        res.render('exam');
+    } else {
+        res.redirect('/');
+    }
+});
+
+
+router.post('/insertexam', function(req, res) {
+    const { role } = isauth(req);
+    const { code } = isauth(req);
+    console.log(req.body + "   " + code);
+    if (role == 'admin') {
+        insertNewExam(req,code);
+        res.redirect('/');
+    } else {
+        res.redirect('/');
+    }
+});
+
 module.exports = router;

@@ -133,6 +133,53 @@ function insertNewLecture(center_name, course_id, day, hour) {
 
 
 
+function insertNewExam(req, code) {
+
+    console.log(req);
+    let stmt = "SELECT COUNT(*) as count FROM exam WHERE lecture_num = ? and  course_id =? and center_name=?"; 
+    let exist = false;
+ 
+    connection.query(stmt, [req.body.lecture_num, req.body.course_id, req.body.center_name ], (err, results) => {
+        if (err) {
+            console.error("error in fetching exam " + err);
+        } else {
+            console.log("fetched successfully");
+            console.log(results[0].count);
+            if(results[0].count != 0){
+                exist = true;
+            }
+
+
+            if(exist){
+                stmt = "UPDATE exam SET fullmark = ?  WHERE lecture_num = ? and  course_id =? and center_name=?";
+                console.log(req.attend + " " + req.code);
+                
+                connection.query(stmt, [req.body.full_mark, req.body.lecture_num, req.body.course_id, req.body.center_name], (err, results) => {
+                    if (err) {
+                        console.error("error in updata exam " + err);
+                    } else {
+                        console.log("Update attendance successfully");
+                    }
+                });
+            } else {
+
+                stmt = "INSERT INTO exam (lecture_num, center_name, course_id, fullmark, admin_id) VALUES (?,?,?,?,?)";
+            connection.query(stmt, [req.body.lecture_num,req.body.center_name, req.body.course_id, req.body.full_mark, code], (err, results) => {
+                if (err) {
+                    console.error("error in entering Exam " + err);
+                } else {
+                    console.log("entered Exam successfully");
+                }
+            });
+
+            }
+        }
+
+        });
+
+
+}
+
 
 function insertAttendance(req, code) {
     console.log(req);
@@ -191,3 +238,4 @@ exports.isCodeUsed = isCodeUsed;
 exports.insertCourse = insertCourse;
 exports.insertCenter = insertCenter;
 exports.insertAttendance = insertAttendance;
+exports.insertNewExam = insertNewExam;

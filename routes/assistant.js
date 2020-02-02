@@ -176,7 +176,7 @@ router.get('/studentInfo', (req, res) => {
 router.get('/lecturenumber/:course_id', (req, res) => {
     const { role } = isauth(req);
     console.log(role);
-    if (role == 'assistant') {
+    if (role == 'assistant' || role == 'admin') {
         getlecturesnumber(req.params.course_id, (err, [lecture_num, day, hour]) => {
             if (err) {
                 console.log(err);
