@@ -84,13 +84,15 @@ myApp.controller('namesCtrl', function($scope, $http) {
             method: 'GET',
             url: '/assistant/lecturenumber/' + $scope.chosenCourse + '/' + $scope.chosenCenter
         }).then(function successCallback(response) {
+            $('#lec').val("");            
+            for(var o = 0; o< $scope.lectures.length ;o ++ ){
+                $('#'+$scope.lectures[o].id ).remove();} 
             for (var i = 0; i < response.data.lecture_num.length; i++) {
                 $scope.lectures.push({
                     id: response.data.lecture_num[i],
                     day: response.data.day[i],
                     hour: response.data.hour[i]
                 });
-                $('#lec').val("");
                 $('#lec').append(`<option value="${response.data.lecture_num[i]}"> 
                                        ${" Day: " + response.data.day[i] + " Time: " + response.data.hour[i]} 
                                   </option>`); 
