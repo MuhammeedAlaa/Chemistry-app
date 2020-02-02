@@ -1,6 +1,8 @@
 // jshint esversion:6
 const connection = require('../config/database');
 function getStudInfo(studCode,callback){
+    console.log(studCode);
+    
     let stmt = "SELECT avg(grade) as 'Avg Grade',sum(attended) as 'Total Attendance',black_point as 'Total black points', avg(fullmark) as 'Full mark avg' from exam_grades NATURAL JOIN student NATURAL JOIN attendance NATURAL JOIN exam where student_code = ?";
     connection.query(stmt, studCode, (err,result)=>{
         if(err){
@@ -10,6 +12,8 @@ function getStudInfo(studCode,callback){
             let attendance = result[0]['Total Attendance'];
             let blackpoints = result[0]['Total black points'];
             let fullmarkavg = result[0]['Full mark avg'];
+            console.log(gradesarv + attendance + blackpoints + fullmarkavg);
+            
             if(!gradesarv){
                 gradesarv = 0;
             }

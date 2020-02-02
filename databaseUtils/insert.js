@@ -136,15 +136,47 @@ function insertNewLecture(center_name, course_id, day, hour) {
 
 function insertAttendance(req, code) {
     console.log(req);
-        
-    let stmt = "INSERT INTO `attendance`(`exam_num`, `lecture_num`, `center_name`, `course_id`, `assistant_id`, `student_code`, `Attended`) VALUES (?,?,?,?,?,?,?)";    
-    connection.query(stmt, [1, req.lec_num, req.center_name, req.course_id, code, req.code, req.attend], (err, results) => {
+    let stmt = "SELECT COUNT(*) as count FROM STUDENT WHERE student_code = ?"; 
+    let exist = false;
+    connection.query(stmt, req.code, (err, results) => {
         if (err) {
-            console.error("error in entering attendance " + err);
+            console.error("error in fetching student " + err);
         } else {
-            console.log(req.lec_num + "  " + req.center_name + "  " + req.course_id + "  " + code + "  " + req.code + " " + req.attend);
+            console.log("fetched successfully");
+            console.log(results[0].count);
+            
+            if(results[0].count != 0){
+                exist = true;
+            }
 
-            console.log("entered attendance successfully");
+
+            if(exist){
+                stmt = "UPDATE ATTENDANCE SET Attended = ? where student_code = ?";
+                console.log(req.attend + " " + req.code);
+                
+                connection.query(stmt, [req.attend, req.code], (err, results) => {
+                    if (err) {
+                        console.error("error in updata attendance " + err);
+                    } else {
+                        console.log("Update attendance successfully");
+                    }
+                });
+            }
+            else {
+                stmt = "INSERT INTO `attendance`(`exam_num`, `lecture_num`, `center_name`, `course_id`, `assistant_id`, `student_code`, `Attended`) VALUES (?,?,?,?,?,?,?)";  
+                connection.query(stmt, [1, req.lec_num, req.center_name, req.course_id, code, req.code, req.attend], (err, results) => {
+                    if (err) {
+                        console.error("error in entering attendance " + err);
+                    } else {
+                        console.log(req.lec_num + "  " + req.center_name + "  " + req.course_id + "  " + code + "  " + req.code + " " + req.attend);
+            
+                        console.log("entered attendance successfully");
+                    }
+                });
+            }
+
+
+
         }
     });
 }
