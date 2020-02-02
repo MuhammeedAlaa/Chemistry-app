@@ -82,7 +82,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
     if($scope.chosenCourse != '' && $scope.chosenCenter != ''){
         $http({
             method: 'GET',
-            url: '/assistant/lecturenumber/' + $scope.chosenCourse
+            url: '/assistant/lecturenumber/' + $scope.chosenCourse + '/' + $scope.chosenCenter
         }).then(function successCallback(response) {
             for (var i = 0; i < response.data.lecture_num.length; i++) {
                 $scope.lectures.push({

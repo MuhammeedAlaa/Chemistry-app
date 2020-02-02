@@ -173,11 +173,13 @@ router.get('/studentInfo', (req, res) => {
 
 
 
-router.get('/lecturenumber/:course_id', (req, res) => {
+router.get('/lecturenumber/:course_id/:center_name', (req, res) => {
     const { role } = isauth(req);
     console.log(role);
     if (role == 'assistant' || role == 'admin') {
-        getlecturesnumber(req.params.course_id, (err, [lecture_num, day, hour]) => {
+        console.log(req.params.course_id + "    " + req.params.center_name);
+        
+        getlecturesnumber(req.params.course_id, req.params.center_name, (err, [lecture_num, day, hour]) => {
             if (err) {
                 console.log(err);
                 res.redirect('/');
