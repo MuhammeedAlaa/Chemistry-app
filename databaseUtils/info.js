@@ -81,7 +81,7 @@ function getAssistInfo(callback){
 
 
 function getStudentsInfo(callback){
-    let stmt = "SELECT * FROM STUDENT NATRUAL JOIN COURSE";
+    let stmt = "SELECT * FROM STUDENT JOIN COURSE on student.course_id = course.course_id";
     connection.query(stmt, (err,result) =>{
         if(err){
             callback(err,null);
