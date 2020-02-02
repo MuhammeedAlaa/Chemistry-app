@@ -34,35 +34,39 @@ myApp.controller('namesCtrl', function($scope, $http) {
     };
     $scope.editBP1 = function(user) {
         var index = $scope.users.indexOf(user);
-        $http({
-            method: 'POST',
-            url: '/assistant/EditBPplus',
-            data: $scope.users[index]
-        }).then(function successCallback(response) {
+        if ($scope.users[index].blackpoints != 4) {
+            $http({
+                method: 'POST',
+                url: '/assistant/EditBPplus',
+                data: $scope.users[index]
+            }).then(function successCallback(response) {
 
-            $scope.users[index].blackpoints += 1;
+                $scope.users[index].blackpoints += 1;
 
-            console.log($scope.users[index]);
+                console.log($scope.users[index]);
 
-            console.log("API is used successfully");
-        }, function errorCallback(response) {
-            alert(response.statusText);
-        });
+                console.log("API is used successfully");
+            }, function errorCallback(response) {
+                alert(response.statusText);
+            });
+        }
     };
     $scope.editBP2 = function(user) {
         var index = $scope.users.indexOf(user);
-        $http({
-            method: 'POST',
-            url: '/assistant/EditBPminus',
-            data: $scope.users[index]
-        }).then(function successCallback(response) {
-            $scope.users[index].blackpoints -= 1;
-            console.log($scope.users[index]);
+        if ($scope.users[index].blackpoints != 0) {
+            $http({
+                method: 'POST',
+                url: '/assistant/EditBPminus',
+                data: $scope.users[index]
+            }).then(function successCallback(response) {
+                $scope.users[index].blackpoints -= 1;
+                console.log($scope.users[index]);
 
-            console.log("API is used successfully");
-        }, function errorCallback(response) {
-            alert(response.statusText);
-        });
+                console.log("API is used successfully");
+            }, function errorCallback(response) {
+                alert(response.statusText);
+            });
+        }
     };
     $scope.orderBy = function(filter) {
         $scope.order = filter;
