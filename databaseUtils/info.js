@@ -81,7 +81,7 @@ function getAssistInfo(callback){
 
 
 function getStudentsInfo(callback){
-    let stmt = "SELECT * FROM STUDENT NATRUAL JOIN COURSE";
+    let stmt = "SELECT * FROM STUDENT JOIN COURSE on student.course_id = course.course_id";
     connection.query(stmt, (err,result) =>{
         if(err){
             callback(err,null);
@@ -300,9 +300,9 @@ function getExam(req,callback){
     });
 }
 
-function getlecturesnumber(course_id, callback){
-    let stmt = "SELECT lecture_num, day, hour FROM lecture where course_id = ?  ";
-    connection.query(stmt, course_id, (err,rows) =>{
+function getlecturesnumber(course_id, center_name, callback){
+    let stmt = "SELECT lecture_num, day, hour FROM lecture where course_id = ? and center_name=?  ";
+    connection.query(stmt, [course_id, center_name], (err,rows) =>{
         if(err){
             callback(err,null);
         } else {

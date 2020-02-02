@@ -13,6 +13,8 @@ myApp.controller('namesCtrl', function($scope, $http) {
         url: '/assistant/studentInfo'
     }).then(function successCallback(response) {
         console.log("API is used successfully");
+        console.log(response.data);
+        
         for (var i = 0; i < response.data.assistIds.length; i++) {
             $scope.users.push({
                 assistid: response.data.assistIds[i],
