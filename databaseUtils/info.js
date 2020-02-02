@@ -265,9 +265,21 @@ function getCenterInfo(callback){
 }
 
 
+function getlectureInstanceInfo(callback){
+    let stmt = "SELECT lecture_num, center_name, course_name, date, day, hour, fullmark, course_id FROM "+ 
+    "lecture NATURAL JOIN exam NATURAL JOIN course";
+    connection.query(stmt, (err,rows) =>{
+        if(err){
+            callback(err,null);
+        } else {
+            callback(null, rows);
+        }
+    });
+}
+
 
 function getlectureInfo(callback){
-    let stmt = "SELECT course_name, center_name, day, hour FROM lec_timetable NATURAL JOIN Course ";
+    let stmt = "SELECT course_name, center_name, day, hour, course_id FROM lec_timetable NATURAL JOIN Course ";
     connection.query(stmt, (err,rows) =>{
         if(err){
             callback(err,null);
@@ -316,6 +328,7 @@ exports.getCourseInfo = getCourseInfo;
 exports.getCenterInfo = getCenterInfo; 
 
 exports.getlectureInfo = getlectureInfo; 
+exports.getlectureInstanceInfo = getlectureInstanceInfo; 
 exports.studentInfoCourse = studentInfoCourse; 
 exports.getlecturesnumber = getlecturesnumber; 
 exports.getExam = getExam; 

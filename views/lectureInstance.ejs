@@ -1,0 +1,86 @@
+<title>Lectures</title>
+<%- include("partails/assistHeader.ejs") -%>
+
+<main class="page-content">
+    <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
+        <div class="clearfix">
+            <div class="form-inline pull-left">
+                <button class="btn btn-success" ng-click="addlecture()"><span class="glyphicon glyphicon-plus">
+                    </span>Add lecture</button>
+            </div>
+            <div class="form-inline pull-right">
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th ng-click="orderBy('lec_number')" >Lecture Number</th>
+                    <th ng-click="orderBy('center_name')">Center</th>
+                    <th ng-click="orderBy('course_name')">Course</th>
+                    <th ng-click="orderBy('date')">Date</th>
+                    <th ng-click="orderBy('day')">Day</th>
+                    <th ng-click="orderBy('hour')">Hour</th>
+                    <th ng-click="orderBy('fullmark')">Exam fullmark</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <tr ng-repeat="lecture in resultlectures = (lectures) | orderBy:order:reverse">
+                    <td>{{lecture.lecture_num}}</td>
+                    <td>{{lecture.center_name}}</td>
+                    <td>{{lecture.course_name}}</td>
+                    <td>{{lecture.date}}</td>
+                    <td>{{lecture.day}}</td>
+                    <td>{{lecture.hour}}</td>
+                    <td>{{lecture.fullmark}}</td>
+                    <td>
+                        <button class="btn btn-primary" ng-click="editlecture(lecture)">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" ng-click="deletelecture(lecture)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="crude-form__wrapper" ng-show="triggerForm">
+            <h3 ng-show="editForm">Edit Lecture</h3>
+            <h3 ng-show="addForm">Add Lectuer</h3>
+            <form name="lectureForm" ng-model="lectureForm">
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label id="chosenLecTimelbl" for="chosenLecTime">Lecture time</label>
+                        <select id="chosenLecTime" required ng-model="chosenLecTime"  class="col-md-12" style="height: auto;">
+                            <option value = "">Select a lecture</option>
+                            <option ng-repeat="option in LectureTimes" ng-value="option.id" value="option.id">{{option.course_name}}, {{option.center_name}}, {{option.day}}, {{option.hour}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="date">date</label>
+                        <input class="form-control" ng-model="chosendate" id="lecdate" type="date" name="date" required autocomplete="off" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="fullmark">Exam fullmark</label>
+                        <input class="form-control" ng-model="fullmark" id="fullmark" type="number" name="fullmark" required autocomplete="off" />
+                    </div>
+                </div>
+                <button class="btn btn-primary" ng-click="saveEdit(lectureId)"
+                    ng-disabled="userForm.$invalid"> <i class="glyphicon glyphicon-pencil"> </i>Save
+                    change </button>
+                <button class="btn btn-primary" ng-click="triggerForm = false">
+                    Cancel </button>
+            </form>
+        </div>
+    </div>
+</main>
+</div>
+<!-- page-wrapper -->
+<script src="/javascripts/lectureInstance.js"></script>
+<%- include("partails/adminFooter") -%>

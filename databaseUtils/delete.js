@@ -68,9 +68,36 @@ function deleteLecData(req) {
 });
 }
 
+function deleteLecInstanceData(req) {
+    let stmt = `DELETE FROM lecture WHERE lecture_num = ? AND course_id = ? AND center_name = ? AND day = ? AND hour = ?`;
+    const r = req.body;
+    const lecture = [r.lecture_num, r.course_id, r.center_name, r.day, r.hour];
+    connection.query(stmt, lecture, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        {
+            console.error("Deleted LECTURE INSTANCE Successfully");
+            let stmt = `DELETE FROM exam WHERE exam_num = ? AND lecture_num = ? AND course_id = ? AND center_name = ?`;
+            const r = req.body;
+            const exam = [r.lecture_num,r.lecture_num, r.course_id, r.center_name];
+            connection.query(stmt, exam, (err, results) => {
+                if (err) {
+                    console.error(err.message);
+                }else{
+                    console.error("Deleted EXAM Successfully");
+                }
+            });
+            
+        }
+});
+}
+
 
 exports.deleteLecData = deleteLecData;
 exports.deleteAssistant = deleteAssistant;
 exports.deleteCourse = deleteCourse;
 exports.deleteCenter = deleteCenter;
 exports.deleteStudent = deleteStudent;
+exports.deleteLecInstanceData = deleteLecInstanceData;

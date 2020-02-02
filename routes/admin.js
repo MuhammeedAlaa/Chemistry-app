@@ -304,21 +304,6 @@ router.get("/lectureData", function (req, res) {
     }
 });
 
-router.get("/lectureData", function (req, res) {
-    const {role} = isauth(req);
-    if (role == 'assistant') {
-        getlecturesnumber(req.body.course_id ,(err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json(data);
-            }
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
 router.post('/addlecture', function (req, res) {
     console.log(req.body);
     const {role} = isauth(req);

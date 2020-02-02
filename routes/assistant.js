@@ -2,10 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const { isauth } = require('../utils/auth');
-const { isCodeUsed, insertStudent, insertLecture, insertAttendance, insertNewExamScore } = require('../databaseUtils/insert');
-const { getStudentsInfo, studentInfoCourse, getlecturesnumber, getExam } = require('../databaseUtils/info');
-const { deleteStudent } = require('../databaseUtils/delete');
-const { updateStudantData } = require('../databaseUtils/update');
+const { isCodeUsed, insertStudent, insertLecture, insertAttendance, insertNewExamScore, insertNewLectureinstance } = require('../databaseUtils/insert');
+const { getStudentsInfo, studentInfoCourse, getlecturesnumber, getExam, getlectureInstanceInfo, getlectureInfo } = require('../databaseUtils/info');
+const { deleteStudent, deleteLecInstanceData } = require('../databaseUtils/delete');
+const { updateStudantData, updateLectureInstanceData } = require('../databaseUtils/update');
 
 router.get('/', function(req, res) {
     const { role } = isauth(req);
@@ -20,24 +20,98 @@ router.get('/', function(req, res) {
 router.get('/lecture', function(req, res) {
     const { role } = isauth(req);
     if (role == 'assistant') {
-        res.render('lecture');
+        res.render('lectureinstance');
     } else {
         res.redirect('/');
     }
 });
 
-router.post("/AddLecture", function(req, res) {
-    console.log(req.body);
-    const { role } = isauth(req);
+router.get("/baseLectureData", function (req, res) {
+    const {role} = isauth(req);
     if (role == 'assistant') {
-        console.log(req.body);
-        insertLecture(req.center_name, req.course_id, req.day, req.hour);
-        res.redirect("/");
+        getlectureInfo((err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
     } else {
         res.redirect('/');
     }
-    res.redirect("/");
 });
+
+router.get("/lectureData", function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'assistant') {
+        getlectureInstanceInfo((err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/addlecture', function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'assistant') {
+        insertNewLectureinstance(req,(err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+                res.status(200).end();
+            }
+        });
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+
+router.post('/EditLecture', function (req, res) {
+    console.log(req.body);
+    const {role} = isauth(req);
+    if (role == 'assistant') {
+        console.log(2000);
+        updateLectureInstanceData(req);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+
+
+router.post('/DeleteLecture', function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'assistant') {
+        deleteLecInstanceData(req);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+
+
+
+router.get('/exam', function(req, res) {
+    const { role } = isauth(req);
+    if (role == 'admin') {
+        res.render('exam');
+    } else {
+        res.redirect('/');
+    }
+});
+
 
 //------Black Points routes
 router.get('/blackpoint', function(req, res) {

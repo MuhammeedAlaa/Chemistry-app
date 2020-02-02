@@ -131,6 +131,38 @@ function insertNewLecture(center_name, course_id, day, hour) {
     });
 }
 
+function insertNewLectureinstance(req, callback) {
+    const r = req.body;
+    let stmt = `SELECT MAX(lecture_num) FROM lecture WHERE center_name = ? AND course_id = ? AND day = ? AND hour = ?`;
+    connection.query(stmt, [r.center_name, r.course_id, r.day, r.hour], (err, results, fields) => {
+        if (err) {
+            console.log(err);
+        } else {
+            let lecnum;
+            if(results[0]['MAX(lecture_num)'])
+                lecnum = parseInt(results[0]['MAX(lecture_num)']) + 1;
+            else
+                lecnum = 1;
+            stmt = "INSERT INTO lecture VALUES (?,?,?,?,?,?)";
+            connection.query(stmt, [lecnum, r.center_name, r.course_id, r.date, r.day, r.hour], (err, results) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    let stmt = `INSERT INTO exam VALUES (?,?,?,?,?)`;
+                    connection.query(stmt, [lecnum, lecnum, r.center_name, r.course_id, r.fullmark], (err, results) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("inserted exam and lecture instance");
+                            callback(null, lecnum);
+                        }
+                    });
+                    console.log("entered lecture successfully");
+                }
+            });
+        }
+    });
+}
 
 
 function insertNewExam(req, code) {
@@ -285,3 +317,4 @@ exports.insertCenter = insertCenter;
 exports.insertAttendance = insertAttendance;
 exports.insertNewExam = insertNewExam;
 exports.insertNewExamScore = insertNewExamScore;
+exports.insertNewLectureinstance = insertNewLectureinstance;
