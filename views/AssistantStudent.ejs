@@ -85,6 +85,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         <label for="course" id="lbcourse">Course</label>
+                        <!-- if you removed this required the edit will work perfectly-->
                         <select id="Course" required ng-model="chosenCourse" class="col-md-12" style="height: auto;" ng-change="showLec()">
                           <option value = "">Select a course</option>
                           <option ng-repeat="option in courses" ng-value="option.id" >{{option.name}}</option>
