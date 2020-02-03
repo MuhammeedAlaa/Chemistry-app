@@ -219,6 +219,90 @@ function studentInfoCourse(CID,callback){
     });
 }
 
+function studentInfoCourse2(CID,callback){
+    console.log(CID);
+    console.log("asdfoidjsafoidsaf");
+    
+    let stmt = "SELECT * FROM STUDENT where course_id = ? ";
+    connection.query(stmt,CID, (err,result) =>{
+        if(err){
+            callback(err,null);
+        } else {
+            let fullnames = [];
+            let phones = [];
+            let parent_phones = [];
+            let assistIds = [];
+            let studCodes = [];
+            let studpasswords = [];
+            let blackpoints = [];
+            let schools = [];
+            let attend = [];
+            result.forEach((student)=>{
+                if(student.fname == null){
+                    student.fname = '';
+                }
+                if(student.lname == null){
+                    student.lname = '';
+                }
+                
+                if(student.phone == null){
+                    student.phone = '';
+                }
+               
+                if(student.student_code == null){
+                    student.student_code = 0;
+                }
+               
+                if(student.assistant_id == null){
+                    student.assistant_id = 0;
+                }
+               
+                if(student.password == null){
+                    student.password = '';
+                }
+               
+                if(student.parent_phone == null){
+                    student.parent_phone = '';
+                }
+               
+                if(student.black_point == null){
+                    student.black_point = 0;
+                }
+                if(student.school == null){
+                    student.school = '';
+                }
+                fullnames.push(student.fname + " " + student.lname);
+                phones.push(student.phone);
+                parent_phones.push(student.parent_phone);
+                assistIds.push(student.assistant_id);
+                blackpoints.push(student.black_point);
+                studCodes.push(student.student_code);
+                studpasswords.push(student.password);
+                schools.push(student.school);
+                let stmt = "SELECT ATTENDED FROM attendance where course_id = ? ";
+                console.log("asdfsadfijo");
+                
+                connection.query(stmt,CID, (err,result2) =>{
+                    if(err){
+                        callback(err,null);
+                    } else {
+                        console.log(result2);
+                        
+                        result2.forEach((student2)=>{
+                            if(student2.ATTENDED)
+                            attend.push("Attened");
+                            else
+                            attend.push("Absent");
+                        });
+                        callback(null, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools, attend]);
+                    }
+                });
+            });
+            
+        }
+    });
+}
+
 
 
 function getCourseInfo(callback){
@@ -345,4 +429,5 @@ exports.studentInfoCourse = studentInfoCourse;
 exports.getlecturesnumber = getlecturesnumber; 
 exports.getExam = getExam; 
 exports.getlectureInstanceInfo = getlectureInstanceInfo; 
+exports.studentInfoCourse2 = studentInfoCourse2; 
 

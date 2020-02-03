@@ -143,23 +143,24 @@ function insertNewLectureinstance(req, callback) {
                 lecnum = parseInt(results[0]['MAX(lecture_num)']) + 1;
             else
                 lecnum = 1;
-            stmt = "INSERT INTO lecture VALUES (?,?,?,?,?,?)";
-            connection.query(stmt, [lecnum, r.center_name, r.course_id, r.date, r.day, r.hour], (err, results) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    let stmt = `INSERT INTO exam VALUES (?,?,?,?,?)`;
-                    connection.query(stmt, [lecnum, lecnum, r.center_name, r.course_id, r.fullmark], (err, results) => {
-                        if (err) {
-                            console.log(err);
-                        } else {
-                            console.log("inserted exam and lecture instance");
-                            callback(null, lecnum);
-                        }
-                    });
-                    console.log("entered lecture successfully");
-                }
-            });
+                let stmt = `INSERT INTO exam VALUES (?,?,?,?,?)`;
+                connection.query(stmt, [lecnum, r.center_name, r.course_id, r.fullmark], (err, results) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        console.log("inserted exam and lecture instance");
+               
+                        stmt = "INSERT INTO lecture VALUES (?,?,?,?,?,?)";
+                        connection.query(stmt, [lecnum, r.center_name, r.course_id, r.date, r.day, r.hour], (err, results) => {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                console.log("entered lecture successfully");
+                                callback(null, lecnum);
+                            }
+                        });
+                    }
+                });
         }
     });
 }

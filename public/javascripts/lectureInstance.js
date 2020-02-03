@@ -1,10 +1,5 @@
 // jshint esversion:8
 var myApp = angular.module('myApp', []);
-<<<<<<< HEAD
-
-
-=======
->>>>>>> noerrorversion
 myApp.controller('namesCtrl', function ($scope, $http) {
     $('th').css('cursor', 'pointer');
     $scope.triggerForm = false;
@@ -37,21 +32,13 @@ function updatetable(){
         method: 'GET',
         url: '/assistant/baseLectureData'
     }).then(function successCallback(response) {
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> noerrorversion
         chosenLecTime = "";
         data = response.data;
         for (let i = 0; i < data.length; i++) {
             data[i].id = i;
         }
         $scope.LectureTimes = data;
-<<<<<<< HEAD
-        console.log($scope.LectureTimes);
-=======
->>>>>>> noerrorversion
     }, function errorCallback(response) {
         alert(response.statusText);
     });
@@ -62,16 +49,9 @@ updatetable();
         $scope.reverse = ($scope.order === filter) ? !$scope.reverse : false;
         $scope.order = filter;
     };
-
-
-
     $scope.saveEdit = function (lectureId) {
         if (lectureId == 'new') {
             $scope.chosenLecTime = $scope.LectureTimes[parseInt($scope.chosenLecTime)];
-<<<<<<< HEAD
-            console.log($scope.chosenLecTime);    
-=======
->>>>>>> noerrorversion
             var newLecture = {
                 center_name: $scope.chosenLecTime.center_name,
                 course_name: $scope.chosenLecTime.course_name,
@@ -90,10 +70,6 @@ updatetable();
                 $scope.lectures.push(newLecture);
             }, function errorCallback(response) {
                 alert(response.statusText);
-<<<<<<< HEAD
-                $scope.lectures.push(newLecture);
-=======
->>>>>>> noerrorversion
             });
         } else {
             var data = {
@@ -137,11 +113,9 @@ updatetable();
         }, function errorCallback(response) {
             alert(response.statusText);
         });
-        
+
 
     };
-
-
     $scope.addlecture = function () {
         $scope.lectureId = 'new';
         $scope.triggerForm = true;
@@ -149,14 +123,14 @@ updatetable();
         $scope.addForm = true;
         $scope.lectureExisted = false;
         $scope.chosenLecTime = "";
-        $( "#lectureForm" ).show();
-        $( "#lectureFormlbl" ).show();
-
-        
+        $("#chosenLecTime").show();
+        $("#chosenLecTimelbl").show();
+        $scope.fullmark = "";
+        $scope.chosendate = "";
+        $('#fullmark').attr("placeholder","Add Full Mark");
     };
     $scope.editlecture = function (lecture) {
         var index = $scope.lectures.indexOf(lecture);
-        console.log(index);
         $scope.triggerForm = true;
         $scope.editForm = true;
         $scope.addForm = false;
@@ -165,8 +139,14 @@ updatetable();
         $scope.chosenLecTime = $scope.lectures[index];
         $scope.chosenLecTime.lecture_num = $scope.lectures[index].lecture_num;
         $scope.chosenLecTime.course_id = $scope.lectures[index].course_id;
+        let date = new Date($scope.lectures[index].date);
+        let dd = date.getDate(); var mm = date.getMonth(); var yyyy = date.getFullYear();
+        let today =new Date(yyyy , mm,dd );  
+        $scope.chosendate = today;
+        $scope.fullmark = $scope.lectures[index].fullmark;
+        $('#fullmark').attr("placeholder","Edit Full Mark");
         $("#chosenLecTime").hide();
         $("#chosenLecTimelbl").hide();
-        
+
     };
-});
+}); 

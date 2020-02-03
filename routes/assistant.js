@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { isauth } = require('../utils/auth');
 const { isCodeUsed, insertStudent, insertLecture, insertAttendance, insertNewExamScore, insertNewLectureinstance } = require('../databaseUtils/insert');
-const { getStudentsInfo, studentInfoCourse, getlecturesnumber, getExam, getlectureInstanceInfo, getlectureInfo } = require('../databaseUtils/info');
+const { getStudentsInfo, studentInfoCourse, getlecturesnumber, getExam, getlectureInstanceInfo, getlectureInfo, studentInfoCourse2 } = require('../databaseUtils/info');
 const { deleteStudent, deleteLecInstanceData } = require('../databaseUtils/delete');
 const { updateStudantData, updateLectureInstanceData } = require('../databaseUtils/update');
 
@@ -21,105 +21,11 @@ router.get('/lecture', function(req, res) {
     const { role } = isauth(req);
     if (role == 'assistant') {
         res.render('lectureinstance');
-<<<<<<< HEAD
-    } else {
-=======
         } else {
->>>>>>> noerrorversion
         res.redirect('/');
     }
 });
 
-<<<<<<< HEAD
-router.get("/baseLectureData", function (req, res) {
-    const {role} = isauth(req);
-    if (role == 'assistant') {
-        getlectureInfo((err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json(data);
-            }
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
-router.get("/lectureData", function (req, res) {
-    const {role} = isauth(req);
-    if (role == 'assistant') {
-        getlectureInstanceInfo((err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json(data);
-            }
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
-router.post('/addlecture', function (req, res) {
-    const {role} = isauth(req);
-    if (role == 'assistant') {
-        insertNewLectureinstance(req,(err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                res.json(data);
-                res.status(200).end();
-            }
-        });
-    }
-    else{
-        res.redirect('/');
-    }
-});
-
-
-router.post('/EditLecture', function (req, res) {
-    console.log(req.body);
-    const {role} = isauth(req);
-    if (role == 'assistant') {
-        console.log(2000);
-        updateLectureInstanceData(req);
-        res.redirect("/");
-    }
-    else{
-        res.redirect('/');
-    }
-});
-
-
-
-router.post('/DeleteLecture', function (req, res) {
-    const {role} = isauth(req);
-    if (role == 'assistant') {
-        deleteLecInstanceData(req);
-        res.redirect("/");
-    }
-    else{
-        res.redirect('/');
-    }
-});
-
-
-
-
-router.get('/exam', function(req, res) {
-    const { role } = isauth(req);
-    if (role == 'admin') {
-        res.render('exam');
-    } else {
-        res.redirect('/');
-    }
-});
-
-
-=======
->>>>>>> noerrorversion
 //------Black Points routes
 router.get('/blackpoint', function(req, res) {
     const { role } = isauth(req);
@@ -442,6 +348,32 @@ router.get('/studentInfoCourse/:code', (req, res) => {
                     studpasswords: studpasswords,
                     blackpoints: blackpoints,
                     schools: schools
+                });
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+router.get('/studentInfoCourse2/:code', (req, res) => {
+    const { role } = isauth(req);
+    console.log(req.params.code);
+    if (role == 'assistant') {
+        studentInfoCourse2(req.params.code, (err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools, attend]) => {
+            if (err) {
+                console.log(err);
+                res.redirect('/');
+            } else {
+                res.json({
+                    fullnames: fullnames,
+                    phones: phones,
+                    parent_phones: parent_phones,
+                    assistIds: assistIds,
+                    studCodes: studCodes,
+                    studpasswords: studpasswords,
+                    blackpoints: blackpoints,
+                    schools: schools,
+                    attend: attend
                 });
             }
         });
