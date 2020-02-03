@@ -355,10 +355,9 @@ router.get('/exam', function(req, res) {
 
 router.post('/insertexam', function(req, res) {
     const { role } = isauth(req);
-    const { code } = isauth(req);
     console.log(req.body + "   " + code);
     if (role == 'admin') {
-        insertNewExam(req,code);
+        insertNewExam(req);
         res.redirect('/');
     } else {
         res.redirect('/');

@@ -89,6 +89,9 @@ function updateLectureData(req) {
 }
 
 
+
+
+
 function updateLectureInstanceData(req) {
     let stmt = `UPDATE lecture SET date = ? 
     WHERE lecture_num = ? AND center_name = ? AND course_id = ? AND day = ? AND hour = ? `;
@@ -125,5 +128,5 @@ exports.updateCourseData = updateCourseData;
 exports.updateAssistData = updateAssistData;
 exports.updateCenterData = updateCenterData;
 
-exports.updateLectureData = updateLectureData;
 exports.updateLectureInstanceData = updateLectureInstanceData;
+exports.updateLectureData = updateLectureData;

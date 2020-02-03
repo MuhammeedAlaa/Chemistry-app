@@ -21,7 +21,6 @@ myApp.controller('namesCtrl', function ($scope, $http) {
         url: '/admin/lecturedata'
     }).then(function successCallback(response) {
         $scope.lectures = response.data;
-        console.log($scope.lectures);
     }, function errorCallback(response) {
         alert(response.statusText);
     });
@@ -55,7 +54,6 @@ myApp.controller('namesCtrl', function ($scope, $http) {
                 id: response.data.course_id[i],
                 name: response.data.course_name[i],
             });
-            console.log(response.data.course_id[i] + "   " + response.data.course_name[i]);
         }
     }, function errorCallback(response) {
         alert(response.statusText);
@@ -71,7 +69,6 @@ myApp.controller('namesCtrl', function ($scope, $http) {
 
     $scope.saveEdit = function (lectureId) {
         if (lectureId == 'new') {
-            console.log("sad");
             var newLecture = {
                 center_name: $scope.chosenCenter,
                 course_id: $scope.chosenCourse,
@@ -79,7 +76,6 @@ myApp.controller('namesCtrl', function ($scope, $http) {
                 hour: $('#Time').val() + ":00",
                 course_name: $( "#Course option:selected" ).text()
             };
-            console.log(newLecture);
             $http({
                 method: 'POST',
                 url: '/admin/AddLecture',
@@ -162,7 +158,6 @@ myApp.controller('namesCtrl', function ($scope, $http) {
     };
     $scope.editlecture = function (lecture) {
         var index = $scope.lectures.indexOf(lecture);
-        console.log(index);
         $scope.triggerForm = true;
         $scope.editForm = true;
         $scope.addForm = false;

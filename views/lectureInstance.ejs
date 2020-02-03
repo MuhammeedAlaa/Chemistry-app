@@ -55,7 +55,7 @@
                         <label id="chosenLecTimelbl" for="chosenLecTime">Lecture time</label>
                         <select id="chosenLecTime" required ng-model="chosenLecTime"  class="col-md-12" style="height: auto;">
                             <option value = "">Select a lecture</option>
-                            <option ng-repeat="option in LectureTimes" ng-value="option.id" value="option.id">{{option.course_name}}, {{option.center_name}}, {{option.day}}, {{option.hour}}</option>
+                            <option ng-repeat="option in LectureTimes" ng-value="option.id" value="option.id" id="{{option.id}}">{{option.course_name}}, {{option.center_name}}, {{option.day}}, {{option.hour}}</option>
                         </select>
                     </div>
                 </div>
@@ -83,4 +83,4 @@
 </div>
 <!-- page-wrapper -->
 <script src="/javascripts/lectureInstance.js"></script>
-<%- include("partails/adminFooter") -%>
+<%- include("partails/adminFooter") -%> 

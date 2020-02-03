@@ -46,7 +46,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 id: response.data.course_id[i],
                 name: response.data.course_name[i],
             });
-            console.log(response.data.course_id[i] + "   " + response.data.course_name[i]);
         }
     }, function errorCallback(response) {
         alert(response.statusText);
@@ -68,21 +67,11 @@ myApp.controller('namesCtrl', function($scope, $http) {
             $('#lblec').hide();
             $('#lec').hide();
             $('#saveandcancel').show();
-
-
-
-
-
-
-
-                        
-           
             $http({
                 method: 'GET',
                 url: '/assistant/studentInfoCourse/' + $scope.chosenCourse,
             }).then(function successCallback(response) {
                 console.log("API is used successfully");
-                console.log(response);
                 for (var i = 0; i < response.data.assistIds.length; i++) {
                     $scope.users.push({
                         assistid: response.data.assistIds[i],
@@ -165,8 +154,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
             for (let i = 0; i < $scope.users.length; i++) {
                 $scope.users[i].exam_num =  response.data.num;
             }
-            console.log($scope.users);
-            
             $http({
                 method: 'POST',
                 url: '/assistant/insertScore',

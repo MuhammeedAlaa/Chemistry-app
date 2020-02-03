@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `chem_course`
 --
+CREATE Database `chem_course`;
+
+use `chem_course`;
 
 CREATE Database `chem_course`;
 
@@ -282,11 +285,6 @@ ALTER TABLE `course`
   MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT;
 
 
---
--- AUTO_INCREMENT for table `lecture`
---
-ALTER TABLE `lecture`
-  MODIFY `lecture_num` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

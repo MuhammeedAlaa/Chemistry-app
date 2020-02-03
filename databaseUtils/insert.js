@@ -195,8 +195,8 @@ function insertNewExam(req, code) {
                 });
             } else {
 
-                stmt = "INSERT INTO exam (lecture_num, center_name, course_id, fullmark, admin_id) VALUES (?,?,?,?,?)";
-            connection.query(stmt, [req.body.lecture_num,req.body.center_name, req.body.course_id, req.body.full_mark, code], (err, results) => {
+                stmt = "INSERT INTO exam (lecture_num, center_name, course_id, fullmark) VALUES (?,?,?,?)";
+            connection.query(stmt, [req.body.lecture_num,req.body.center_name, req.body.course_id, req.body.full_mark], (err, results) => {
                 if (err) {
                     console.error("error in entering Exam " + err);
                 } else {
@@ -301,6 +301,43 @@ function insertAttendance(req, code) {
 
 
 
+        }
+    });
+}
+
+
+
+
+
+function insertNewLectureinstance(req, callback) {
+    const r = req.body;
+    let stmt = `SELECT MAX(lecture_num) FROM lecture WHERE center_name = ? AND course_id = ? AND day = ? AND hour = ?`;
+    connection.query(stmt, [r.center_name, r.course_id, r.day, r.hour], (err, results, fields) => {
+        if (err) {
+            console.log(err);
+        } else {
+            let lecnum;
+            if(results[0]['MAX(lecture_num)'])
+                lecnum = parseInt(results[0]['MAX(lecture_num)']) + 1;
+            else
+                lecnum = 1;
+            stmt = "INSERT INTO lecture VALUES (?,?,?,?,?,?)";
+            connection.query(stmt, [lecnum, r.center_name, r.course_id, r.date, r.day, r.hour], (err, results) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    let stmt = `INSERT INTO exam VALUES (?,?,?,?,?)`;
+                    connection.query(stmt, [lecnum, lecnum, r.center_name, r.course_id, r.fullmark], (err, results) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log("inserted exam and lecture instance");
+                            callback(null, lecnum);
+                        }
+                    });
+                    console.log("entered lecture successfully");
+                }
+            });
         }
     });
 }

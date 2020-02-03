@@ -21,11 +21,16 @@ router.get('/lecture', function(req, res) {
     const { role } = isauth(req);
     if (role == 'assistant') {
         res.render('lectureinstance');
+<<<<<<< HEAD
     } else {
+=======
+        } else {
+>>>>>>> noerrorversion
         res.redirect('/');
     }
 });
 
+<<<<<<< HEAD
 router.get("/baseLectureData", function (req, res) {
     const {role} = isauth(req);
     if (role == 'assistant') {
@@ -113,6 +118,8 @@ router.get('/exam', function(req, res) {
 });
 
 
+=======
+>>>>>>> noerrorversion
 //------Black Points routes
 router.get('/blackpoint', function(req, res) {
     const { role } = isauth(req);
@@ -199,7 +206,7 @@ router.get('/totalAttendance', function(req, res) {
 
 router.get('/', function(req, res) {
     const { role } = isauth(req);
-    if (role == 'assistant') {
+    if (role == 'assistant'  || role == 'admin') {
         res.render('assistantStudent');
     } else {
         res.redirect('/');
@@ -442,6 +449,89 @@ router.get('/studentInfoCourse/:code', (req, res) => {
         res.redirect('/');
     }
 });
+
+
+
+
+
+
+
+
+
+router.get("/baseLectureData", function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'assistant') {
+        getlectureInfo((err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.get("/lectureData", function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'assistant') {
+        getlectureInstanceInfo((err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+            }
+        });
+    } else {
+        res.redirect('/');
+    }
+});
+
+router.post('/addlecture', function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'assistant') {        
+        insertNewLectureinstance(req,(err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.json(data);
+                res.status(200).end();
+            }
+        });
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+
+router.post('/EditLecture', function (req, res) {
+    console.log(req.body);
+    const { role } = isauth(req);
+    if (role == 'assistant') {
+        updateLectureInstanceData(req);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
+
+
+
+router.post('/DeleteLecture', function (req, res) {
+    const {role} = isauth(req);
+    if (role == 'assistant') {
+        deleteLecInstanceData(req);
+        res.redirect("/");
+    }
+    else{
+        res.redirect('/');
+    }
+});
+
 
 
 

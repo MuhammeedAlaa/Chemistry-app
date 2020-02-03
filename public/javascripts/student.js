@@ -13,8 +13,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
         url: '/assistant/studentInfo'
     }).then(function successCallback(response) {
         console.log("API is used successfully");
-        console.log(response.data);
-        
         for (var i = 0; i < response.data.assistIds.length; i++) {
             $scope.users.push({
                 assistid: response.data.assistIds[i],
@@ -43,7 +41,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 id: response.data.course_id[i],
                 name: response.data.course_name[i],
             });
-            console.log(response.data.course_id[i] + "   " + response.data.course_name[i]);
         }
     }, function errorCallback(response) {
         alert(response.statusText);
@@ -60,7 +57,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $scope.addForm = false;
         $scope.codeExisted = false;
         $scope.editUserId = index;
-        console.log($scope.users[index]);
         var spaceindex = $scope.users[index].name.indexOf(" ");
         $scope.crudFormfName = $scope.users[index].name.substring(0, spaceindex);
         $scope.crudFormLname = $scope.users[index].name.substring(spaceindex + 1, $scope.users[index].name.length);
@@ -114,8 +110,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
                     break;
                 }
            }
-           
-            
             $http({
                 method: 'POST',
                 url: '/assistant/AddStudent' ,
@@ -128,8 +122,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
             });
         } else {
             var fullname = $scope.crudFormfName + " " + $scope.crudFormLname;
-            console.log(fullname);
-
             var editUser = {
                 name: fullname,
                 phone: $scope.crudFormPhone,
@@ -153,8 +145,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 $scope.users[userId].blackpoints = editUser.blackpoints;
                 $scope.users[userId].school = editUser.school;
                 $scope.users[userId].parent_phone = editUser.parent_phone;
-                console.log($scope.users[userId]);
-
                 console.log("API is used successfully");
             }, function errorCallback(response) {
                 alert(response.statusText);
@@ -204,25 +194,18 @@ myApp.controller('namesCtrl', function($scope, $http) {
         $('#editShcool').attr("placeholder", "Add Student School");
         $('#editCode').attr('type', 'text');
         $('#labelCode').show();
-
         $('#editfName').attr('type', 'hidden');
         $('#labelFname').hide();
-
         $('#editlName').attr('type', 'hidden');
         $('#labelLname').hide();
-
         $('#editparentPhone').attr('type', 'hidden');
         $('#labelParent').hide();
-
         $('#editPassword').attr('type', 'hidden');
         $('#labelPassword').hide();
-
         $('#editShcool').attr('type', 'hidden');
         $('#labelSchool').hide();
-
         $('#editblackpoints').attr('type', 'hidden');
         $('#labelBlack').hide();
-
         $('#Course').show();
         $('#lbcourse').show();
     };
