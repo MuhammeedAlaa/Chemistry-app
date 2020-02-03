@@ -63,7 +63,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 courses: $scope.courses,
                 newname: $scope.crudFormName
             };
-            console.log( $scope.courses[courseId]);
             $http({
                 method: 'POST',
                 url: '/admin/EditCourse',
@@ -82,7 +81,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
 
     $scope.deleteCourse = function(course) {
         var index = $scope.courses.indexOf(course);
-        console.log(course);
         $http({
             method: 'POST',
             url: '/admin/DeleteCourse',

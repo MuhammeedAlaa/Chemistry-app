@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 --
 -- Database: `chem_course`
 --
+CREATE Database `chem_course`;
+
+use `chem_course`;
 
 -- --------------------------------------------------------
 
@@ -98,8 +101,7 @@ CREATE TABLE `exam` (
   `lecture_num` int(11) NOT NULL,
   `center_name` varchar(255) NOT NULL,
   `course_id` int(11) NOT NULL,
-  `fullmark` int(11) NOT NULL,
-  `admin_id` varchar(20) DEFAULT NULL
+  `fullmark` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -217,8 +219,7 @@ ALTER TABLE `exam`
   ADD KEY `exam_num` (`exam_num`) USING BTREE,
   ADD KEY `lecture_num` (`lecture_num`),
   ADD KEY `center_name` (`center_name`),
-  ADD KEY `course_id` (`course_id`),
-  ADD KEY `admin_id` (`admin_id`);
+  ADD KEY `course_id` (`course_id`);
 
 --
 -- Indexes for table `exam_grades`
@@ -283,11 +284,6 @@ ALTER TABLE `course`
 ALTER TABLE `exam`
   MODIFY `exam_num` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `lecture`
---
-ALTER TABLE `lecture`
-  MODIFY `lecture_num` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -322,8 +318,7 @@ ALTER TABLE `course`
 ALTER TABLE `exam`
   ADD CONSTRAINT `exam_ibfk_1` FOREIGN KEY (`lecture_num`) REFERENCES `lecture` (`lecture_num`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `exam_ibfk_2` FOREIGN KEY (`center_name`) REFERENCES `center` (`center_name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `exam_ibfk_3` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `exam_ibfk_4` FOREIGN KEY (`admin_id`) REFERENCES `admin` (`admin_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `exam_ibfk_3` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `exam_grades`

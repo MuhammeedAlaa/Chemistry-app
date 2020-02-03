@@ -45,7 +45,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 id: response.data.course_id[i],
                 name: response.data.course_name[i],
             });
-            console.log(response.data.course_id[i] + "   " + response.data.course_name[i]);
         }
     }, function errorCallback(response) {
         alert(response.statusText);

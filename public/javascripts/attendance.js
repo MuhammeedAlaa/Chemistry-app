@@ -72,7 +72,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 url: '/assistant/studentInfoCourse/' + $scope.chosenCourse,
             }).then(function successCallback(response) {
                 console.log("API is used successfully");
-                console.log(response);
                 for (var i = 0; i < response.data.assistIds.length; i++) {
                     $scope.users.push({
                         assistid: response.data.assistIds[i],
@@ -135,10 +134,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
     };
     $scope.savestudentAttendance = function(user) {
         var index = $scope.users.indexOf(user);
-        console.log(index);
-        
-        console.log($scope.users[index].attend);
-
         $scope.users[index].attend = !$scope.users[index].attend;
     };
     $scope.insertAttendance = function() {
@@ -146,7 +141,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
             $scope.users[i].lec_num = $scope.chosenLecture;
             $scope.users[i].center_name = $scope.chosenCenter;
             $scope.users[i].course_id = $scope.chosenCourse;
-            console.log($scope.users[i].attend);
         }
 
 
@@ -157,8 +151,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
         }).then(function successCallback(response) {
             console.log("API is used successfully");
             for (let i = 0; i < $scope.users.length; i++) {
-                console.log(response.data.num);
-                
                 $scope.users[i].exam_num =  response.data.num;
             }
             $http({

@@ -29,8 +29,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
 
     $scope.editCenter = function(center) {
         var index = $scope.centers.indexOf(center);
-        console.log(index);
-        
         $scope.triggerForm = true;
         $scope.editForm = true;
         $scope.addForm = false;
@@ -43,8 +41,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
     $scope.saveEdit = function(centerId) {
         
         if (centerId == 'new') {
-            console.log($scope.centers);
-            
             var newData = {
                 name: $scope.crudFormName,
                 old: $scope.centers

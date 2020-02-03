@@ -42,9 +42,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
             }).then(function successCallback(response) {
 
                 $scope.users[index].blackpoints += 1;
-
-                console.log($scope.users[index]);
-
                 console.log("API is used successfully");
             }, function errorCallback(response) {
                 alert(response.statusText);
@@ -60,8 +57,6 @@ myApp.controller('namesCtrl', function($scope, $http) {
                 data: $scope.users[index]
             }).then(function successCallback(response) {
                 $scope.users[index].blackpoints -= 1;
-                console.log($scope.users[index]);
-
                 console.log("API is used successfully");
             }, function errorCallback(response) {
                 alert(response.statusText);

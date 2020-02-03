@@ -87,12 +87,44 @@ function updateLectureData(req) {
         console.log("Updated Successfully");
     });
 }
+
+
+
+
+
+function updateLectureInstanceData(req) {
+    let stmt = `UPDATE lecture SET date = ? 
+    WHERE lecture_num = ? AND center_name = ? AND course_id = ? AND day = ? AND hour = ? `;
+    const r = req.body;
+    const lecture = [r.date ,r.lecture_num ,r.center_name, r.course_id, r.day, r.hour];
+    console.log(lecture);
+    connection.query(stmt, lecture, (err, results) => {
+        if (err) {
+            console.error(err.message);
+        }
+        else
+        {
+        let stmt = `UPDATE exam SET fullmark = ? 
+        WHERE exam_num = ? AND lecture_num = ? AND center_name = ? AND course_id = ?`;
+        const r = req.body;
+        const exam = [r.fullmark, r.lecture_num, r.lecture_num ,r.center_name, r.course_id];
+        connection.query(stmt, exam, (err, results) => {
+            if (err) {
+                console.error(err.message);
+            }
+            else
+            {
+                console.log("update lecture and exam successfully");
+            }
+        });
+    }
+    });
+}
 exports.updateStudData = updateStudData;
 exports.updateStudantData = updateStudantData;
 exports.updateCourseData = updateCourseData;
 
 exports.updateAssistData = updateAssistData;
 exports.updateCenterData = updateCenterData;
-
-exports.updateLectureData = updateLectureData;
+exports.updateLectureInstanceData = updateLectureInstanceData;
 exports.updateLectureData = updateLectureData;
