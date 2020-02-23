@@ -2,7 +2,7 @@
 var myApp = angular.module('myApp', []);
 
 
-myApp.controller('namesCtrl', function($scope, $http) {
+myApp.controller('namesCtrl', function ($scope, $http) {
     $scope.triggerForm = true;
     $scope.addForm = false;
     $scope.order = 'code';
@@ -51,11 +51,11 @@ myApp.controller('namesCtrl', function($scope, $http) {
         alert(response.statusText);
     });
 
-    $scope.orderBy = function(filter) {
+    $scope.orderBy = function (filter) {
         $scope.order = filter;
         $scope.reverse = !$scope.reverse;
     };
-    $scope.viewlecattend = function() {
+    $scope.viewlecattend = function () {
         if ($scope.chosenCourse != '' && $scope.chosenCenter != '' && $scope.chosenLecture != '') {
             $scope.triggerForm = true;
             $scope.addForm = true;
@@ -82,7 +82,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
                         password: response.data.studpasswords[i],
                         blackpoints: response.data.blackpoints[i],
                         school: response.data.schools[i],
-                        attend: false,
+                        attend: response.data.attend[i],
                         lec_num: -1,
                         center_name: '',
                         course_id: -1,
@@ -92,51 +92,52 @@ myApp.controller('namesCtrl', function($scope, $http) {
             }, function errorCallback(response) {
                 alert(response.statusText);
             });
-                $('#studenttable').show();
-        }  else if($scope.chosenCourse == '' && $scope.chosenCenter == '') {
+            $('#studenttable').show();
+        } else if ($scope.chosenCourse == '' && $scope.chosenCenter == '') {
             alert("Please choose Coure and Center");
-        } else if($scope.chosenCenter == '') {
+        } else if ($scope.chosenCenter == '') {
             alert("Please choose Center");
-        } else if ($scope.chosenCourse == ''){
+        } else if ($scope.chosenCourse == '') {
             alert("Please choose Course");
         } else {
             alert("Please choose Lecture");
         }
     };
-    $scope.showLec = function () {        
-    if($scope.chosenCourse != '' && $scope.chosenCenter != ''){
-        $http({
-            method: 'GET',
-            url: '/assistant/lecturenumber/' + $scope.chosenCourse + '/' + $scope.chosenCenter
-        }).then(function successCallback(response) {
-            $('#lec').val("");            
-            for(var o = 0; o< $scope.lectures.length ;o ++ ){
-                $('#'+$scope.lectures[o].id ).remove();} 
-            for (var i = 0; i < response.data.lecture_num.length; i++) {
-                $scope.lectures.push({
-                    id: response.data.lecture_num[i],
-                    day: response.data.day[i],
-                    hour: response.data.hour[i]
-                });
+    $scope.showLec = function () {
+        if ($scope.chosenCourse != '' && $scope.chosenCenter != '') {
+            $http({
+                method: 'GET',
+                url: '/assistant/lecturenumber/' + $scope.chosenCourse + '/' + $scope.chosenCenter
+            }).then(function successCallback(response) {
+                $('#lec').val("");
+                for (var o = 0; o < $scope.lectures.length; o++) {
+                    $('#' + $scope.lectures[o].id).remove();
+                }
+                for (var i = 0; i < response.data.lecture_num.length; i++) {
+                    $scope.lectures.push({
+                        id: response.data.lecture_num[i],
+                        day: response.data.day[i],
+                        hour: response.data.hour[i]
+                    });
 
-                
-                $('#lec').append(`<option value="${response.data.lecture_num[i]}" id="${response.data.lecture_num[i]}"> 
+
+                    $('#lec').append(`<option value="${response.data.lecture_num[i]}" id="${response.data.lecture_num[i]}"> 
                                        ${" Day: " + response.data.day[i] + " Time: " + response.data.hour[i]} 
-                                  </option>`); 
-            }
-        }, function errorCallback(response) {
-            alert(response.statusText);
-        });
-        $('#lec').show();
-        $('#lblec').show(); 
-    } 
-    
+                                  </option>`);
+                }
+            }, function errorCallback(response) {
+                alert(response.statusText);
+            });
+            $('#lec').show();
+            $('#lblec').show();
+        }
+
     };
-    $scope.savestudentAttendance = function(user) {
+    $scope.savestudentAttendance = function (user) {
         var index = $scope.users.indexOf(user);
         $scope.users[index].attend = !$scope.users[index].attend;
     };
-    $scope.insertAttendance = function() {
+    $scope.insertAttendance = function () {
         for (let i = 0; i < $scope.users.length; i++) {
             $scope.users[i].lec_num = $scope.chosenLecture;
             $scope.users[i].center_name = $scope.chosenCenter;
@@ -147,11 +148,11 @@ myApp.controller('namesCtrl', function($scope, $http) {
 
         $http({
             method: 'GET',
-            url: '/assistant/examnum/' + $scope.chosenCourse +'/' + $scope.chosenLecture +'/' +$scope.chosenCenter ,
+            url: '/assistant/examnum/' + $scope.chosenCourse + '/' + $scope.chosenLecture + '/' + $scope.chosenCenter,
         }).then(function successCallback(response) {
             console.log("API is used successfully");
             for (let i = 0; i < $scope.users.length; i++) {
-                $scope.users[i].exam_num =  response.data.num;
+                $scope.users[i].exam_num = response.data.num;
             }
             $http({
                 method: 'POST',
@@ -167,7 +168,7 @@ myApp.controller('namesCtrl', function($scope, $http) {
             alert(response.statusText);
         });
     };
-    $scope.cancelAttendance = function (){
+    $scope.cancelAttendance = function () {
         $(location).attr('href', '/assistant/attendance');
     };
 });

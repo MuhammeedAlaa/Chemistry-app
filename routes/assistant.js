@@ -1,14 +1,39 @@
 // jshint esversion:6
 const express = require('express');
 const router = express.Router();
-const { isauth } = require('../utils/auth');
-const { isCodeUsed, insertStudent, insertLecture, insertAttendance, insertNewExamScore, insertNewLectureinstance } = require('../databaseUtils/insert');
-const { getStudentsInfo, studentInfoCourse, getlecturesnumber, getExam, getlectureInstanceInfo, getlectureInfo, studentInfoCourse2 } = require('../databaseUtils/info');
-const { deleteStudent, deleteLecInstanceData } = require('../databaseUtils/delete');
-const { updateStudantData, updateLectureInstanceData } = require('../databaseUtils/update');
+const {
+    isauth
+} = require('../utils/auth');
+const {
+    isCodeUsed,
+    insertStudent,
+    insertLecture,
+    insertAttendance,
+    insertNewExamScore,
+    insertNewLectureinstance
+} = require('../databaseUtils/insert');
+const {
+    getStudentsInfo,
+    studentInfoCourse,
+    getlecturesnumber,
+    getExam,
+    getlectureInstanceInfo,
+    getlectureInfo,
+    studentInfoCourse2
+} = require('../databaseUtils/info');
+const {
+    deleteStudent,
+    deleteLecInstanceData
+} = require('../databaseUtils/delete');
+const {
+    updateStudantData,
+    updateLectureInstanceData
+} = require('../databaseUtils/update');
 
-router.get('/', function(req, res) {
-    const { role } = isauth(req);
+router.get('/', function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         res.render('assistantStudent');
     } else {
@@ -17,18 +42,22 @@ router.get('/', function(req, res) {
 });
 
 //------lecture routes
-router.get('/lecture', function(req, res) {
-    const { role } = isauth(req);
+router.get('/lecture', function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         res.render('lectureinstance');
-        } else {
+    } else {
         res.redirect('/');
     }
 });
 
 //------Black Points routes
-router.get('/blackpoint', function(req, res) {
-    const { role } = isauth(req);
+router.get('/blackpoint', function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         res.render('blackpoint');
     } else {
@@ -37,7 +66,9 @@ router.get('/blackpoint', function(req, res) {
 });
 
 router.get('/BPData', (req, res) => {
-    const { role } = isauth(req);
+    const {
+        role
+    } = isauth(req);
     console.log(role);
     if (role == 'assistant') {
         getStudentsInfo((err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) => {
@@ -61,8 +92,10 @@ router.get('/BPData', (req, res) => {
         res.redirect('/');
     }
 });
-router.post("/EditBPplus", function(req, res) {
-    const { role } = isauth(req);
+router.post("/EditBPplus", function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         req.body.blackpoints += 1;
         var spaceindex = req.body.name.indexOf(" ");
@@ -74,8 +107,10 @@ router.post("/EditBPplus", function(req, res) {
         res.redirect('/');
     }
 });
-router.post("/EditBPminus", function(req, res) {
-    const { role } = isauth(req);
+router.post("/EditBPminus", function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         req.body.blackpoints -= 1;
         var spaceindex = req.body.name.indexOf(" ");
@@ -89,8 +124,10 @@ router.post("/EditBPminus", function(req, res) {
 });
 
 //------exam routes
-router.get('/Exam', function(req, res) {
-    const { role } = isauth(req);
+router.get('/Exam', function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         res.render('exam');
     } else {
@@ -99,8 +136,10 @@ router.get('/Exam', function(req, res) {
 });
 
 //------exam routes
-router.get('/totalAttendance', function(req, res) {
-    const { role } = isauth(req);
+router.get('/totalAttendance', function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         res.render('totalAttendance');
     } else {
@@ -110,9 +149,11 @@ router.get('/totalAttendance', function(req, res) {
 
 
 
-router.get('/', function(req, res) {
-    const { role } = isauth(req);
-    if (role == 'assistant'  || role == 'admin') {
+router.get('/', function (req, res) {
+    const {
+        role
+    } = isauth(req);
+    if (role == 'assistant' || role == 'admin') {
         res.render('assistantStudent');
     } else {
         res.redirect('/');
@@ -120,8 +161,10 @@ router.get('/', function(req, res) {
 });
 
 
-router.get('/attendance', function(req, res) {
-    const { role } = isauth(req);
+router.get('/attendance', function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         res.render('bAttendance');
     } else {
@@ -131,7 +174,9 @@ router.get('/attendance', function(req, res) {
 
 
 router.get('/studentInfo', (req, res) => {
-    const { role } = isauth(req);
+    const {
+        role
+    } = isauth(req);
     console.log(role);
     if (role == 'assistant') {
         getStudentsInfo((err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools, course_id, course_name]) => {
@@ -161,11 +206,13 @@ router.get('/studentInfo', (req, res) => {
 
 
 router.get('/lecturenumber/:course_id/:center_name', (req, res) => {
-    const { role } = isauth(req);
+    const {
+        role
+    } = isauth(req);
     console.log(role);
     if (role == 'assistant' || role == 'admin') {
         console.log(req.params.course_id + "    " + req.params.center_name);
-        
+
         getlecturesnumber(req.params.course_id, req.params.center_name, (err, [lecture_num, day, hour]) => {
             if (err) {
                 console.log(err);
@@ -187,10 +234,12 @@ router.get('/lecturenumber/:course_id/:center_name', (req, res) => {
 
 
 router.get('/studentInfoCourse/:code', (req, res) => {
-    const { role } = isauth(req);
+    const {
+        role
+    } = isauth(req);
     console.log(req.params.code);
     if (role == 'assistant') {
-        studentInfoCourse(req.params.code, (err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) => {
+        studentInfoCourse(req.params.code, (err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools, scores, attend]) => {
             if (err) {
                 console.log(err);
                 res.redirect('/');
@@ -203,7 +252,9 @@ router.get('/studentInfoCourse/:code', (req, res) => {
                     studCodes: studCodes,
                     studpasswords: studpasswords,
                     blackpoints: blackpoints,
-                    schools: schools
+                    schools: schools,
+                    scores: scores,
+                    attend: attend
                 });
             }
         });
@@ -216,8 +267,10 @@ router.get('/studentInfoCourse/:code', (req, res) => {
 
 
 
-router.post("/deleteStudent", function(req, res) {
-    const { role } = isauth(req);
+router.post("/deleteStudent", function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         console.log(req.body);
         deleteStudent(req.body.code);
@@ -229,8 +282,8 @@ router.post("/deleteStudent", function(req, res) {
 
 
 
-router.post('/AddStudent', function(req, res) {
-    const decodedtoken = isauth(req);    
+router.post('/AddStudent', function (req, res) {
+    const decodedtoken = isauth(req);
     if (decodedtoken.role == 'assistant') {
         var coded = req.body.code;
         isCodeUsed(coded, (err, data) => {
@@ -244,7 +297,9 @@ router.post('/AddStudent', function(req, res) {
                 } else {
                     var code = 400;
                     var message = "this user code already in try another one";
-                    res.writeHead(code, message, { 'cotent-type': 'text/plain' });
+                    res.writeHead(code, message, {
+                        'cotent-type': 'text/plain'
+                    });
                     res.end(message);
                 }
             }
@@ -256,9 +311,9 @@ router.post('/AddStudent', function(req, res) {
 
 
 
-router.post('/setattendance', function(req, res) {
+router.post('/setattendance', function (req, res) {
     const decodedtoken = isauth(req);
-    if(decodedtoken.role =='assistant' ){
+    if (decodedtoken.role == 'assistant') {
         for (let i = 0; i < req.body.length; i++) {
             insertAttendance(req.body[i], decodedtoken.code);
         }
@@ -272,8 +327,10 @@ router.post('/setattendance', function(req, res) {
 
 
 
-router.post("/EditStudent", function(req, res) {
-    const { role } = isauth(req);
+router.post("/EditStudent", function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         var spaceindex = req.body.name.indexOf(" ");
         req.body.fname = req.body.name.substring(0, spaceindex);
@@ -287,8 +344,10 @@ router.post("/EditStudent", function(req, res) {
 
 
 
-router.get("/studscore", function(req, res) {
-    const { role } = isauth(req);
+router.get("/studscore", function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         console.log(req.body);
         res.render("examscore");
@@ -298,22 +357,28 @@ router.get("/studscore", function(req, res) {
 });
 
 
-router.post("/insertScore", function(req, res) {
-    const { role } = isauth(req);
-    const { code } = isauth(req);
+router.post("/insertScore", function (req, res) {
+    const {
+        role
+    } = isauth(req);
+    const {
+        code
+    } = isauth(req);
     if (role == 'assistant') {
-        insertNewExamScore(req,code);
+        insertNewExamScore(req, code);
         res.redirect('/');
     } else {
         res.redirect('/');
     }
 });
 
-router.get("/examnum/:co/:lec/:cen", function(req, res) {
-    const { role } = isauth(req);
+router.get("/examnum/:co/:lec/:cen", function (req, res) {
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
-        getExam(req,(err,num)=>{
-            if(err){
+        getExam(req, (err, num) => {
+            if (err) {
                 console.log(err);
                 res.redirect("/");
             } else {
@@ -331,7 +396,9 @@ router.get("/examnum/:co/:lec/:cen", function(req, res) {
 
 
 router.get('/studentInfoCourse/:code', (req, res) => {
-    const { role } = isauth(req);
+    const {
+        role
+    } = isauth(req);
     console.log(req.params.code);
     if (role == 'assistant') {
         studentInfoCourse(req.params.code, (err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools]) => {
@@ -356,7 +423,9 @@ router.get('/studentInfoCourse/:code', (req, res) => {
     }
 });
 router.get('/studentInfoCourse2/:code', (req, res) => {
-    const { role } = isauth(req);
+    const {
+        role
+    } = isauth(req);
     console.log(req.params.code);
     if (role == 'assistant') {
         studentInfoCourse2(req.params.code, (err, [fullnames, phones, parent_phones, assistIds, studCodes, studpasswords, blackpoints, schools, attend]) => {
@@ -391,7 +460,9 @@ router.get('/studentInfoCourse2/:code', (req, res) => {
 
 
 router.get("/baseLectureData", function (req, res) {
-    const {role} = isauth(req);
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         getlectureInfo((err, data) => {
             if (err) {
@@ -406,7 +477,9 @@ router.get("/baseLectureData", function (req, res) {
 });
 
 router.get("/lectureData", function (req, res) {
-    const {role} = isauth(req);
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         getlectureInstanceInfo((err, data) => {
             if (err) {
@@ -421,9 +494,11 @@ router.get("/lectureData", function (req, res) {
 });
 
 router.post('/addlecture', function (req, res) {
-    const {role} = isauth(req);
-    if (role == 'assistant') {        
-        insertNewLectureinstance(req,(err, data) => {
+    const {
+        role
+    } = isauth(req);
+    if (role == 'assistant') {
+        insertNewLectureinstance(req, (err, data) => {
             if (err) {
                 console.log(err);
             } else {
@@ -431,8 +506,7 @@ router.post('/addlecture', function (req, res) {
                 res.status(200).end();
             }
         });
-    }
-    else{
+    } else {
         res.redirect('/');
     }
 });
@@ -440,12 +514,13 @@ router.post('/addlecture', function (req, res) {
 
 router.post('/EditLecture', function (req, res) {
     console.log(req.body);
-    const { role } = isauth(req);
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         updateLectureInstanceData(req);
         res.redirect("/");
-    }
-    else{
+    } else {
         res.redirect('/');
     }
 });
@@ -454,12 +529,13 @@ router.post('/EditLecture', function (req, res) {
 
 
 router.post('/DeleteLecture', function (req, res) {
-    const {role} = isauth(req);
+    const {
+        role
+    } = isauth(req);
     if (role == 'assistant') {
         deleteLecInstanceData(req);
         res.redirect("/");
-    }
-    else{
+    } else {
         res.redirect('/');
     }
 });

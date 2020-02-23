@@ -1,95 +1,100 @@
-<title>Attendance</title>
+<title>Score</title>
 <link rel="stylesheet" href="/stylesheets/flipbutton.css">
 <%- include("partails/assistHeader") -%>
-    <main class="page-content">
-        <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
-            <div class="clearfix">
-                <div class="form-inline pull-left">
-                    <button class="btn btn-success" ng-click="viewlecattend()" id="view"><span class="glyphicon glyphicon-list">
-        </span>View</button>
-                </div>
-                <div class="form-inline pull-right">
-                    <div class="form-group">
-                        <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
-                    </div>
-                </div>
+<main class="page-content">
+    <div class="container crud-table" ng-app="myApp" ng-controller="namesCtrl">
+        <div class="clearfix">
+            <div class="form-inline pull-left">
+                <button class="btn btn-success" ng-click="viewlecattend()" id="view"><span
+                        class="glyphicon glyphicon-list">
+                    </span>View</button>
             </div>
-            <div id="studenttable">
-                <table class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th ng-click="orderBy('code')">Code</th>
-                            <th ng-click="orderBy('name')">Name</th>
-                            <th ng-click="orderBy('phone')">Phone</th>
-                            <th>Parent Phone</th>
-                            <th>Shool</th>
-                            <th><label for="Score" id="labScore">Score</label></th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
-                            <td>{{user.code}} </td>
-                            <td>{{user.name}} </td>
-                            <td>{{user.phone}} </td>
-                            <td>{{user.parent_phone}}</td>
-                            <td>{{user.school}}</td>
-                            <td class="tg-list-item">
-                                <input class="form-control"  id={{user.code}} type="number" name="ScoreExam" ng-model="crudFormparentScore" placeholder="Edit Exam Score" min="0" max="1000" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
-
-            <div class="crude-form__wrapper" ng-show="triggerForm">
-                <h3 ng-show="addForm">Exam Scores</h3>
-                <form name="lectureForm" ng-model="lectureForm">
-                    <div class="form-group">
-                        <div class="form-group col-md-12">
-                            <label for="course" id="lbcourse">Course</label>
-                            <select id="Course" required ng-model="chosenCourse" class="col-md-12" style="height: auto;" ng-change="showLec()">
-            <option value = "">Select a course</option>
-            <option ng-repeat="option in courses" ng-value="option.id" >{{option.name}}</option>
-          </select>
-                        </div>
-                    </div>
-
-
-
-                    <div class="form-group">
-                        <div class="form-group col-md-12">
-                            <label for="center" id="lbcenter">Center</label>
-                            <select required ng-model="chosenCenter" id="selectcenter" class="col-md-12" style="height: auto;" ng-change="showLec()">
-            <option value = "">Select a center</option>
-            <option ng-repeat="option in centers" ng-value="option.name">{{option.name}}</option>
-          </select>
-                        </div>
-                    </div>
-
-
-
-                    <div class="form-group">
-                        <div class="form-group col-md-12">
-                            <label for="lecunum" id="lblec">Lecture</label>
-                            <select required ng-model="chosenLecture" class="col-md-12" style="height: auto;" id="lec">
-            <option value = "">Select a Lecture</option>
-          </select>
-                        </div>
-                    </div>
-
-                    <div id="saveandcancel">
-                        <button class="btn btn-primary" ng-click="insertAttendance()" id="Save" ng-disabled="userForm.$invalid"> <i class="glyphicon glyphicon-pencil"> </i>Save
-        change </button>
-                        <button class="btn btn-primary" ng-click="cancelAttendance()" id="Cancel">
-          Cancel </button>
-                    </div>
-                </form>
+            <div class="form-inline pull-right">
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="searchName" placeholder="Type name to search" />
+                </div>
             </div>
         </div>
-    </main>
+        <div id="studenttable">
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th ng-click="orderBy('code')">Code</th>
+                        <th ng-click="orderBy('name')">Name</th>
+                        <th ng-click="orderBy('phone')">Phone</th>
+                        <th>Parent Phone</th>
+                        <th>Shool</th>
+                        <th><label for="Score" id="labScore">Score</label></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr ng-repeat="user in resultUser = (users | filter: {'name': searchName}) | orderBy: order">
+                        <td>{{user.code}} </td>
+                        <td>{{user.name}} </td>
+                        <td>{{user.phone}} </td>
+                        <td>{{user.parent_phone}}</td>
+                        <td>{{user.school}}</td>
+                        <td class="tg-list-item">
+                            <input class="form-control" id={{user.code}} type="number" name="ScoreExam"
+                                value="{{user.score}}" placeholder="Edit Exam Score" min="0" max="1000" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="crude-form__wrapper" ng-show="triggerForm">
+            <h3 ng-show="addForm">Exam Scores</h3>
+            <form name="lectureForm" ng-model="lectureForm">
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="course" id="lbcourse">Course</label>
+                        <select id="Course" required ng-model="chosenCourse" class="col-md-12" style="height: auto;"
+                            ng-change="showLec()">
+                            <option value="">Select a course</option>
+                            <option ng-repeat="option in courses" ng-value="option.id">{{option.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="center" id="lbcenter">Center</label>
+                        <select required ng-model="chosenCenter" id="selectcenter" class="col-md-12"
+                            style="height: auto;" ng-change="showLec()">
+                            <option value="">Select a center</option>
+                            <option ng-repeat="option in centers" ng-value="option.name">{{option.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="form-group col-md-12">
+                        <label for="lecunum" id="lblec">Lecture</label>
+                        <select required ng-model="chosenLecture" class="col-md-12" style="height: auto;" id="lec">
+                            <option value="">Select a Lecture</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="saveandcancel">
+                    <button class="btn btn-primary" ng-click="insertAttendance()" id="Save"
+                        ng-disabled="userForm.$invalid"> <i class="glyphicon glyphicon-pencil"> </i>Save
+                        change </button>
+                    <button class="btn btn-primary" ng-click="cancelAttendance()" id="Cancel">
+                        Cancel </button>
+                </div>
+            </form>
+        </div>
     </div>
-    <!-- page-wrapper -->
-    <script src="/javascripts/examscore.js"></script>
-    <%- include("partails/adminFooter") -%>
+</main>
+</div>
+<!-- page-wrapper -->
+<script src="/javascripts/examscore.js"></script>
+<%- include("partails/adminFooter") -%>
