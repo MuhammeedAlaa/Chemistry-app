@@ -53,8 +53,7 @@
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/MuhammeedAlaa"><img src="https://avatars.githubusercontent.com/u/42709288?v=4
-" width="150px;" alt=""/><br /><sub><b>Muhammad Alaa</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/MuhammeedAlaa"><img src="https://avatars.githubusercontent.com/u/42709288?v=4"width="150px;" alt=""/><br /><sub><b>Muhammad Alaa</b></sub></a><br /></td>
      <td align="center"><a href="https://github.com/Etshawy1"><img src="https://avatars.githubusercontent.com/u/42721791?v=4" width="150px;" alt=""/><br /><sub><b>Muhammad Ahmed</b></sub></a><br /></td>
   </tr>
  </table>
