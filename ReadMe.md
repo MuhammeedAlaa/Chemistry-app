@@ -1,7 +1,7 @@
 <p align="center">
   <a href="" rel="noopener">
  
- ![Chem-course](./images/logo.png)
+ <img src="./images/logo.png" align="center">
 
   </a>
 </p>
@@ -12,7 +12,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/MuhammeedAlaa/Chemistry-app)](https://github.com/MuhammeedAlaa/Chemistry-app/issues)
 [![GitHub forks](https://img.shields.io/github/forks/MuhammeedAlaa/Chemistry-app)](https://github.com/MuhammeedAlaa/Chemistry-app/network)
 [![GitHub stars](https://img.shields.io/github/stars/MuhammeedAlaa/Chemistry-app)](https://github.com/MuhammeedAlaa/Chemistry-app/stargazers)
-[![GitHub license](https://img.shields.io/github/license/Etshawy1/Chemistry-app)](https://github.com/MuhammeedAlaa/Chemistry-app/blob/master/License)
+[![GitHub license](https://img.shields.io/github/license/MuhammeedAlaa/Chemistry-app)](https://github.com/MuhammeedAlaa/Chemistry-app/blob/master/License)
 
 </div>
 
@@ -53,7 +53,7 @@
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/MuhammeedAlaa"><img src="https://avatars.githubusercontent.com/u/42709288?s=460&v=4
+    <td align="center"><a href="https://github.com/MuhammeedAlaa"><img src="https://avatars.githubusercontent.com/u/42709288?v=4
 " width="150px;" alt=""/><br /><sub><b>Muhammad Alaa</b></sub></a><br /></td>
      <td align="center"><a href="https://github.com/Etshawy1"><img src="https://avatars.githubusercontent.com/u/42721791?v=4" width="150px;" alt=""/><br /><sub><b>Muhammad Ahmed</b></sub></a><br /></td>
   </tr>
